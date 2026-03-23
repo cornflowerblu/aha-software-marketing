@@ -28,11 +28,39 @@ const challengeOptions = [
 
 export default function ContactSection() {
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setError('')
+    const form = new FormData(e.currentTarget)
+    const data = {
+      name: form.get('name') as string,
+      company: form.get('company') as string,
+      challenge: form.get('challenge') as string,
+      message: form.get('message') as string,
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        setError('Something went wrong. Please try again.')
+      }
+    } catch {
+      setError('Something went wrong. Please try again.')
+    }
+  }
 
   return (
     <section className="py-32 bg-surface-container" id="contact">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-24">
-        <AnimateOnScroll animation="fade-up">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-24">
+        <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
           <h2 className="font-headline text-6xl md:text-7xl font-medium text-on-background leading-none tracking-tighter mb-10">
             Ready for Radical Change?
           </h2>
@@ -62,7 +90,7 @@ export default function ContactSection() {
           </div>
         </AnimateOnScroll>
 
-        <AnimateOnScroll animation="slide-left" delay={200}>
+        <AnimateOnScroll className="lg:col-span-7" animation="slide-left" delay={200}>
           <div className="bg-background p-8 md:p-12 shadow-ambient-lg ghost-border">
             {submitted ? (
               <div className="text-center py-16">
@@ -79,15 +107,13 @@ export default function ContactSection() {
             ) : (
               <form
                 className="space-y-10"
-                onSubmit={(e) => {
-                  e.preventDefault()
-                  setSubmitted(true)
-                }}
+                onSubmit={handleSubmit}
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                  <Input label="Full Name" placeholder="John Doe" type="text" />
+                  <Input label="Full Name" name="name" placeholder="John Doe" type="text" required />
                   <Input
                     label="Company"
+                    name="company"
                     placeholder="Acme Engineering"
                     type="text"
                   />
@@ -102,6 +128,7 @@ export default function ContactSection() {
                   </label>
                   <select
                     id="challenge"
+                    name="challenge"
                     className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-lg font-headline py-2 transition-all outline-none"
                   >
                     {challengeOptions.map((opt) => (
@@ -112,9 +139,14 @@ export default function ContactSection() {
 
                 <Textarea
                   label="Brief Context"
+                  name="message"
                   placeholder="Tell us about your current stack..."
                   rows={3}
                 />
+
+                {error && (
+                  <p className="text-error text-sm font-body">{error}</p>
+                )}
 
                 <Button
                   variant="primary"

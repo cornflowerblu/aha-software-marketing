@@ -10,6 +10,14 @@ function getResend() {
   return new Resend(key)
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function POST(request: Request) {
   let body: unknown
   try {
@@ -84,13 +92,13 @@ export async function POST(request: Request) {
   }
 
   // Create registration
-  const registration = await payload.create({
+  const registration = await (payload.create as Function)({
     collection: 'registrations',
     data: {
       user: user.id,
       event: eventId,
       paymentStatus: (event.price ?? 0) > 0 ? 'pending' : 'free',
-    } as Record<string, unknown>,
+    },
   })
 
   // Send confirmation email
@@ -101,10 +109,10 @@ export async function POST(request: Request) {
         to: email,
         subject: `Registration confirmed: ${event.title}`,
         html: `<h1>You're registered!</h1>
-<p>Hi ${name},</p>
-<p>You've been registered for <strong>${event.title}</strong>.</p>
+<p>Hi ${escapeHtml(name)},</p>
+<p>You've been registered for <strong>${escapeHtml(String(event.title))}</strong>.</p>
 <p><strong>Date:</strong> ${new Date(String(event.date)).toLocaleDateString('en-US', { dateStyle: 'full' })}</p>
-${event.location ? `<p><strong>Location:</strong> ${event.location}</p>` : ''}
+${event.location ? `<p><strong>Location:</strong> ${escapeHtml(String(event.location))}</p>` : ''}
 <p>We'll send you a reminder before the event.</p>
 <p>— AHA Software</p>`,
       })

@@ -6,6 +6,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { generateGoogleCalendarLink } from '@/lib/calendar'
+import { generateEventSchema } from '@/lib/seo'
 import SectionLabel from '@/components/ui/SectionLabel'
 import CapacityBar from '@/components/events/CapacityBar'
 import RegistrationForm from '@/components/events/RegistrationForm'
@@ -116,26 +117,16 @@ export default async function EventDetailPage({ params }: Props) {
     ? `${formatTime(event.date)} — ${formatTime(event.endDate)}`
     : formatTime(event.date)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Event',
-    name: event.title,
-    startDate: event.date,
+  const jsonLd = generateEventSchema({
+    title: event.title,
+    slug: event.slug,
+    date: event.date,
     ...(event.endDate ? { endDate: event.endDate } : {}),
-    ...(event.location
-      ? {
-          location: {
-            '@type': 'Place',
-            name: event.location,
-          },
-        }
-      : {}),
-    ...(imageUrl ? { image: imageUrl } : {}),
-    organizer: {
-      '@type': 'Organization',
-      name: 'AHA Software',
-    },
-  }
+    ...(event.location ? { location: event.location } : {}),
+    ...(event.price != null ? { price: event.price } : {}),
+    ...(event.capacity != null ? { capacity: event.capacity } : {}),
+    ...(imageUrl ? { featuredImage: { url: imageUrl, alt: imageAlt } } : {}),
+  })
 
   return (
     <>

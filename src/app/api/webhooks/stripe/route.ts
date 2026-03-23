@@ -31,10 +31,10 @@ export async function POST(request: Request) {
           limit: 1,
         })
         if (users.docs.length > 0) {
-          await payload.update({
+          await (payload.update as Function)({
             collection: 'users',
             id: users.docs[0].id,
-            data: { subscriptionStatus: 'active' } as Record<string, unknown>,
+            data: { subscriptionStatus: 'active' },
           })
         }
       }
@@ -51,10 +51,10 @@ export async function POST(request: Request) {
         limit: 1,
       })
       if (users.docs.length > 0) {
-        await payload.update({
+        await (payload.update as Function)({
           collection: 'users',
           id: users.docs[0].id,
-          data: { subscriptionStatus: status } as Record<string, unknown>,
+          data: { subscriptionStatus: status },
         })
       }
       break
@@ -69,10 +69,10 @@ export async function POST(request: Request) {
         limit: 1,
       })
       if (users.docs.length > 0) {
-        await payload.update({
+        await (payload.update as Function)({
           collection: 'users',
           id: users.docs[0].id,
-          data: { subscriptionStatus: 'cancelled' } as Record<string, unknown>,
+          data: { subscriptionStatus: 'cancelled' },
         })
       }
       break

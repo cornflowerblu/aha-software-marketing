@@ -31,7 +31,7 @@ export default function InsightsSection() {
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <AnimateOnScroll>
           <div className="flex justify-between items-baseline mb-20 border-b border-outline-variant/30 pb-8">
-            <h2 className="font-headline text-5xl font-medium text-on-background tracking-tight">
+            <h2 className="font-headline text-5xl font-medium text-on-background tracking-tight italic">
               Technical Insights
             </h2>
             <Link

@@ -15,11 +15,13 @@ interface RegistrationFormProps {
 }
 
 export default function RegistrationForm({
+  eventSlug,
   eventTitle,
   registrationDeadline,
   calendarLink,
 }: RegistrationFormProps) {
   const [submitted, setSubmitted] = useState(false)
+  const [error, setError] = useState('')
 
   const deadlineStr = registrationDeadline
     ? new Intl.DateTimeFormat('en-US', {
@@ -71,22 +73,52 @@ export default function RegistrationForm({
 
       <form
         className="space-y-6"
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault()
-          setSubmitted(true)
+          setError('')
+          const form = new FormData(e.currentTarget)
+          const data = {
+            eventSlug,
+            name: form.get('name') as string,
+            email: form.get('email') as string,
+            organization: form.get('organization') as string,
+          }
+
+          try {
+            const res = await fetch('/api/register-event', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(data),
+            })
+            if (res.ok) {
+              setSubmitted(true)
+            } else {
+              const result = await res.json().catch(() => null)
+              setError(result?.error || 'Registration failed. Please try again.')
+            }
+          } catch {
+            setError('Something went wrong. Please try again.')
+          }
         }}
       >
-        <Input label="Full Name" placeholder="Julianne Smith" type="text" />
+        <Input label="Full Name" name="name" placeholder="Julianne Smith" type="text" required />
         <Input
           label="Professional Email"
+          name="email"
           placeholder="j.smith@company.com"
           type="email"
+          required
         />
         <Input
           label="Organization"
+          name="organization"
           placeholder="Global Media Group"
           type="text"
         />
+
+        {error && (
+          <p className="text-error text-sm font-body">{error}</p>
+        )}
 
         <div className="pt-4 flex flex-col gap-4">
           <Button

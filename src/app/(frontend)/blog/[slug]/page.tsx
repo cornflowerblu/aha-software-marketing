@@ -7,6 +7,7 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import ReadingProgressBar from '@/components/blog/ReadingProgressBar'
 import Badge from '@/components/ui/Badge'
+import { generateArticleSchema } from '@/lib/seo'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -113,15 +114,20 @@ export default async function BlogPostPage({ params }: Props) {
       : undefined
   const readTime = estimateReadTime(post.content)
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.excerpt,
-    datePublished: post.publishedAt,
-    ...(authorName ? { author: { '@type': 'Person', name: authorName } } : {}),
-    ...(imageUrl ? { image: imageUrl } : {}),
-  }
+  const jsonLd = generateArticleSchema({
+    title: post.title,
+    slug: post.slug,
+    excerpt: post.excerpt,
+    publishedAt: post.publishedAt || '',
+    ...(authorName ? { author: { name: authorName } } : {}),
+    ...(imageUrl ? { featuredImage: { url: imageUrl, alt: imageAlt } } : {}),
+    ...(Array.isArray(post.categories) && post.categories.length > 0
+      ? {
+          categories: post.categories
+            .filter((c): c is { title: string; slug: string } => typeof c === 'object')
+        }
+      : {}),
+  })
 
   return (
     <>

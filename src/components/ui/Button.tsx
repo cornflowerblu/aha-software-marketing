@@ -36,7 +36,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const classes = [
-    'font-label font-bold tracking-[0.2em] uppercase transition-all duration-200 inline-flex items-center justify-center gap-2',
+    'font-label font-bold tracking-[0.2em] uppercase transition-all duration-200 inline-flex items-center justify-center gap-2 rounded-md',
     variantStyles[variant],
     sizeStyles[size],
     className,

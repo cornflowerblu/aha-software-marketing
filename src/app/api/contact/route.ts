@@ -9,6 +9,14 @@ function getResend() {
   return new Resend(key)
 }
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+}
+
 export async function POST(request: Request) {
   let body: unknown
   try {
@@ -34,13 +42,13 @@ export async function POST(request: Request) {
         from: 'AHA Software <noreply@ahasw.com>',
         to: 'hello@ahasw.com',
         replyTo: email,
-        subject: `Contact form: ${name}${company ? ` (${company})` : ''}`,
+        subject: `Contact form: ${escapeHtml(name)}${company ? ` (${escapeHtml(company)})` : ''}`,
         html: `<h2>New contact form submission</h2>
-<p><strong>Name:</strong> ${name}</p>
-<p><strong>Email:</strong> ${email}</p>
-${company ? `<p><strong>Company:</strong> ${company}</p>` : ''}
+<p><strong>Name:</strong> ${escapeHtml(name)}</p>
+<p><strong>Email:</strong> ${escapeHtml(email)}</p>
+${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
 <p><strong>Message:</strong></p>
-<p>${message.replace(/\n/g, '<br>')}</p>`,
+<p>${escapeHtml(message).replace(/\n/g, '<br>')}</p>`,
       })
     } catch {
       // Continue even if email fails

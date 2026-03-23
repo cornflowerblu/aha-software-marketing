@@ -13,8 +13,8 @@ const footerSections = [
     title: 'Navigation',
     links: [
       { label: 'Editorial', href: '/blog' },
-      { label: 'Events', href: '/events' },
-      { label: 'Premium', href: '/premium' },
+      { label: 'Insights', href: '/blog' },
+      { label: 'Sitemap', href: '#' },
     ],
   },
   {
@@ -22,7 +22,7 @@ const footerSections = [
     links: [
       { label: 'Newsletter', href: '/contact' },
       { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms of Service', href: '#' },
+      { label: 'Security Architecture', href: '#', highlight: true },
     ],
   },
 ]
@@ -36,7 +36,7 @@ export function Footer() {
             AHA Software
           </div>
           <p className="font-body text-sm tracking-wide text-[--color-on-background]/60 leading-relaxed max-w-xs">
-            Architectural alignment for the modern enterprise. We build the systems that build the future.
+            Architectural alignment for the modern enterprise. We build the systems that build the future with precision structuralism.
           </p>
         </div>
         {footerSections.map((section) => (
@@ -49,7 +49,11 @@ export function Footer() {
                 <Link
                   key={link.label}
                   href={link.href}
-                  className="text-[--color-on-background] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all font-body text-sm"
+                  className={`hover:opacity-100 hover:translate-x-1 transition-all font-body text-sm uppercase ${
+                    (link as { highlight?: boolean }).highlight
+                      ? 'text-[--color-primary] font-bold opacity-100'
+                      : 'text-[--color-on-background] opacity-60'
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -60,7 +64,7 @@ export function Footer() {
       </div>
       <div className="px-6 md:px-12 pb-10 border-t border-[--color-outline-variant]/10 pt-8 max-w-[1440px] mx-auto">
         <p className="text-[--color-on-background]/40 font-label text-[10px] tracking-[0.2em] uppercase">
-          &copy; {new Date().getFullYear()} AHA Software, Inc. All rights reserved.
+          &copy; {new Date().getFullYear()} AHA Editorial Software. Designed for the Digital Curator. Precision Structuralism in Digital Engineering.
         </p>
       </div>
     </footer>

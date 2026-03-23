@@ -23,12 +23,12 @@ const stats = [
 
 export default function SpecKitSection() {
   return (
-    <section className="py-32 bg-primary overflow-hidden relative text-on-primary">
+    <section className="py-32 editorial-gradient overflow-hidden relative text-on-primary">
       <div className="absolute inset-0 carbon-texture" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          <AnimateOnScroll className="lg:col-span-6" animation="fade-up">
+          <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
             <span className="text-on-primary-container font-extrabold tracking-[0.3em] text-[10px] uppercase mb-8 block font-label">
               Proprietary Methodology
             </span>
@@ -55,7 +55,7 @@ export default function SpecKitSection() {
           </AnimateOnScroll>
 
           <AnimateOnScroll
-            className="lg:col-span-6 grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6"
             animation="slide-left"
             delay={200}
           >
