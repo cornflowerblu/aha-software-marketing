@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+
+<html class="light scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AHA Software | Master the Art of Radical Organizational Change</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&amp;family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ffdbce",
+              "on-tertiary": "#ffffff",
+              "primary-fixed-dim": "#80d5cb",
+              "secondary-container": "#c5e6e1",
+              "background": "#fff8f2",
+              "on-tertiary-fixed-variant": "#72361b",
+              "on-tertiary-fixed": "#370e00",
+              "on-primary-container": "#a3faef",
+              "surface-container-highest": "#e8e1db",
+              "on-error": "#ffffff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#bdc9c6",
+              "on-background": "#1e1b17",
+              "on-secondary-fixed-variant": "#2e4c48",
+              "surface-container-high": "#eee7e0",
+              "on-surface": "#1e1b17",
+              "outline": "#6e7977",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#80d5cb",
+              "secondary-fixed": "#c8e9e4",
+              "primary": "#005c55",
+              "surface-bright": "#fff8f2",
+              "surface-tint": "#006a63",
+              "on-secondary-container": "#4a6864",
+              "tertiary-fixed-dim": "#ffb598",
+              "primary-container": "#0f766e",
+              "on-tertiary-container": "#ffe5db",
+              "on-surface-variant": "#3e4947",
+              "surface-container-low": "#faf2eb",
+              "secondary": "#466460",
+              "inverse-on-surface": "#f7efe9",
+              "surface-container": "#f4ede6",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#33302c",
+              "on-secondary-fixed": "#00201d",
+              "on-primary-fixed": "#00201d",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "tertiary": "#7f4025",
+              "surface-variant": "#e8e1db",
+              "surface": "#fff8f2",
+              "secondary-fixed-dim": "#accdc8",
+              "tertiary-container": "#9c573a",
+              "surface-dim": "#e0d9d2",
+              "on-primary-fixed-variant": "#00504a",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#9cf2e8"
+            },
+            fontFamily: {
+              "headline": ["Fraunces", "serif"],
+              "body": ["DM Sans", "sans-serif"],
+              "label": ["DM Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .editorial-gradient {
+        background: linear-gradient(135deg, #005c55 0%, #0f766e 100%);
+      }
+      .blueprint-grid {
+        background-image: radial-gradient(circle, #bdc9c6 1px, transparent 1px);
+        background-size: 40px 40px;
+      }
+      .asymmetric-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-[#fff8f2]/80 dark:bg-[#1e1b17]/80 backdrop-blur-lg shadow-[0_20px_40px_rgba(30,27,23,0.05)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1440px] mx-auto">
+<div class="font-headline font-bold text-2xl text-[#1e1b17] dark:text-[#fff8f2] tracking-tighter">
+            AHA Software
+        </div>
+<div class="hidden md:flex items-center space-x-10">
+<a class="font-headline italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#">Services</a>
+<a class="font-headline italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#">Insights</a>
+<a class="font-headline italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#">Events</a>
+<a class="font-headline italic text-lg tracking-tight text-[#005c55] dark:text-[#0f766e] border-b-2 border-[#005c55] pb-1" href="#">Full Access</a>
+</div>
+<div class="flex items-center space-x-6">
+<button class="font-body text-sm uppercase tracking-widest text-on-surface opacity-70 hover:opacity-100 transition-all">Login</button>
+<button class="editorial-gradient text-on-primary px-6 py-2.5 rounded-md font-bold text-sm tracking-wide shadow-lg hover:scale-105 transition-transform">Work Together</button>
+</div>
+</div>
+</nav>
+<main class="pt-32">
+<!-- Hero / Value Prop Section -->
+<section class="max-w-[1440px] mx-auto px-12 mb-32 relative">
+<div class="absolute inset-0 blueprint-grid opacity-10 pointer-events-none"></div>
+<div class="asymmetric-grid gap-12 items-center relative z-10">
+<div class="col-span-12 lg:col-span-7">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-tertiary mb-6 block">Strategic Alignment Hub</span>
+<h1 class="font-headline text-6xl md:text-8xl font-bold leading-[0.9] tracking-tighter text-on-background mb-10 italic">
+                    Master the Art <span class="text-primary-container italic">of</span> Radical Organizational Change.
+                </h1>
+<p class="font-body text-xl text-on-surface-variant max-w-xl leading-relaxed mb-12 opacity-90">
+                    Gain exclusive access to a library of instructional videos, event recordings, speaking engagements, and premium posts that deep-dive into the GitHub Spec Kit methodology.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="editorial-gradient text-on-primary px-10 py-5 rounded-md font-bold text-base transition-all hover:shadow-2xl hover:scale-105">View Full Access Plans</button>
+<button class="bg-surface-container-high text-on-surface px-10 py-5 rounded-md font-bold text-base transition-all hover:bg-surface-container-highest">Our Methodology</button>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 relative">
+<div class="aspect-[4/5] bg-surface-container-low overflow-hidden rounded-lg shadow-2xl relative">
+<img alt="Strategic Visual" class="w-full h-full object-cover grayscale mix-blend-multiply opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXLP3HPPccsT-rbw-cvdtqpo1rjQ5sPxrsurGU309-NzDXSrFTMH4IYICy8pJJaLjxdzkxYp5MNGWECvBom7kHNB2Np7hianJaJtZWe8gh5_zPCukdKA5mFa3uLFyWhQn0N5bxdT-ofEg7hNLxC6IsXICcn7d47_Zej3vEcdXHdR-ruwWI4_NMRRXh_6ZN0lvkdsho-gwGACpr1I69XRs9WPyMN7FKTbFDGzexhiPF_nkUKU0899J0GKEnfOlNtVtGswZO-F7WXJlA"/>
+<div class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent"></div>
+</div>
+<div class="absolute -bottom-6 -left-6 bg-surface p-8 shadow-2xl border-l-4 border-primary max-w-xs z-20 hidden md:block">
+<p class="font-headline text-2xl italic text-primary leading-tight">"The architect must be the builder."</p>
+<p class="font-label text-xs uppercase tracking-widest mt-4 opacity-60">— Principal, AHA Software</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Knowledge Base section -->
+<section class="bg-surface-container-low py-32 mb-32">
+<div class="max-w-[1440px] mx-auto px-12">
+<div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+<div class="max-w-2xl">
+<h2 class="font-headline text-5xl font-bold tracking-tight mb-6">The Knowledge Base</h2>
+<p class="font-body text-lg text-on-surface-variant">A glimpse into the deep-dive instructional content and strategic recordings shared exclusively with our community.</p>
+</div>
+<div class="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-primary font-bold">
+                    Section 02 // Library <span class="material-symbols-outlined ml-2">arrow_forward</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Video Tutorial -->
+<div class="group bg-surface-container-lowest overflow-hidden rounded-xl transition-all hover:translate-y-[-8px] hover:shadow-[0_40px_80px_rgba(0,92,85,0.08)]">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img alt="Implementing GitHub Spec Kit" class="w-full h-full object-cover blur-sm opacity-60 scale-110 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBmRcAIHPHmh_Wq0-oLhGV17Ocg8PjxSq2t3OCha6G70KgjQW71GC_ax8ePeWmjSsnfxjwsJz408-QJH9DGtmKUv9xvi-ecFeLz3kNDJtvOKmNIaLuKE2fjZx2maCKun2u5UpCM9Eu_NvWUL6l-NiFntOx8JuMOHuOJMSqYBCea9HmVg48DJXVLPol2HzinfrZqs81yiiuM_ESRs8j_mHN0ajnFUm9Ist_A1o0f386IRWu0F1mTF12oCpUCFDA64qgYdTBC2DZRfgvD"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-5xl" data-weight="fill">play_circle</span>
+</div>
+</div>
+<div class="p-10">
+<span class="font-label text-xs uppercase tracking-widest text-tertiary mb-3 block">Video Tutorial</span>
+<h3 class="font-headline text-2xl font-bold mb-4 text-on-background">Implementing the GitHub Spec Kit for Product Teams</h3>
+<p class="text-on-surface-variant mb-6 line-clamp-2">A step-by-step guide to bridging the gap between product requirements and automated testing workflows...</p>
+<div class="flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+<span>Watch Module</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Speaking Engagement -->
+<div class="group bg-surface-container-lowest overflow-hidden rounded-xl transition-all hover:translate-y-[-8px] hover:shadow-[0_40px_80px_rgba(0,92,85,0.08)]">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img alt="Radical Change at Scale" class="w-full h-full object-cover blur-sm opacity-60 scale-110 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAAUAPddo1OyahgnP3Qa7XbkZGvCvUyxBgF88UOfmrTjEqVdHBZNZSyEsykQucX8aI9zdBeeCp4Tgdxwg55LIcDA8oTiQJTsFNfRcoJQnlzdA4NAH75osopd35esbJfzGL-xPHje8G5ifYR0n-WGmYS_8b-FfUmvFMI8Jhh5vauqMrhdXIwok9sVRV2qCxRZ411cb7Mm8PRag320o1mksJzoj1fIsdKwUN7aVpfnA0FligfrzQHAYQwWv5vgFzmqbS2eOqDYcNO-Ut"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-5xl" data-weight="fill">podcasts</span>
+</div>
+</div>
+<div class="p-10">
+<span class="font-label text-xs uppercase tracking-widest text-tertiary mb-3 block">Event Recording</span>
+<h3 class="font-headline text-2xl font-bold mb-4 text-on-background">Radical Change at Scale - DevConf 2024</h3>
+<p class="text-on-surface-variant mb-6 line-clamp-2">Keynote presentation on transforming enterprise engineering culture through structural methodology...</p>
+<div class="flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+<span>Full Session</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+<!-- Premium Blog Post -->
+<div class="group bg-surface-container-lowest overflow-hidden rounded-xl transition-all hover:translate-y-[-8px] hover:shadow-[0_40px_80px_rgba(0,92,85,0.08)]">
+<div class="aspect-video relative overflow-hidden bg-surface-container-high">
+<img alt="Eliminating Rework" class="w-full h-full object-cover blur-sm opacity-60 scale-110 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANRmhMOOoSf9tVMmx6yq3kwHuQd23gVig7BkNz8hoEAxnv2M0e77EID0LsrCOFnCdV3l_GMtjuZx9VLS0NXUjG4Zab6aHYuGPVff5mLx2xjmXb3tf1vYZwItatp4k5NI_tNvuK36EgUGn011-FY47T3IcvHFiBxMs2BjFuf5WcGjx5mLG9MhIAFxUmpZMkbgQA0ubym6C5UejZylYHEF5xh-nuWkf0w2SZZwEhnRFr7BYDxJ7MD-Tlnyqyxgfb-73tuJbXRIm3Nb-_"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-5xl" data-weight="fill">article</span>
+</div>
+</div>
+<div class="p-10">
+<span class="font-label text-xs uppercase tracking-widest text-tertiary mb-3 block">Strategic Insight</span>
+<h3 class="font-headline text-2xl font-bold mb-4 text-on-background">Eliminating Rework: The DevOps Perspective</h3>
+<p class="text-on-surface-variant mb-6 line-clamp-2">How automated governance in your CI/CD pipeline ensures architectural alignment from day one...</p>
+<div class="flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest">
+<span>Read Article</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Pricing Cards -->
+<section class="max-w-[1440px] mx-auto px-12 mb-32">
+<div class="text-center mb-20">
+<h2 class="font-headline text-5xl font-bold mb-6 italic">Choose your level of access.</h2>
+<p class="font-body text-on-surface-variant max-w-xl mx-auto">Master the methodologies that drive organizational engineering rigor.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+<!-- Community Tier -->
+<div class="bg-surface-container-lowest p-12 flex flex-col items-start border border-outline-variant/20 rounded-xl hover:shadow-xl transition-all">
+<span class="font-label text-xs uppercase tracking-widest text-outline mb-4 font-bold">Standard</span>
+<h3 class="font-headline text-4xl font-bold mb-2">Community</h3>
+<div class="flex items-baseline gap-1 mb-10">
+<span class="text-4xl font-bold font-headline">$0</span>
+<span class="text-on-surface-variant opacity-60">/ forever</span>
+</div>
+<ul class="space-y-4 mb-12 flex-grow font-body">
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check</span>
+<span>Monthly Strategy Newsletter</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check</span>
+<span>Public Case Studies &amp; Frameworks</span>
+</li>
+<li class="flex items-center gap-3 text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-xl">check</span>
+<span>Community Discord Access</span>
+</li>
+</ul>
+<button class="w-full py-4 border-2 border-primary text-primary font-bold rounded-md hover:bg-primary hover:text-on-primary transition-all">Join the Community</button>
+</div>
+<!-- Full Access Tier -->
+<div class="editorial-gradient p-12 text-on-primary flex flex-col items-start relative rounded-xl shadow-[0_40px_80px_rgba(0,92,85,0.15)] overflow-hidden">
+<div class="absolute top-0 right-0 bg-tertiary text-on-tertiary px-6 py-2 text-xs font-bold uppercase tracking-widest">Most Coveted</div>
+<span class="font-label text-xs uppercase tracking-widest text-white/60 mb-4 font-bold">Strategic Partnership</span>
+<h3 class="font-headline text-4xl font-bold mb-2">Full Access</h3>
+<div class="flex items-baseline gap-1 mb-10">
+<span class="text-4xl font-bold font-headline">$49</span>
+<span class="text-white/60">/ month</span>
+</div>
+<ul class="space-y-4 mb-12 flex-grow font-body">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-xl" data-weight="fill">verified</span>
+<span>Instructional Video Library</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-xl" data-weight="fill">verified</span>
+<span>All Speaking &amp; Event Recordings</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-xl" data-weight="fill">verified</span>
+<span>Premium Blog Technical Deep-Dives</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-secondary-container text-xl" data-weight="fill">verified</span>
+<span>Exclusive Q&amp;A with Senior Consultants</span>
+</li>
+</ul>
+<button class="w-full py-4 bg-tertiary text-on-tertiary font-bold rounded-md hover:opacity-90 transition-all shadow-lg">Upgrade to Full Access</button>
+</div>
+</div>
+</section>
+<!-- Archive Section -->
+<section class="max-w-[1440px] mx-auto px-12 mb-32">
+<div class="flex items-center gap-4 mb-12">
+<div class="h-[1px] bg-outline-variant flex-grow opacity-30"></div>
+<h2 class="font-headline text-3xl italic px-4 font-bold">From the Archive</h2>
+<div class="h-[1px] bg-outline-variant flex-grow opacity-30"></div>
+</div>
+<div class="asymmetric-grid gap-12">
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low p-10 rounded-xl">
+<h3 class="font-headline text-3xl font-bold mb-6">The Curator Series</h3>
+<p class="text-on-surface-variant font-body leading-relaxed mb-8">Access our legacy of symposiums and unedited workshop sessions focused on the architecture of modern enterprise software.</p>
+<div class="flex items-center gap-4">
+<div class="flex -space-x-4">
+<div class="w-12 h-12 rounded-full border-2 border-background bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Expert" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWQ6zdL6dqk1pKh99CZx2PS-eSM7nMcDQLjRBXhzn7NRsoOzCcAUGExJSf54QxdlKZXgJrCEhbd7cPkMe51hxmXNPG08e2sZE5wUowYScaarTxdNeVdHgWwxrohN55qJpuQS1QadMwFzThSdLq-dD9cNWajXGF5lPF38J30bTRvSqULICykW0vdFvn0MWOEmKeOmQn6QM9mTGewsuC4wriDQ_G-OdbRQNKV5zhNR2EMISVwghgdkDJtnjeaWgpWCpfvVkQolT4D3gI"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-background bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Expert" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA9pNFV35-mN1dfnRzaaNqTJOPOumoUyVlZLDs6X3UVLQguU1VQhoc_X5fmX1K6qdXLmx_cnO53R9m_2YbF-GgSr-Mm7J7I0-Bjbwq9_s-riaqR-TNQpzftIliA_zN6QNpEhY3asAxm__9VmdWOn_tkzP0NQXUeTgfMqsRSEN9g-v7aTk4fpqxuogNpM7aphmEv7XjrAOj8tJNOYAuiqPlNJ5yFY351J_GaALJNRwONMRhsx0s_4oQULNH_Fz4tsWE6aPp9TErFfZN1"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-background bg-secondary-container flex items-center justify-center overflow-hidden">
+<img alt="Expert" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyQFfD9aNxm0jlp_SdNc3ZCaqI3N3McpJXqzaQf66xkuDkJWq0Uwbq0fj3_lLsV8157-Yliqg0mY3mC6eMzpQf0qg_07hOMzd2kwbokvNojb3B-h400wi_lPIuI__qSfRb8SmKKwgsY6hqG8XGwkNTp0jKfu3U9wtneL9sN-t8v9UY2T-Qwj2uGvmIUjDEwIgJTq6oDTZDRfeVmYL_3E5P6YeRhV9aJi-RcOOI-zMOX9Xs2E42PphAkQmiKCZ7kW5F_NEEkOriRLqv"/>
+</div>
+</div>
+<span class="text-xs font-label uppercase tracking-widest text-outline font-bold">25+ Expert Sessions</span>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Recording 1 -->
+<div class="group cursor-pointer">
+<div class="aspect-video bg-surface-container relative mb-4 overflow-hidden rounded-lg">
+<img alt="Recording Preview" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAAUAPddo1OyahgnP3Qa7XbkZGvCvUyxBgF88UOfmrTjEqVdHBZNZSyEsykQucX8aI9zdBeeCp4Tgdxwg55LIcDA8oTiQJTsFNfRcoJQnlzdA4NAH75osopd35esbJfzGL-xPHje8G5ifYR0n-WGmYS_8b-FfUmvFMI8Jhh5vauqMrhdXIwok9sVRV2qCxRZ411cb7Mm8PRag320o1mksJzoj1fIsdKwUN7aVpfnA0FligfrzQHAYQwWv5vgFzmqbS2eOqDYcNO-Ut"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-surface text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-4 left-4 bg-background px-3 py-1 text-[10px] font-bold uppercase tracking-wider">58:12</div>
+</div>
+<h4 class="font-headline text-xl font-bold group-hover:text-primary transition-colors">Strategic Alignment Workshop 2023</h4>
+<p class="text-sm text-on-surface-variant mt-1 italic font-body">Full Access Archive • Nov 2023</p>
+</div>
+<!-- Recording 2 -->
+<div class="group cursor-pointer">
+<div class="aspect-video bg-surface-container relative mb-4 overflow-hidden rounded-lg">
+<img alt="Recording Preview" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCke3Sk8SoZhutKiO7oj3-kqWm5FKs3jtuEvYXcbqkCdFE8XKvtuUeTvVFg9RtVaZsuQF_FxvgAMgeIW2HzHgOaFD1Ac-79RtuK1IcvM1GEoFwhpc_5JIWsqt0uWQL4Z7e4IYRRtx3l_FiTjNXp4tPS5aNoywdf_1wgVO5C-2f6Xd4iI6JydrjA8TmvPBqCmVa8B-PH90upwjZi9yH87oB0TcONcU2x8KwZcz7jvShlRqaQQMGZ9FdHaQKQ4WVAGc4FhOb-kzEFythx"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-surface text-6xl">play_circle</span>
+</div>
+<div class="absolute bottom-4 left-4 bg-background px-3 py-1 text-[10px] font-bold uppercase tracking-wider">42:05</div>
+</div>
+<h4 class="font-headline text-xl font-bold group-hover:text-primary transition-colors">Masterclass: Spec-Driven Development</h4>
+<p class="text-sm text-on-surface-variant mt-1 italic font-body">Full Access Archive • Jan 2024</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#f5ede4] dark:bg-[#151310] w-full mt-20">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-[1440px] mx-auto">
+<div class="col-span-1 md:col-span-1">
+<div class="font-headline text-3xl text-[#1e1b17] dark:text-[#fff8f2] mb-6 font-bold tracking-tighter">AHA Software</div>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                Architectural alignment for the modern enterprise. We build the systems that build the future with consulting and educational precision.
+            </p>
+</div>
+<div class="space-y-4">
+<h4 class="font-label text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e]">Network</h4>
+<nav class="flex flex-col space-y-3 font-body">
+<a class="text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 text-sm" href="#">Sitemap</a>
+<a class="text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 text-sm" href="#">Newsletter</a>
+<a class="text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 text-sm" href="#">Contact</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-label text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e]">Legal</h4>
+<nav class="flex flex-col space-y-3 font-body">
+<a class="text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 text-sm" href="#">Privacy Policy</a>
+<a class="text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 text-sm" href="#">Terms of Service</a>
+</nav>
+</div>
+<div class="space-y-4">
+<h4 class="font-label text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e]">Statement</h4>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                © 2024 AHA Software. Designed for the Leaders of Change.
+            </p>
+</div>
+</div>
+<div class="px-12 py-8 border-t border-outline-variant/10 max-w-[1440px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+<span class="font-body text-xs text-on-surface opacity-50">© 2024 AHA Software Consulting.</span>
+<div class="flex gap-6">
+<span class="material-symbols-outlined text-on-surface opacity-40 hover:opacity-100 cursor-pointer transition-opacity">public</span>
+<span class="material-symbols-outlined text-on-surface opacity-40 hover:opacity-100 cursor-pointer transition-opacity">alternate_email</span>
+<span class="material-symbols-outlined text-on-surface opacity-40 hover:opacity-100 cursor-pointer transition-opacity">rss_feed</span>
+</div>
+</div>
+</footer>
+</body></html>

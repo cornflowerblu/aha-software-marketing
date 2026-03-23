@@ -1,10 +1,14 @@
 # dependencies (bun install)
 node_modules
 
-# output
+# Next.js
+.next
 out
 dist
 *.tgz
+
+# Payload
+src/app/(payload)/admin/importMap.js
 
 # code coverage
 coverage

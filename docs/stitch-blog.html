@@ -1,0 +1,351 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,600;0,700;1,400&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ffdbce",
+              "on-tertiary": "#ffffff",
+              "primary-fixed-dim": "#80d5cb",
+              "secondary-container": "#c5e6e1",
+              "background": "#fff8f2",
+              "on-tertiary-fixed-variant": "#72361b",
+              "on-tertiary-fixed": "#370e00",
+              "on-primary-container": "#a3faef",
+              "surface-container-highest": "#e8e1db",
+              "on-error": "#ffffff",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#bdc9c6",
+              "on-background": "#1e1b17",
+              "on-secondary-fixed-variant": "#2e4c48",
+              "surface-container-high": "#eee7e0",
+              "on-surface": "#1e1b17",
+              "outline": "#6e7977",
+              "error-container": "#ffdad6",
+              "inverse-primary": "#80d5cb",
+              "secondary-fixed": "#c8e9e4",
+              "primary": "#005c55",
+              "surface-bright": "#fff8f2",
+              "surface-tint": "#006a63",
+              "on-secondary-container": "#4a6864",
+              "tertiary-fixed-dim": "#ffb598",
+              "primary-container": "#0f766e",
+              "on-tertiary-container": "#ffe5db",
+              "on-surface-variant": "#3e4947",
+              "surface-container-low": "#faf2eb",
+              "secondary": "#466460",
+              "inverse-on-surface": "#f7efe9",
+              "surface-container": "#f4ede6",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#33302c",
+              "on-secondary-fixed": "#00201d",
+              "on-primary-fixed": "#00201d",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "tertiary": "#7f4025",
+              "surface-variant": "#e8e1db",
+              "surface": "#fff8f2",
+              "secondary-fixed-dim": "#accdc8",
+              "tertiary-container": "#9c573a",
+              "surface-dim": "#e0d9d2",
+              "on-primary-fixed-variant": "#00504a",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#9cf2e8"
+            },
+            fontFamily: {
+              "headline": ["Newsreader", "serif"],
+              "body": ["Manrope", "sans-serif"],
+              "label": ["Manrope", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #fff8f2;
+            color: #1e1b17;
+            font-family: 'Manrope', sans-serif;
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px rgba(30, 27, 23, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background">
+<!-- TopNavBar (JSON Managed) -->
+<nav class="fixed top-0 w-full z-50 bg-[#fff8f2]/80 dark:bg-[#1e1b17]/80 backdrop-blur-lg shadow-[0_20px_40px_rgba(30,27,23,0.05)]">
+<div class="flex justify-between items-center px-12 py-6 max-w-[1440px] mx-auto">
+<div class="font-['Newsreader'] font-bold text-2xl text-[#1e1b17] dark:text-[#fff8f2] tracking-tighter" style="">
+                AHA Editorial
+            </div>
+<div class="hidden md:flex gap-8 items-center">
+<a class="font-['Newsreader'] italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#" style="">Services</a>
+<a class="font-['Newsreader'] italic text-lg tracking-tight text-[#005c55] dark:text-[#0f766e] border-b-2 border-[#005c55] pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#" style="">Editorial</a>
+<a class="font-['Newsreader'] italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#" style="">Events</a>
+<a class="font-['Newsreader'] italic text-lg tracking-tight text-[#1e1b17] dark:text-[#fff8f2] opacity-80 pb-1 hover:opacity-100 hover:text-[#0f766e] transition-all duration-300" href="#" style="">Premium</a>
+</div>
+<div class="flex gap-4 items-center">
+<button class="text-[#005c55] dark:text-[#0f766e] font-label font-bold text-sm tracking-wide uppercase px-4 py-2 hover:opacity-70 transition-all" style="">Login</button>
+<button class="bg-[#005c55] text-white px-6 py-2.5 rounded-md font-label font-bold text-sm tracking-wide uppercase scale-95 transition-transform duration-200 hover:scale-100" style="">Subscribe</button>
+</div>
+</div>
+<!-- Progress Bar (Simulated for Editorial context) -->
+<div class="w-full h-1 bg-surface-container-high overflow-hidden">
+<div class="w-[35%] h-full bg-primary transition-all duration-1000"></div>
+</div>
+</nav>
+<main class="pt-32 pb-20 px-6 md:px-12 max-w-[1440px] mx-auto">
+<!-- Hero Section / Editorial Header -->
+<header class="mb-20 text-center max-w-4xl mx-auto">
+<span class="font-label text-xs tracking-[0.2em] uppercase text-tertiary mb-6 block" style="">The Digital Curator</span>
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-8 leading-[1.1]" style="">
+                Perspectives on the <span class="italic font-normal" style="">Modern Workforce</span>.
+            </h1>
+<p class="font-body text-xl text-on-surface-variant leading-relaxed opacity-90" style="">
+                Exploring the intersection of technology, strategy, and premium editorial craftsmanship. Dedicated to those who curate experiences.
+            </p>
+</header>
+<!-- Category Filters -->
+<div class="flex flex-wrap justify-center gap-3 mb-16">
+<button class="px-6 py-2 rounded-full bg-primary text-on-primary font-label text-sm font-bold tracking-wide" style="">All Insights</button>
+<button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label text-sm font-medium hover:bg-surface-container-highest transition-colors" style="">Strategy</button>
+<button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label text-sm font-medium hover:bg-surface-container-highest transition-colors" style="">Digital Craft</button>
+<button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label text-sm font-medium hover:bg-surface-container-highest transition-colors" style="">Premium</button>
+<button class="px-6 py-2 rounded-full bg-secondary-container text-on-secondary-container font-label text-sm font-medium hover:bg-surface-container-highest transition-colors" style="">Interviews</button>
+</div>
+<!-- Featured Story (Asymmetric Layout) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-28 items-center bg-surface-container-low rounded-xl p-8 md:p-12 overflow-hidden">
+<div class="lg:col-span-7 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-video object-cover transition-transform duration-700 group-hover:scale-105" data-alt="overhead view of a minimalist workspace with a vintage typewriter, a modern tablet, and a cup of coffee on a warm wood surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDNQy3b9uNIK4wmE2YWhC6NCGU2701g1dc9OQJlSwm8HkNNEu61koaZVbQUZ-XI0-l2pZ4beJqpbmD8RmDh_1Sz6thnCr5p4UFFexBaaKOetTaKq7RMnqSPmhaq1pa0DInwsugdS1QuHJ0uoAIsslSU9uUxqRXzgB6jB6yQ7-AM3cx77W9lm33nKaN4hbmC4hZCappXFOm1voHYtZZfSsPt2bgSbez0o2DAC-IhuC5SrtnWEis9essCAMq37XIJ49T-_qRRWzaqfkS" style="">
+</div>
+<div class="lg:col-span-5">
+<div class="flex items-center gap-3 mb-6">
+<span class="px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-xs" data-weight="fill" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                        Premium
+                    </span>
+<span class="text-xs font-label text-on-surface-variant/60 uppercase tracking-widest" style="">12 Min Read</span>
+</div>
+<h2 class="font-headline text-4xl font-bold text-on-surface mb-6 leading-tight" style="">
+                    The Resurgence of Long-Form: Why Depth is the New Currency.
+                </h2>
+<p class="font-body text-lg text-on-surface-variant mb-8 leading-relaxed" style="">
+                    In an era of fleeting content, readers are gravitating back toward substance. We analyze the metrics behind high-engagement editorial strategies.
+                </p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="portrait of a professional male editor with spectacles and a thoughtful expression in a library setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXJ7hSisb_9fIfs3CzC8hERYsvVe8KajC1adAn2RRuk90lwoTxFa9x-Eah21LegqTSXS_gQcxDdGqKWZBWnuOfq9DBcxVRRQwCeoxlizr62NgSEpnwo6JT8R5qfDXOf_76nfVknIdlGCT3Oc8oP7946UAmWtPxAlG7VX2gAnBDTqgnn04JATxIHZf9s7IaRGGTbYDciTV5gPOROLkVBidajiH4u9x6IUAjCLop9xXLGPHZ8uM4CewxtkFLS4uRd53tv8lv5Vu-dx5M" style="">
+</div>
+<div>
+<p class="font-body text-sm font-bold text-on-surface" style="">Julian Sterling</p>
+<p class="font-body text-xs text-on-surface-variant/70" style="">April 14, 2024</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Post Grid (Editorial Style) -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
+<!-- Article 1 -->
+<article class="flex flex-col">
+<div class="relative mb-6 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="abstract digital art showing flowing lines of data in shades of deep teal and warm copper" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2YW1pEUQFFzQzOwr3OO5Dr7PvwzOLJYycUnqhdaAvojuh1wR-mc7OKolyJeGw9iaVv0Cax-XJf2M0x6SgJzkT6j8ipVo9bTkNFlVCNtIgq_izP9lYbxJWHSqjxL6EVHJTY6IXxDl2FoBKYnYm8Cj8N2zYlrR3VZkqXzxalHc8n0C1sr5Cftv9DQVwy4GcV4VKcIpucslpcMyhts4Ibwa6zxGCdL4Wy66mtKJ7W6jnJQAWVSip_RZnWA9BAGbB4Pj4n6PvpyPJnW24" style="">
+<div class="absolute top-4 left-4">
+<span class="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary" style="">Strategy</span>
+</div>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline text-2xl font-bold mb-4 hover:text-primary transition-colors cursor-pointer" style="">Semantic Systems in Modern UI Design</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6" style="">
+                        How taxonomy and structure influence user trust in complex software environments.
+                    </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/15 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional woman in her late 30s with neutral attire and a calm smile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBS29zJ9avKyi7IOcVq9GdvTeIfogXOHZ7BS9vQg1xEw4TzLCH_8EdjUvE2J8wSImV5CPwHy8nXQTK029fY6bppB0IMD5Aw2ka5DHqagjuDkeEp0M17IOegcQuJbfnymu1N6hZW8UIzCswSGdrg0jOVGP54xNr959w2eVcRiHFwONfaaVsC4Aipu1q8iobRzEO6PfJZ-obR3bHhP-th1Ii8RPNwJXhfzECrYmK1LKs6lMeDd7jYXXRK6vqn9SkkKNuu_tZzakCnZuf" style="">
+</div>
+<span class="text-xs font-bold" style="">Elena Vance</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant/60 uppercase" style="">Mar 28</span>
+</div>
+</article>
+<!-- Article 2 (Premium) -->
+<article class="flex flex-col">
+<div class="relative mb-6 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="interior of a modern architecturally significant library with dramatic lighting and tall bookshelves" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC2WzyN8tDbr2SL9HTGd8PcQDxgV1EnxBxy5-reNRXiBFrr3uLpWluD88shf5KpbxxPQdY7vrWvNyhHc1TWTezdBrzLnpYa6zrjgz1Uo8k6-wIPzlciMalstl0W5aHzMmAjXS9VdbN0blRr0tfriCH0ucWPV1VDGIkec2TXbI45Yk3Nh3Ppgps7q2mzS0V5EiVZ8Ony-TIptAF4qbCmppdgWFlN-R1ErNfRn_bc7dm3v44IzBu8SGRNlX4-tP1cJcDpnDxoZ-mu-3cb" style="">
+<div class="absolute top-4 left-4 flex gap-2">
+<span class="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary" style="">Insights</span>
+<span class="bg-tertiary px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-white flex items-center gap-1" style="">
+<span class="material-symbols-outlined text-[10px]" style="font-variation-settings: &quot;FILL&quot; 1;">star</span>
+                            Premium
+                        </span>
+</div>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline text-2xl font-bold mb-4 hover:text-primary transition-colors cursor-pointer" style="">The Art of the Digital Monograph</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6" style="">
+                        Translating traditional publishing aesthetics into highly functional SaaS marketing engines.
+                    </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/15 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="headshot of a man with short dark hair and a professional black blazer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAq_MS0o4rVCWsNJad16oe8lINEmdrhTzpNiEIkTxqZBO9Vy-7T8gjPtsDkxMzWiYWjuxAbK0zYeMfFvtmSnXalANSTffnBrrgJBAXMRB1mzN6a84U-buERGMy7Jfd8fEzaRq8yJVFn7nOr-v27zKzKcSKWcQE5R9cxVBooDv17Hs_NBAYNGnRcnN1nJXKIMN17SqRHAfJ7kRvF2j36BpM3DAx8Nu2VNPdhy4OPDYf_gq5u_CCWSPsnC7Cqm-e6f3UYfnMjL14pk_Ic" style="">
+</div>
+<span class="text-xs font-bold" style="">Marcus Thorne</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant/60 uppercase" style="">Mar 22</span>
+</div>
+</article>
+<!-- Article 3 -->
+<article class="flex flex-col">
+<div class="relative mb-6 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="hands holding a fountain pen over a leather-bound notebook with elegant cursive writing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC269XeSKsPMZlfsmsC7X_YpL7VGXLpRNTlxC0wQnEElI11lv7Y3ye6IuggmwV9sBOyulygQrxJ6ELQqsVMmnYkNPlxOkfB99psav2XmBgE7cYD1un1l8yO2ty25UP6YPzj9H5a_iq741fRLSnoSW5BauQ0yeMyt3LAdK-JXspuFAfYghIoLCwnkjTFDEg4UgW4wzVOuwVPA_IBdosLcb-p_3UW3m9N0SvAwaf_j9qCcrBTu9OFDg7pUgp84oplHlBaIkybF2tZ4cFS" style="">
+<div class="absolute top-4 left-4">
+<span class="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary" style="">Digital Craft</span>
+</div>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline text-2xl font-bold mb-4 hover:text-primary transition-colors cursor-pointer" style="">Typography as Interface</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6" style="">
+                        Why the choice of serif versus sans-serif defines the subconscious authority of your brand.
+                    </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/15 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="close up of a woman with curly hair and creative studio in the background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3s_aRynadLhpdRMmffoV2tcDgtvqZ2hzhdWo6H394Bk8RxoL3ORCiQd6nnlPiRysllN7YWi5qUUR6B4dc7U_SnM_huZElOB3ida0JZbw52hPlsIo_xQXo5LrSSN_K2leiKAdjjEMH-UDZmxsm6WNlGiyQHG8qjXB8re4Ovfbv0mZuf97nEBa0qOz2Om6W7Q2R2Q9xampRd7V4c32qnSFOk-BmGVydraeII6S3mCwv2Gd9VP20cg86OwYUizy5Zd1HxJofxbNaK-Uu" style="">
+</div>
+<span class="text-xs font-bold" style="">Sarah Jenkins</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant/60 uppercase" style="">Mar 15</span>
+</div>
+</article>
+<!-- Article 4 -->
+<article class="flex flex-col">
+<div class="relative mb-6 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="macro photo of mechanical clock gears representing complex systems and strategy" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtMEaUJYQ6N3JM61iWepvNHKKKItIYEuywMiO6jWr4vhc1nCy3Jql92pokZI0XC_jHHExgSNml3MbL-NoJQYNrQegE00PrAnA2yzL-NYZD5je4a6joWek6-KL8CRtxDBtUtTPARuM7fGw1F8QjQnUgrD4O9cIjhVkWai4RS6ZUXuoiTJ5ij9LJzz3VkoRMGRcwl_bhWHcU3AtjObtIUOaL8Ibf9iAN7-YbyfV67Vr5W1kndUKFLl7Nw_PIiKKbWSX1m2JWfj8ALT0N" style="">
+<div class="absolute top-4 left-4">
+<span class="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary" style="">Analysis</span>
+</div>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline text-2xl font-bold mb-4 hover:text-primary transition-colors cursor-pointer" style="">The ROI of Editorial Design</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6" style="">
+                        Measuring the intangible: How beauty and whitespace drive conversion in high-ticket software.
+                    </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/15 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="portrait of Julian Sterling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClTYcllJ8GUJ18i9noaK1uJzxp2Nxw2yYOn331slw3kEGYLfE7fWaN6qbNWjtG8nJHqcphXT_jcDMsLW-12v9KKUfDLbYGh4ejUQmzd4SnH6Ibe9oaMbcekPB8jEcjOp8ZTXf1r_ytn4ZvBZX_gNe01zaB3XnOsJL7sfxmWjVxzGb_jgxV1xPNuwBy_1gBW7bXUktzjNoNOgmYCz5mHK72iJOYNo7rd63aSZ0gRf8-mexxBzAYRMKwvLMS_EcgmWoZl5LRTAcoozmj" style="">
+</div>
+<span class="text-xs font-bold" style="">Julian Sterling</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant/60 uppercase" style="">Mar 10</span>
+</div>
+</article>
+<!-- Article 5 (Newsletter Promo - Asymmetric Break) -->
+<div class="lg:col-span-2 bg-primary-container text-on-primary-container p-12 rounded-xl flex flex-col justify-center items-start editorial-shadow relative overflow-hidden">
+<div class="absolute top-0 right-0 opacity-10 translate-x-1/4 -translate-y-1/4">
+<span class="material-symbols-outlined text-[240px]" style="font-variation-settings: &quot;wght&quot; 700;">mail</span>
+</div>
+<span class="font-label text-xs tracking-[0.2em] uppercase mb-4 opacity-80" style="">Weekly Curator</span>
+<h3 class="font-headline text-4xl font-bold mb-6 max-w-md leading-tight" style="">Join 25,000+ digital architects.</h3>
+<p class="font-body text-lg mb-8 opacity-90 max-w-sm" style="">
+                    The best of AHA Editorial, delivered to your inbox every Thursday morning. No noise, just signal.
+                </p>
+<div class="w-full max-w-md flex gap-2">
+<input class="flex-grow bg-white/10 border-none rounded-md px-4 text-white placeholder:text-white/40 focus:ring-2 focus:ring-white/50" placeholder="Email Address" type="email">
+<button class="bg-white text-primary px-6 py-2 rounded-md font-bold uppercase text-xs tracking-widest" style="">Join</button>
+</div>
+</div>
+<!-- Article 6 -->
+<article class="flex flex-col">
+<div class="relative mb-6 group cursor-pointer overflow-hidden rounded-lg">
+<img class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" data-alt="overhead view of a team collaborating on a moodboard with fabric samples and color swatches" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0UhtpZEnzCfjfrf1TS-kwNqXO62zA4O24eB546rwD4cDFLuv0ApJNJd0mt7LMVGnYlHXKVqJZQj_INhOkMxAuFsSFg48Mmia_wOOkiru2s74InzsaZVAqa4h9OG3nBKmtp2a4jM2PSUkKKB-I0FwMrBWFLevSQhgbdgqhlrthzXosh2_6vuASlONqudTGJZZNmz_-fPu6Eqj52m1nG_LQdna7eBjtmwPK4ttbBwJ-n9IXRGYI9kYE4TdU-s0xu1fNoawy1GkPgi5y" style="">
+<div class="absolute top-4 left-4">
+<span class="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary" style="">Interviews</span>
+</div>
+</div>
+<div class="flex-grow">
+<h3 class="font-headline text-2xl font-bold mb-4 hover:text-primary transition-colors cursor-pointer" style="">Collaborative Curation</h3>
+<p class="font-body text-on-surface-variant text-sm leading-relaxed mb-6" style="">
+                        An interview with the founders of Studio Meta on building lasting digital legacies.
+                    </p>
+</div>
+<div class="pt-6 border-t border-outline-variant/15 flex justify-between items-center">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="professional photo of Sarah Jenkins" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJwUpJFKQc4cWNMapsOBompJ2jc2trOX-i6bTzbZ5U2HyWEL9yaAPx0AsvA56VT_jem0QBhTzeEwN2ZlvDbAwlpA3r148aPqHUb3rPbzJyf3UpCu1BHlpdkenTWuPH0HyRUcp_uDeKuNPd4mBzCPZvXR90mun8MJVCgm7KO1ztYvo2wOLLmS-Hx1gEsfumWGDGgy994fPm-argVNAgqhuN6wO7Mucc737tlHYd8jgGAyh7wpBXtTmuXg4qIxeCVgJH7a3Y3-xw0z7L" style="">
+</div>
+<span class="text-xs font-bold" style="">Sarah Jenkins</span>
+</div>
+<span class="text-[10px] font-label text-on-surface-variant/60 uppercase" style="">Mar 02</span>
+</div>
+</article>
+</div>
+<!-- Pagination -->
+<div class="mt-28 flex justify-center items-center gap-6">
+<button class="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface-variant opacity-40 cursor-not-allowed" style="">
+<span class="material-symbols-outlined text-sm" style="">arrow_back</span>
+                Previous
+            </button>
+<div class="flex gap-4">
+<span class="w-8 h-8 flex items-center justify-center font-bold text-sm bg-primary text-on-primary rounded" style="">1</span>
+<button class="w-8 h-8 flex items-center justify-center font-bold text-sm hover:text-primary" style="">2</button>
+<button class="w-8 h-8 flex items-center justify-center font-bold text-sm hover:text-primary" style="">3</button>
+<span class="w-8 h-8 flex items-center justify-center text-sm" style="">...</span>
+<button class="w-8 h-8 flex items-center justify-center font-bold text-sm hover:text-primary" style="">12</button>
+</div>
+<button class="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface hover:text-primary transition-colors" style="">
+                Next
+                <span class="material-symbols-outlined text-sm" style="">arrow_forward</span>
+</button>
+</div>
+</main>
+<!-- Footer (JSON Managed) -->
+<footer class="w-full mt-20 bg-[#f5ede4] dark:bg-[#151310]">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-12 px-12 py-20 max-w-[1440px] mx-auto">
+<div class="md:col-span-1">
+<div class="font-['Newsreader'] text-3xl text-[#1e1b17] dark:text-[#fff8f2] mb-6" style="">AHA</div>
+<p class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 leading-relaxed" style="">
+                    © 2024 AHA Editorial Software. Designed for the Digital Curator.
+                </p>
+</div>
+<div>
+<h4 class="font-['Manrope'] text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e] mb-6" style="">Platform</h4>
+<ul class="space-y-4">
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Sitemap</a></li>
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Newsletter</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-['Manrope'] text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e] mb-6" style="">Legal</h4>
+<ul class="space-y-4">
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Privacy Policy</a></li>
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Terms of Service</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-['Manrope'] text-sm tracking-wide uppercase font-bold text-[#005c55] dark:text-[#0f766e] mb-6" style="">Contact</h4>
+<ul class="space-y-4">
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Support</a></li>
+<li class="" style=""><a class="font-['Manrope'] text-sm text-[#1e1b17] dark:text-[#fff8f2] opacity-60 hover:opacity-100 hover:translate-x-1 transition-all duration-300 block" href="#" style="">Press</a></li>
+</ul>
+</div>
+</div>
+</footer>
+</body></html>

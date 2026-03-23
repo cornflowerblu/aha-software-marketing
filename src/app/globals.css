@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+/*
+ * AHA Software Design System
+ * Creative Direction: "The Digital Curator"
+ * Fonts: Fraunces (headline) + DM Sans (body/label)
+ * Colors: Full Material Design 3 token set
+ * See docs/DESIGN.md for rules and philosophy
+ */
+
+@theme {
+  /* ──────────────────────────────────────────────
+   * COLORS — Material Design 3 Token Set
+   * ────────────────────────────────────────────── */
+
+  /* Primary */
+  --color-primary: #005c55;
+  --color-primary-container: #0f766e;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #a3faef;
+  --color-primary-fixed: #9cf2e8;
+  --color-primary-fixed-dim: #80d5cb;
+  --color-on-primary-fixed: #00201d;
+  --color-on-primary-fixed-variant: #00504a;
+
+  /* Secondary */
+  --color-secondary: #466460;
+  --color-secondary-container: #c5e6e1;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #4a6864;
+  --color-secondary-fixed: #c8e9e4;
+  --color-secondary-fixed-dim: #accdc8;
+  --color-on-secondary-fixed: #00201d;
+  --color-on-secondary-fixed-variant: #2e4c48;
+
+  /* Tertiary (Clay Accent) */
+  --color-tertiary: #7f4025;
+  --color-tertiary-container: #9c573a;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #ffe5db;
+  --color-tertiary-fixed: #ffdbce;
+  --color-tertiary-fixed-dim: #ffb598;
+  --color-on-tertiary-fixed: #370e00;
+  --color-on-tertiary-fixed-variant: #72361b;
+
+  /* Background & Surface ("Warm Stone" philosophy) */
+  --color-background: #fff8f2;
+  --color-on-background: #1e1b17;
+  --color-surface: #fff8f2;
+  --color-on-surface: #1e1b17;
+  --color-on-surface-variant: #3e4947;
+
+  /* Surface Layers (Tonal Depth — "stacked sheets of fine paper") */
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #faf2eb;
+  --color-surface-container: #f4ede6;
+  --color-surface-container-high: #eee7e0;
+  --color-surface-container-highest: #e8e1db;
+  --color-surface-variant: #e8e1db;
+  --color-surface-dim: #e0d9d2;
+  --color-surface-bright: #fff8f2;
+  --color-surface-tint: #006a63;
+
+  /* Outline */
+  --color-outline: #6e7977;
+  --color-outline-variant: #bdc9c6;
+
+  /* Error */
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  /* Inverse */
+  --color-inverse-surface: #33302c;
+  --color-inverse-on-surface: #f7efe9;
+  --color-inverse-primary: #80d5cb;
+
+  /* ──────────────────────────────────────────────
+   * FONTS
+   * ────────────────────────────────────────────── */
+  --font-headline: var(--font-fraunces), 'Fraunces', serif;
+  --font-body: var(--font-dm-sans), 'DM Sans', sans-serif;
+  --font-label: var(--font-dm-sans), 'DM Sans', sans-serif;
+
+  /* ──────────────────────────────────────────────
+   * BORDER RADIUS (minimal, editorial)
+   * ────────────────────────────────────────────── */
+  --radius-DEFAULT: 0.125rem;
+  --radius-sm: 0.125rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 9999px;
+
+  /* ──────────────────────────────────────────────
+   * SHADOWS (Ambient only — large, diffused)
+   * ────────────────────────────────────────────── */
+  --shadow-ambient: 0 20px 40px rgba(30, 27, 23, 0.05);
+  --shadow-ambient-lg: 0 40px 80px rgba(30, 27, 23, 0.06);
+  --shadow-editorial: 0 20px 40px rgba(30, 27, 23, 0.05);
+  --shadow-lift: 0 40px 80px rgba(0, 92, 85, 0.08);
+}
+
+/* ──────────────────────────────────────────────
+ * BASE STYLES
+ * ────────────────────────────────────────────── */
+
+body {
+  @apply bg-background text-on-background font-body antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  @apply bg-secondary-container text-on-secondary-container;
+}
+
+/* ──────────────────────────────────────────────
+ * CUSTOM UTILITIES
+ * ────────────────────────────────────────────── */
+
+/* Signature Gradient — Primary CTAs */
+@utility editorial-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+}
+
+/* Editorial Dot Grid Background */
+@utility editorial-grid {
+  background-image: radial-gradient(circle, var(--color-outline-variant) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+@utility editorial-grid-sm {
+  background-image: radial-gradient(circle, var(--color-outline-variant) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Glassmorphism (for nav, floating elements) */
+@utility glassmorphism {
+  background: color-mix(in srgb, var(--color-background) 80%, transparent);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Ghost Border — outline-variant at 15% max */
+@utility ghost-border {
+  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 15%, transparent);
+}
+
+/* Carbon Texture (for branded sections) */
+@utility carbon-texture {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E");
+}
+
+/* ──────────────────────────────────────────────
+ * MATERIAL SYMBOLS ICON FONT
+ * ────────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+/* ──────────────────────────────────────────────
+ * EDITORIAL RICH TEXT (for Payload Lexical content)
+ * ────────────────────────────────────────────── */
+.editorial-rich-text p {
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.editorial-rich-text blockquote {
+  font-style: italic;
+  padding-left: 2rem;
+  border-left: 3px solid var(--color-primary);
+  margin: 2rem 0;
+  color: var(--color-primary);
+}
+
+/* ──────────────────────────────────────────────
+ * SCROLLBAR STYLING
+ * ────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}

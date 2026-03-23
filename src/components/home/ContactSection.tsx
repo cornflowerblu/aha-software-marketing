@@ -1,0 +1,133 @@
+'use client'
+
+import { useState } from 'react'
+import Input from '@/components/ui/Input'
+import Textarea from '@/components/ui/Textarea'
+import Button from '@/components/ui/Button'
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+
+const contactInfo = [
+  {
+    icon: 'location_on',
+    label: 'Office Hub',
+    value: '42 Engineering Plaza, London EC2A',
+  },
+  {
+    icon: 'mail',
+    label: 'Direct Line',
+    value: 'hello@ahasw.consulting',
+  },
+]
+
+const challengeOptions = [
+  'Eliminating Rework',
+  'DevOps Hardening',
+  'Cloud Architecture',
+  'GitHub Spec Kit Implementation',
+]
+
+export default function ContactSection() {
+  const [submitted, setSubmitted] = useState(false)
+
+  return (
+    <section className="py-32 bg-surface-container" id="contact">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-2 gap-24">
+        <AnimateOnScroll animation="fade-up">
+          <h2 className="font-headline text-6xl md:text-7xl font-medium text-on-background leading-none tracking-tighter mb-10">
+            Ready for Radical Change?
+          </h2>
+          <p className="font-body text-xl text-on-background/60 mb-16 font-headline italic leading-relaxed">
+            Contact us to schedule a Strategic Alignment workshop. No sales
+            pitches&mdash;just technical experts auditing your delivery pipeline.
+          </p>
+
+          <div className="space-y-12">
+            {contactInfo.map((info) => (
+              <div key={info.label} className="flex gap-8 group">
+                <div className="w-16 h-16 flex items-center justify-center bg-background text-primary border border-outline-variant/30 group-hover:border-primary transition-colors">
+                  <span className="material-symbols-outlined text-3xl">
+                    {info.icon}
+                  </span>
+                </div>
+                <div>
+                  <h4 className="font-extrabold text-[10px] uppercase tracking-[0.3em] mb-2 text-primary font-label">
+                    {info.label}
+                  </h4>
+                  <p className="text-on-background text-lg font-headline">
+                    {info.value}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </AnimateOnScroll>
+
+        <AnimateOnScroll animation="slide-left" delay={200}>
+          <div className="bg-background p-8 md:p-12 shadow-ambient-lg ghost-border">
+            {submitted ? (
+              <div className="text-center py-16">
+                <span className="material-symbols-outlined text-5xl text-primary mb-6 block">
+                  check_circle
+                </span>
+                <h3 className="font-headline text-3xl font-medium mb-4">
+                  Message Sent
+                </h3>
+                <p className="font-body text-on-background/60">
+                  We&apos;ll be in touch within 24 hours.
+                </p>
+              </div>
+            ) : (
+              <form
+                className="space-y-10"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  setSubmitted(true)
+                }}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <Input label="Full Name" placeholder="John Doe" type="text" />
+                  <Input
+                    label="Company"
+                    placeholder="Acme Engineering"
+                    type="text"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="challenge"
+                    className="block font-label text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mb-3"
+                  >
+                    Primary Challenge
+                  </label>
+                  <select
+                    id="challenge"
+                    className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-lg font-headline py-2 transition-all outline-none"
+                  >
+                    {challengeOptions.map((opt) => (
+                      <option key={opt}>{opt}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <Textarea
+                  label="Brief Context"
+                  placeholder="Tell us about your current stack..."
+                  rows={3}
+                />
+
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="w-full py-6 text-[11px] tracking-[0.3em]"
+                >
+                  Initiate Consultation
+                </Button>
+              </form>
+            )}
+          </div>
+        </AnimateOnScroll>
+      </div>
+    </section>
+  )
+}
