@@ -7,7 +7,9 @@ import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import ReadingProgressBar from '@/components/blog/ReadingProgressBar'
 import Badge from '@/components/ui/Badge'
+import PaywallGate from '@/components/premium/PaywallGate'
 import { generateArticleSchema } from '@/lib/seo'
+import { getCurrentUser, isPremiumUser } from '@/lib/auth'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -114,6 +116,17 @@ export default async function BlogPostPage({ params }: Props) {
       : undefined
   const readTime = estimateReadTime(post.content)
 
+  // Server-side premium content gating
+  let user: Awaited<ReturnType<typeof getCurrentUser>> = null
+  try {
+    user = await getCurrentUser()
+  } catch {
+    // Not authenticated
+  }
+  const isAuthenticated = !!user
+  const hasPremium = user ? isPremiumUser(user) : false
+  const isGated = post.premium === true && !hasPremium
+
   const jsonLd = generateArticleSchema({
     title: post.title,
     slug: post.slug,
@@ -203,10 +216,20 @@ export default async function BlogPostPage({ params }: Props) {
           </div>
         )}
 
-        {post.content && (
-          <div className="editorial-rich-text font-body text-lg text-on-background/90 leading-relaxed">
-            <RichText data={post.content as unknown as SerializedEditorState} />
-          </div>
+        {isGated ? (
+          <PaywallGate isAuthenticated={isAuthenticated} isPremium={false}>
+            <div className="editorial-rich-text font-body text-lg text-on-background/90 leading-relaxed">
+              <p className="text-on-surface-variant italic">
+                This is a premium article. Sign in or upgrade to read the full content.
+              </p>
+            </div>
+          </PaywallGate>
+        ) : (
+          post.content && (
+            <div className="editorial-rich-text font-body text-lg text-on-background/90 leading-relaxed">
+              <RichText data={post.content as unknown as SerializedEditorState} />
+            </div>
+          )
         )}
 
         <footer className="mt-16 pt-8 border-t border-outline-variant/20">
