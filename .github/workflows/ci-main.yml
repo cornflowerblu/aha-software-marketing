@@ -34,9 +34,25 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # ─── Database migration ─────────────────────────────────────────────────────
+
+  migrate:
+    name: Run Migrations
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx payload migrate
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
   # ─── Pre-deploy gates ────────────────────────────────────────────────────────
 
   unit-tests:
+    needs: [migrate]
     name: Unit Tests
     runs-on: ubuntu-latest
     environment: production
