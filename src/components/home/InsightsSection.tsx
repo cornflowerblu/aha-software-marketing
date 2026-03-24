@@ -5,7 +5,7 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 const articles = [
   {
     slug: 'high-quality-software-delivery',
-    image: '/assets/insight-server-room.jpg',
+    image: '/assets/insight-server-room.png',
     category: 'Engineering',
     title: 'High-Quality Software Delivery: Beyond the Sprint.',
     excerpt:
@@ -15,7 +15,7 @@ const articles = [
   },
   {
     slug: 'devops-radical-automation',
-    image: '/assets/insight-code-screen.jpg',
+    image: '/assets/insight-code-screen.png',
     category: 'DevOps',
     title: 'DevOps for Modern Teams: Radical Automation.',
     excerpt:

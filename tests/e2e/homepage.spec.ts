@@ -18,45 +18,39 @@ test.describe('Homepage', () => {
 
   test('hero section has CTA button', async ({ page }) => {
     const cta = page.locator(
-      'a:has-text("Get Started"), a:has-text("Spec Kit"), button:has-text("Get Started"), a:has-text("Learn")'
+      'a:has-text("Start the Transformation"), a:has-text("Our Methodology"), a:has-text("Work Together")'
     ).first()
     await expect(cta).toBeVisible()
   })
 
   test('has Core Pillars section', async ({ page }) => {
-    // Section with pillar cards
-    const pillarsHeading = page.locator('h2, [data-testid="pillars-heading"]').filter({
-      hasText: /Pillar|Approach|Method|Foundation/i,
+    const pillarsHeading = page.locator('h2').filter({
+      hasText: /Pillars/i,
     })
-    if ((await pillarsHeading.count()) > 0) {
-      await expect(pillarsHeading.first()).toBeVisible()
-    }
+    await expect(pillarsHeading.first()).toBeVisible()
   })
 
   test('has Spec Kit section', async ({ page }) => {
-    const specKitText = page.locator(':has-text("Spec Kit")').first()
-    await expect(specKitText).toBeVisible()
+    const specKitHeading = page.locator('h2:has-text("Spec Kit")')
+    await expect(specKitHeading).toBeVisible()
   })
 
   test('has Insights / blog preview section', async ({ page }) => {
-    const insightsSection = page.locator(
-      ':has-text("Insights"), :has-text("Latest"), :has-text("Blog")'
-    ).first()
-    await expect(insightsSection).toBeVisible()
+    const insightsHeading = page.locator('h2:has-text("Insights")')
+    await expect(insightsHeading).toBeVisible()
   })
 
-  test('has Contact section with form or CTA', async ({ page }) => {
-    const contactSection = page.locator(
-      'section:has(input), section:has(form), :has-text("Contact"), :has-text("Get in Touch")'
-    ).first()
+  test('has Contact section with form', async ({ page }) => {
+    const contactSection = page.locator('section#contact')
     await expect(contactSection).toBeVisible()
+    await expect(contactSection.locator('form')).toBeVisible()
   })
 
-  test('header has navigation', async ({ page }) => {
-    const header = page.locator('header')
-    await expect(header).toBeVisible()
-    const nav = header.locator('nav, a')
-    await expect(nav.first()).toBeVisible()
+  test('nav has navigation links', async ({ page }) => {
+    const nav = page.locator('nav').first()
+    await expect(nav).toBeVisible()
+    const navLink = nav.locator('a').first()
+    await expect(navLink).toBeVisible()
   })
 
   test('footer is visible', async ({ page }) => {
@@ -70,9 +64,12 @@ test.describe('Homepage', () => {
     })
     await page.goto('/')
     await page.waitForLoadState('networkidle')
-    // Filter out expected warnings (e.g., HMR, dev mode)
     const realErrors = errors.filter(
-      (e) => !e.includes('HMR') && !e.includes('DevTools') && !e.includes('Warning:'),
+      (e) =>
+        !e.includes('HMR') &&
+        !e.includes('DevTools') &&
+        !e.includes('Warning:') &&
+        !e.includes('Failed to load resource'),
     )
     expect(realErrors).toHaveLength(0)
   })

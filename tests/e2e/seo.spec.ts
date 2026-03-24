@@ -10,7 +10,7 @@ test.describe('SEO Infrastructure', () => {
     test('contains User-agent directive', async ({ request }) => {
       const response = await request.get('/robots.txt')
       const body = await response.text()
-      expect(body).toContain('User-agent:')
+      expect(body.toLowerCase()).toContain('user-agent:')
     })
 
     test('allows crawling of public pages', async ({ request }) => {

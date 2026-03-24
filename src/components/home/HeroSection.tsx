@@ -39,7 +39,7 @@ export default function HeroSection() {
         >
           <div className="aspect-[3/4] bg-surface-container overflow-hidden relative shadow-[-40px_40px_80px_rgba(0,0,0,0.1)]">
             <Image
-              src="/assets/hero-abstract.jpg"
+              src="/assets/hero-abstract.png"
               alt="Technical precision abstract"
               fill
               className="object-cover grayscale opacity-90 contrast-110"

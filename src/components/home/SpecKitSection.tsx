@@ -77,7 +77,7 @@ export default function SpecKitSection() {
             <div className="md:col-span-2 bg-gradient-to-br from-on-primary/10 to-transparent p-10 border border-on-primary/10 flex flex-col md:flex-row gap-10 items-center">
               <div className="w-32 h-32 bg-on-primary/10 flex-shrink-0 overflow-hidden relative">
                 <Image
-                  src="/assets/spec-kit-integration.jpg"
+                  src="/assets/spec-kit-integration.png"
                   alt="Seamless integration"
                   fill
                   className="object-cover grayscale opacity-50"

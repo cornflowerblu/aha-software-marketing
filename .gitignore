@@ -96,3 +96,5 @@ test-results/responsive-Responsive-Desi-b88e5-hamburger-opens-mobile-menu-chromi
 test-results/responsive-Responsive-Desi-d920f-nu-links-navigate-correctly-chromium/error-context.md
 test-results/responsive-Responsive-Desi-d920f-nu-links-navigate-correctly-chromium/test-failed-1.png
 .vercel
+.playwright-mcp/
+test-results/

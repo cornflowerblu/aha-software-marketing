@@ -87,7 +87,7 @@ export default function PremiumPage() {
           >
             <div className="aspect-[4/5] bg-surface-container-low overflow-hidden shadow-ambient-lg relative">
               <Image
-                src="/assets/hero-abstract.jpg"
+                src="/assets/hero-abstract.png"
                 alt="Strategic visual"
                 fill
                 className="object-cover grayscale mix-blend-multiply opacity-80"

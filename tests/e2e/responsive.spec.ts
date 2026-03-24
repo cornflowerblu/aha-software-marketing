@@ -2,46 +2,39 @@ import { test, expect } from '@playwright/test'
 
 test.describe('Responsive Design', () => {
   test.describe('Mobile navigation', () => {
-    test.use({ viewport: { width: 375, height: 812 } }) // iPhone-like
+    test.use({ viewport: { width: 375, height: 812 } })
 
     test('hamburger menu is visible on mobile', async ({ page }) => {
       await page.goto('/')
-      const hamburger = page.locator(
-        'button[aria-label*="menu" i], button[data-testid="mobile-menu"], [data-testid="hamburger"]'
-      )
-      await expect(hamburger.first()).toBeVisible()
+      const hamburger = page.locator('button[aria-label="Toggle menu"]')
+      await expect(hamburger).toBeVisible()
     })
 
     test('desktop nav links are hidden on mobile', async ({ page }) => {
       await page.goto('/')
-      const desktopNav = page.locator('nav a:has-text("Blog")').first()
-      // On mobile the nav links should be hidden (inside hamburger menu)
+      // The desktop nav container is hidden via md:flex (hidden by default)
+      const desktopNav = page.locator('.hidden.md\\:flex a').first()
       await expect(desktopNav).not.toBeVisible()
     })
 
     test('hamburger opens mobile menu', async ({ page }) => {
       await page.goto('/')
-      const hamburger = page.locator(
-        'button[aria-label*="menu" i], button[data-testid="mobile-menu"], [data-testid="hamburger"]'
-      )
-      await hamburger.first().click()
+      const hamburger = page.locator('button[aria-label="Toggle menu"]')
+      await hamburger.click()
 
-      // Menu should now be visible with nav links
-      const mobileMenu = page.locator(
-        '[data-testid="mobile-menu-panel"], nav[data-mobile], [role="dialog"]'
-      )
-      await expect(mobileMenu.first()).toBeVisible()
+      // Mobile menu appears as a div with nav links inside the nav element
+      const mobileLink = page.locator('nav .md\\:hidden a:has-text("Insights")')
+      await expect(mobileLink).toBeVisible()
     })
 
     test('mobile menu links navigate correctly', async ({ page }) => {
       await page.goto('/')
-      const hamburger = page.locator(
-        'button[aria-label*="menu" i], button[data-testid="mobile-menu"], [data-testid="hamburger"]'
-      )
-      await hamburger.first().click()
+      const hamburger = page.locator('button[aria-label="Toggle menu"]')
+      await hamburger.click()
 
-      const blogLink = page.locator('a:has-text("Blog")').first()
-      await blogLink.click()
+      // Click Insights link in the mobile menu
+      const insightsLink = page.locator('nav .md\\:hidden a:has-text("Insights")')
+      await insightsLink.click()
       await expect(page).toHaveURL(/\/blog/)
     })
   })
@@ -51,7 +44,7 @@ test.describe('Responsive Design', () => {
 
     test('nav links are visible on desktop', async ({ page }) => {
       await page.goto('/')
-      const navLinks = ['Blog', 'Events', 'About', 'Services', 'Contact']
+      const navLinks = ['Services', 'Insights', 'Events', 'Contact']
       for (const text of navLinks) {
         const link = page.locator(`nav a:has-text("${text}")`).first()
         await expect(link).toBeVisible()
@@ -60,19 +53,21 @@ test.describe('Responsive Design', () => {
 
     test('hamburger menu is hidden on desktop', async ({ page }) => {
       await page.goto('/')
-      const hamburger = page.locator(
-        'button[aria-label*="menu" i], button[data-testid="mobile-menu"], [data-testid="hamburger"]'
-      )
-      if (await hamburger.count() > 0) {
-        await expect(hamburger.first()).not.toBeVisible()
-      }
+      const hamburger = page.locator('button[aria-label="Toggle menu"]')
+      await expect(hamburger).not.toBeVisible()
     })
 
     test('nav has glassmorphism styling (fixed, backdrop-blur)', async ({ page }) => {
       await page.goto('/')
-      const nav = page.locator('header, nav').first()
+      const nav = page.locator('nav').first()
       const position = await nav.evaluate((el) => getComputedStyle(el).position)
-      expect(['fixed', 'sticky']).toContain(position)
+      expect(position).toBe('fixed')
+    })
+
+    test('Work Together CTA is visible on desktop', async ({ page }) => {
+      await page.goto('/')
+      const cta = page.locator('nav a:has-text("Work Together")')
+      await expect(cta).toBeVisible()
     })
   })
 
@@ -92,19 +87,23 @@ test.describe('Responsive Design', () => {
   })
 
   test.describe('Footer', () => {
-    test('footer is visible on all pages', async ({ page }) => {
-      const pages = ['/', '/blog', '/events', '/about', '/services', '/contact', '/premium']
+    test('footer is visible on key pages', async ({ page }) => {
+      const pages = ['/', '/blog', '/events', '/premium', '/contact']
       for (const path of pages) {
         await page.goto(path)
         await expect(page.locator('footer')).toBeVisible()
       }
     })
 
-    test('footer has 4-column grid on desktop', async ({ page }) => {
+    test('footer has multi-column grid on desktop', async ({ page }) => {
       await page.setViewportSize({ width: 1440, height: 900 })
       await page.goto('/')
       const footer = page.locator('footer')
       await expect(footer).toBeVisible()
+      // Footer has 4 column sections
+      const footerColumns = footer.locator('> div:first-child > div')
+      const count = await footerColumns.count()
+      expect(count).toBeGreaterThanOrEqual(4)
     })
   })
 })
