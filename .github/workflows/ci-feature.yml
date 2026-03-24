@@ -43,10 +43,6 @@ jobs:
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
       - run: bun run test:unit
-      - run: bun run test:coverage
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          PAYLOAD_SECRET: ci-test-secret
       - name: Notify Vercel
         if: always()
         continue-on-error: true

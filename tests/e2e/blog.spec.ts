@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Blog", () => {
 	test.describe("Listing page", () => {
-		test("loads successfully", async ({ page }) => {
+		test("loads successfully @smoke", async ({ page }) => {
 			const response = await page.goto("/blog");
 			expect(response?.status()).toBeLessThan(400);
 		});

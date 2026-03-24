@@ -13,7 +13,9 @@
 		"test:integration": "bun test tests/integration",
 		"test:e2e": "bunx playwright test",
 		"test:e2e:ui": "bunx playwright test --ui",
-		"test:coverage": "bun test --coverage tests/unit tests/integration"
+		"test:coverage": "bun test --coverage tests/unit tests/integration",
+		"seed": "bun run src/seed.ts",
+		"migrate": "bunx payload migrate"
 	},
 	"dependencies": {
 		"@hubspot/api-client": "^13.5.0",
@@ -22,9 +24,11 @@
 		"@payloadcms/next": "^3.80.0",
 		"@payloadcms/plugin-seo": "^3.80.0",
 		"@payloadcms/richtext-lexical": "^3.80.0",
+		"@payloadcms/storage-vercel-blob": "^3.80.0",
 		"@payloadcms/ui": "^3.80.0",
 		"@playwright/test": "^1.58.2",
 		"@vercel/analytics": "^2.0.1",
+		"@vercel/blob": "^2.3.1",
 		"graphql": "^16.13.1",
 		"motion": "^12.38.0",
 		"next": "^16.2.1",
