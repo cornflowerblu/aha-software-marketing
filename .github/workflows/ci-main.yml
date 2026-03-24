@@ -18,8 +18,10 @@ name: Main Branch — Test, Gate, Canary, Verify
 #      • Add required reviewers so every push to main must be approved before
 #        payload migrate runs against the production database.
 #      • Add DATABASE_URL and PAYLOAD_SECRET as environment secrets.
-#   5. The "production" environment holds all other production secrets.
-
+#   5. Ensure the "production" environment also has access to DATABASE_URL and
+#      PAYLOAD_SECRET (e.g., duplicate them as environment secrets, or keep
+#      them as repo-level secrets), along with all other production secrets,
+#      since other jobs in this workflow run with environment: production.
 on:
   push:
     branches: [main]
