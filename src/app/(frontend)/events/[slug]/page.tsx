@@ -8,8 +8,10 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import { generateGoogleCalendarLink } from '@/lib/calendar'
 import { generateEventSchema, generateBreadcrumbSchema } from '@/lib/seo'
 import SectionLabel from '@/components/ui/SectionLabel'
+import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 import CapacityBar from '@/components/events/CapacityBar'
 import RegistrationForm from '@/components/events/RegistrationForm'
+import EventHeroImage from '@/components/events/EventHeroImage'
 
 type Props = {
   params: Promise<{ slug: string }>
@@ -28,6 +30,7 @@ interface EventDoc {
   status?: 'upcoming' | 'past' | 'cancelled'
   registrationDeadline?: string
   featuredImage?: { url?: string; alt?: string } | null
+  speaker?: { name?: string; title?: string; image?: { url?: string; alt?: string } | null } | null
   meta?: { title?: string; description?: string }
 }
 
@@ -134,6 +137,23 @@ export default async function EventDetailPage({ params }: Props) {
     ...(imageUrl ? { featuredImage: { url: imageUrl, alt: imageAlt } } : {}),
   })
 
+  // Speaker data (from CMS or fallback)
+  const speakerName =
+    event.speaker && typeof event.speaker === 'object'
+      ? event.speaker.name
+      : undefined
+  const speakerTitle =
+    event.speaker && typeof event.speaker === 'object'
+      ? event.speaker.title
+      : undefined
+  const speakerImage =
+    event.speaker &&
+    typeof event.speaker === 'object' &&
+    event.speaker.image &&
+    typeof event.speaker.image === 'object'
+      ? event.speaker.image.url
+      : undefined
+
   return (
     <>
       <script
@@ -145,79 +165,129 @@ export default async function EventDetailPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-20">
-        {/* Hero */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-end mb-20 pt-8">
-          <div className="lg:col-span-7">
-            <SectionLabel color="tertiary" className="mb-4">
-              {isPast ? 'Past Event' : 'Exclusive Workshop'}
-            </SectionLabel>
-            <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-8 leading-[1.1]">
-              {event.title}
-            </h1>
-            <div className="flex flex-wrap gap-8 items-center text-on-surface-variant">
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary">
-                  calendar_today
-                </span>
-                <span className="font-medium font-body">
-                  {formatDate(event.date)}
-                </span>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary">
-                  schedule
-                </span>
-                <span className="font-medium font-body">{timeRange}</span>
-              </div>
-              {event.location && (
+      {/* ───────── Hero Section ───────── */}
+      <section className="pt-[120px] pb-20 px-6 md:px-12 max-w-[1440px] mx-auto w-full relative overflow-hidden">
+        {/* Subtle radial glow */}
+        <div
+          className="absolute inset-0 opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage:
+              'radial-gradient(ellipse at 50% 50%, var(--color-primary-container) 0%, transparent 70%)',
+          }}
+        />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-16 gap-y-12 relative w-full items-end">
+          {/* Left: headline + metadata (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col gap-4 items-start self-end">
+            <AnimateOnScroll animation="fade-up">
+              <SectionLabel color="tertiary">
+                {isPast ? 'Past Event' : 'Exclusive Workshop'}
+              </SectionLabel>
+            </AnimateOnScroll>
+
+            <AnimateOnScroll animation="fade-up" delay={100}>
+              <h1 className="font-headline text-5xl md:text-7xl tracking-tighter text-on-surface leading-[1]">
+                {/* Split the title for italic accent on the first period/comma phrase */}
+                <EventHeadline title={event.title} />
+              </h1>
+            </AnimateOnScroll>
+
+            <AnimateOnScroll animation="fade-up" delay={200}>
+              <div className="flex flex-wrap gap-8 items-center pt-4">
                 <div className="flex items-center gap-3">
-                  <span className="material-symbols-outlined text-primary">
-                    distance
+                  <span className="material-symbols-outlined text-primary text-xl">
+                    calendar_today
                   </span>
-                  <span className="font-medium font-body">
-                    {event.location}
+                  <span className="font-body text-on-surface-variant">
+                    {formatDate(event.date)}
                   </span>
                 </div>
-              )}
-            </div>
+                <div className="flex items-center gap-3">
+                  <span className="material-symbols-outlined text-primary text-xl">
+                    schedule
+                  </span>
+                  <span className="font-body text-on-surface-variant">
+                    {timeRange}
+                  </span>
+                </div>
+                {event.location && (
+                  <div className="flex items-center gap-3">
+                    <span className="material-symbols-outlined text-primary text-xl">
+                      distance
+                    </span>
+                    <span className="font-body text-on-surface-variant">
+                      {event.location}
+                    </span>
+                  </div>
+                )}
+              </div>
+            </AnimateOnScroll>
           </div>
 
+          {/* Right: capacity card (5 cols) */}
           {event.capacity && !isPast && (
-            <div className="lg:col-span-5 hidden lg:block">
+            <div className="lg:col-span-5 self-end hidden lg:block">
               <CapacityBar capacity={event.capacity} registered={0} />
             </div>
           )}
         </div>
+      </section>
 
-        {/* Featured Image */}
-        {imageUrl && (
-          <div className="relative w-full aspect-[21/9] mb-20 overflow-hidden shadow-ambient-lg">
-            <Image
-              src={imageUrl}
-              alt={imageAlt || event.title}
-              fill
-              className="object-cover"
-              priority
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-on-surface/40 to-transparent" />
-          </div>
-        )}
+      {/* ───────── Featured Image with Parallax ───────── */}
+      {imageUrl && (
+        <EventHeroImage
+          src={imageUrl}
+          alt={imageAlt || event.title}
+        />
+      )}
 
-        {/* Content + Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-20">
-          <div className="lg:col-span-7">
-            {event.description && (
-              <div className="editorial-rich-text font-body text-lg text-on-surface-variant">
-                <RichText
-                  data={event.description as unknown as SerializedEditorState}
-                />
+      {/* ───────── Content + Registration Sidebar ───────── */}
+      <section className="px-6 md:px-12 max-w-[1440px] mx-auto w-full pb-32">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-20">
+          {/* Left: About the Session (7 cols) */}
+          <div className="lg:col-span-7 flex flex-col gap-0">
+            <AnimateOnScroll>
+              {/* Section heading */}
+              <h2 className="font-headline italic text-[30px] leading-[36px] text-on-surface mb-8">
+                About the Session
+              </h2>
+
+              {/* Rich text content from Payload */}
+              {event.description && (
+                <div className="editorial-rich-text font-body text-lg text-on-surface-variant leading-[1.8] mb-8">
+                  <RichText
+                    data={event.description as unknown as SerializedEditorState}
+                  />
+                </div>
+              )}
+            </AnimateOnScroll>
+
+            {/* Coming Soon: Post-Event Recording */}
+            <AnimateOnScroll delay={100}>
+              <div className="bg-surface-container-low rounded-lg p-10">
+                <h3 className="font-headline text-2xl text-on-surface mb-6">
+                  Coming Soon: Post-Event Recording
+                </h3>
+                <div
+                  className="bg-surface-dim rounded-sm flex items-center justify-center py-20 relative border border-dashed border-outline"
+                >
+                  <div className="flex flex-col items-center gap-4">
+                    <span className="material-symbols-outlined text-4xl text-outline opacity-60">
+                      play_circle
+                    </span>
+                    <p className="font-label text-sm uppercase tracking-[0.1em] text-outline text-center">
+                      Available 24h after live stream
+                    </p>
+                  </div>
+                </div>
               </div>
-            )}
+            </AnimateOnScroll>
           </div>
 
-          <div className="lg:col-span-5">
+          {/* Right: Registration sidebar (5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-8 self-start">
             <div className="sticky top-28 space-y-8">
+              {/* Registration form */}
               {!isPast && (
                 <RegistrationForm
                   eventSlug={event.slug}
@@ -230,29 +300,74 @@ export default async function EventDetailPage({ params }: Props) {
                 />
               )}
 
+              {/* Past event: show recording placeholder instead */}
               {isPast && (
-                <div className="bg-surface-container-lowest p-10 shadow-ambient ghost-border">
-                  <h3 className="font-headline text-2xl font-bold mb-6">
-                    Post-Event Recording
-                  </h3>
-                  <div className="relative aspect-video bg-surface-dim flex items-center justify-center border border-dashed border-outline">
-                    <div className="text-center">
-                      <span className="material-symbols-outlined text-4xl text-outline mb-4 block">
-                        lock_clock
-                      </span>
-                      <p className="font-label text-sm uppercase tracking-widest text-outline">
-                        Coming soon
-                      </p>
+                <AnimateOnScroll delay={200}>
+                  <div className="bg-surface-container-lowest rounded-lg p-10 shadow-ambient ghost-border text-center">
+                    <span className="material-symbols-outlined text-5xl text-outline mb-4 block">
+                      lock_clock
+                    </span>
+                    <h3 className="font-headline text-2xl mb-2">
+                      Event Concluded
+                    </h3>
+                    <p className="text-on-surface-variant font-body">
+                      Recording will be available soon.
+                    </p>
+                  </div>
+                </AnimateOnScroll>
+              )}
+
+              {/* Speaker / Host card */}
+              {speakerName && (
+                <AnimateOnScroll delay={300}>
+                  <div className="bg-surface-container-low rounded-lg p-8">
+                    <p className="font-label text-xs uppercase tracking-[0.1em] text-outline mb-6">
+                      Hosted By
+                    </p>
+                    <div className="flex items-center gap-4">
+                      {/* Grayscale avatar */}
+                      <div className="relative size-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-lowest">
+                        {speakerImage ? (
+                          <>
+                            <Image
+                              src={speakerImage}
+                              alt={speakerName}
+                              fill
+                              className="object-cover"
+                            />
+                            {/* Grayscale overlay via mix-blend-saturation */}
+                            <div className="absolute inset-0 bg-white mix-blend-saturation" />
+                          </>
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-surface-container">
+                            <span className="material-symbols-outlined text-2xl text-outline">
+                              person
+                            </span>
+                          </div>
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-headline text-lg text-on-surface leading-7">
+                          {speakerName}
+                        </p>
+                        {speakerTitle && (
+                          <p className="font-body text-sm text-on-surface-variant leading-5">
+                            {speakerTitle}
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </AnimateOnScroll>
               )}
             </div>
           </div>
         </div>
+      </section>
 
-        {/* Back link */}
-        <div className="mt-16 pt-8 border-t border-outline-variant/20">
+      {/* ───────── Back link ───────── */}
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-20">
+        <div className="pt-8 border-t border-outline-variant/20">
           <Link
             href="/events"
             className="inline-flex items-center gap-2 font-label text-sm uppercase tracking-widest text-primary hover:opacity-70 transition-opacity"
@@ -266,4 +381,30 @@ export default async function EventDetailPage({ params }: Props) {
       </div>
     </>
   )
+}
+
+/**
+ * Splits event title for the italic accent pattern from the Make reference.
+ * If the title contains a comma, the word before the comma gets italic + primary color styling.
+ * Otherwise renders as-is with the whole title in headline style.
+ */
+function EventHeadline({ title }: { title: string }) {
+  // Try to split at first comma for italic accent
+  const commaIndex = title.indexOf(',')
+  if (commaIndex > 0) {
+    const words = title.substring(0, commaIndex).split(' ')
+    const lastWord = words.pop()
+    const before = words.join(' ')
+    const after = title.substring(commaIndex + 1)
+
+    return (
+      <>
+        {before && <>{before} </>}
+        <span className="font-headline italic text-primary">{lastWord},</span>
+        {after}
+      </>
+    )
+  }
+
+  return <>{title}</>
 }
