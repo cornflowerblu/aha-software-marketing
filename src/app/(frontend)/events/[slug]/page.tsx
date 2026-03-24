@@ -6,7 +6,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { generateGoogleCalendarLink } from '@/lib/calendar'
-import { generateEventSchema } from '@/lib/seo'
+import { generateEventSchema, generateBreadcrumbSchema } from '@/lib/seo'
 import SectionLabel from '@/components/ui/SectionLabel'
 import CapacityBar from '@/components/events/CapacityBar'
 import RegistrationForm from '@/components/events/RegistrationForm'
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description,
-      type: 'website',
+      type: 'article',
       ...(imageUrl ? { images: [{ url: imageUrl }] } : {}),
     },
   }
@@ -117,6 +117,12 @@ export default async function EventDetailPage({ params }: Props) {
     ? `${formatTime(event.date)} — ${formatTime(event.endDate)}`
     : formatTime(event.date)
 
+  const breadcrumbLd = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Events', url: '/events' },
+    { name: event.title, url: `/events/${event.slug}` },
+  ])
+
   const jsonLd = generateEventSchema({
     title: event.title,
     slug: event.slug,
@@ -133,6 +139,10 @@ export default async function EventDetailPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <div className="max-w-[1440px] mx-auto px-6 md:px-12 pb-20">
