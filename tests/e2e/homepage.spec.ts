@@ -72,7 +72,10 @@ test.describe('Homepage', () => {
         !e.includes('HMR') &&
         !e.includes('DevTools') &&
         !e.includes('Warning:') &&
-        !e.includes('Failed to load resource'),
+        !e.includes('Failed to load resource') &&
+        // CORS rejection of x-vercel-protection-bypass on third-party CDNs
+        // (Google Fonts, etc.) is a CI artifact, not an app error.
+        !e.includes('x-vercel-protection-bypass'),
     )
     expect(realErrors).toHaveLength(0)
   })
