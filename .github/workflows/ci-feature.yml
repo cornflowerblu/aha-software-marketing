@@ -6,6 +6,13 @@ on:
   push:
     branches-ignore: [main]
 
+permissions:
+  statuses: write
+  contents: read
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
@@ -21,6 +28,7 @@ jobs:
       - run: bunx tsc --noEmit
       - name: Notify Vercel
         if: always()
+        continue-on-error: true
         uses: vercel/repository-dispatch/actions/status@v1
         with:
           name: 'Vercel - aha-software-marketing: Lint & Typecheck'
@@ -40,6 +48,7 @@ jobs:
           PAYLOAD_SECRET: ci-test-secret
       - name: Notify Vercel
         if: always()
+        continue-on-error: true
         uses: vercel/repository-dispatch/actions/status@v1
         with:
           name: 'Vercel - aha-software-marketing: Unit Tests'
@@ -59,6 +68,7 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://aha-software-marketing.vercel.app
       - name: Notify Vercel
         if: always()
+        continue-on-error: true
         uses: vercel/repository-dispatch/actions/status@v1
         with:
           name: 'Vercel - aha-software-marketing: Build'
