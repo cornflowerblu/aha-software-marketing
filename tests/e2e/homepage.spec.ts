@@ -17,8 +17,11 @@ test.describe('Homepage', () => {
   })
 
   test('hero section has CTA button', async ({ page }) => {
-    const cta = page.locator(
-      'a:has-text("Start the Transformation"), a:has-text("Our Methodology"), a:has-text("Work Together")'
+    // Scope to the hero/main element to avoid matching the nav CTA which is
+    // hidden on mobile viewports (hidden md:inline-flex)
+    const hero = page.locator('main, [class*="hero"], header').first()
+    const cta = hero.locator(
+      'a:has-text("Start the Transformation"), a:has-text("Our Methodology")'
     ).first()
     await expect(cta).toBeVisible()
   })
