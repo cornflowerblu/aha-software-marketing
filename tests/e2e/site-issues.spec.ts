@@ -70,7 +70,7 @@ test.describe('Site Issue Fixes', () => {
 
     // Intercept the API call to verify the form actually posts
     const responsePromise = page.waitForResponse(
-      (resp) => resp.url().includes('/api/contact'),
+      (resp) => resp.url().includes('/api/contact') && resp.request().method() === 'POST',
       { timeout: 15000 }
     )
 
