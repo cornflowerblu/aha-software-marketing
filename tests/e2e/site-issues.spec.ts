@@ -81,16 +81,17 @@ test.describe('Site Issue Fixes', () => {
     expect(response.status()).toBeLessThan(500)
   })
 
-  // Issue 5: "Work Together" CTA has white text
-  test('"Work Together" CTA has white text on teal gradient', async ({ page }) => {
+  // Issue 5: "Work Together" CTA has white text (desktop only — hidden on mobile/tablet)
+  test('"Work Together" CTA has white text on teal gradient', async ({ page, viewport }) => {
+    // Skip on mobile/tablet — the CTA is hidden below md breakpoint
+    test.skip((viewport?.width ?? 1280) < 768, 'CTA is hidden on mobile/tablet')
+
     await page.goto('/')
 
     const cta = page.getByRole('link', { name: 'Work Together' })
     await expect(cta).toBeVisible()
 
-    // Check computed color is white (rgb(255, 255, 255))
     const color = await cta.evaluate((el) => getComputedStyle(el).color)
-    // Should be white — either rgb(255, 255, 255) or rgba(255, 255, 255, 1)
     expect(color).toMatch(/rgb\(255,\s*255,\s*255\)|rgba\(255,\s*255,\s*255/)
   })
 })

@@ -60,10 +60,10 @@ export function Header() {
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
-            <div className="space-y-1.5">
-              <div className={`w-6 h-0.5 bg-[--color-on-background] transition-all ${mobileOpen ? 'rotate-45 translate-y-2' : ''}`} />
-              <div className={`w-6 h-0.5 bg-[--color-on-background] transition-all ${mobileOpen ? 'opacity-0' : ''}`} />
-              <div className={`w-6 h-0.5 bg-[--color-on-background] transition-all ${mobileOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            <div className="flex flex-col gap-1.5">
+              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
+              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
+              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
             </div>
           </button>
         </div>
