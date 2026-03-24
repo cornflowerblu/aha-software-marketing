@@ -105,20 +105,28 @@ jobs:
               "https://api.vercel.com/v6/deployments?projectId=${VERCEL_PROJECT_ID}&limit=10&teamId=${VERCEL_ORG_ID}" \
               -H "Authorization: Bearer ${VERCEL_TOKEN}" 2>/dev/null || echo '{}')
 
+            # Accept any state except ERROR/CANCELED — the deployment URL is
+            # live and serving as soon as Vercel finishes building, even while
+            # it's held at QUEUED/BUILDING/READY waiting for required checks.
             DEPLOY_URL=$(echo "$RESPONSE" | \
               jq -r --arg sha "${{ github.sha }}" \
-              '.deployments[] | select(.meta.githubCommitSha == $sha and .state == "READY") | .url' | \
+              '.deployments[] | select(.meta.githubCommitSha == $sha and (.state == "READY" or .state == "BUILDING" or .state == "QUEUED")) | .url' | \
               head -1)
 
             if [ -n "$DEPLOY_URL" ]; then
-              # Vercel returns URLs without protocol
               FULL_URL="https://${DEPLOY_URL}"
-              echo "url=${FULL_URL}" >> $GITHUB_OUTPUT
-              echo "Found deployment: ${FULL_URL}"
-              exit 0
+              # Wait until the URL actually responds before handing it to Playwright
+              STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "$FULL_URL" 2>/dev/null || echo "000")
+              if [ "$STATUS" != "000" ] && [ "$STATUS" -lt 500 ]; then
+                echo "url=${FULL_URL}" >> $GITHUB_OUTPUT
+                echo "Deployment live at: ${FULL_URL} (HTTP $STATUS)"
+                exit 0
+              fi
+              echo "Attempt $i/30 — deployment found but not yet serving (HTTP $STATUS), waiting 10s..."
+            else
+              echo "Attempt $i/30 — no deployment found yet, waiting 10s..."
             fi
 
-            echo "Attempt $i/30 — deployment not ready yet, waiting 10s..."
             sleep 10
           done
 
