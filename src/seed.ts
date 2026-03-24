@@ -7,8 +7,45 @@
 import { getPayload } from "payload";
 import type { Post } from "./payload-types";
 import config from "./payload.config";
+import path from "path";
+import fs from "fs";
 
 type PostContent = NonNullable<Post["content"]>;
+
+async function uploadMedia(
+	payload: Awaited<ReturnType<typeof getPayload>>,
+	filename: string,
+	alt: string,
+) {
+	const filePath = path.resolve(process.cwd(), "public/assets", filename);
+	if (!fs.existsSync(filePath)) {
+		console.log(`  Skipping ${filename} (not found at ${filePath})`);
+		return null;
+	}
+
+	const buffer = fs.readFileSync(filePath);
+	const ext = path.extname(filename).slice(1);
+	const mimeMap: Record<string, string> = {
+		png: "image/png",
+		jpg: "image/jpeg",
+		jpeg: "image/jpeg",
+		webp: "image/webp",
+	};
+
+	const result = await payload.create({
+		collection: "media",
+		data: { alt },
+		file: {
+			data: buffer,
+			name: filename,
+			mimetype: mimeMap[ext] || "image/png",
+			size: buffer.length,
+		},
+	});
+
+	console.log(`  Uploaded ${filename} → id:${result.id}`);
+	return result.id;
+}
 
 async function seed() {
 	console.log("Starting seed...");
@@ -40,6 +77,31 @@ async function seed() {
 		console.log("Admin user created");
 	}
 
+	// Upload images — skip if media already exists (shared Blob across all DBs)
+	const existingMedia = await payload.find({ collection: "media", limit: 1 });
+	let serverRoomId: number | string | null = null;
+	let codeScreenId: number | string | null = null;
+	let heroAbstractId: number | string | null = null;
+	let specKitId: number | string | null = null;
+
+	if (existingMedia.totalDocs === 0) {
+		console.log("Uploading images to Blob...");
+		serverRoomId = await uploadMedia(payload, "insight-server-room.png", "Server room with data racks");
+		codeScreenId = await uploadMedia(payload, "insight-code-screen.png", "Code on screen");
+		heroAbstractId = await uploadMedia(payload, "hero-abstract.png", "Modern workspace with afternoon sunlight");
+		specKitId = await uploadMedia(payload, "spec-kit-integration.png", "Seamless integration");
+	} else {
+		console.log(`Media already exists (${existingMedia.totalDocs} items). Reusing.`);
+		const allMedia = await payload.find({ collection: "media", limit: 10 });
+		for (const m of allMedia.docs) {
+			const fn = (m as { filename?: string }).filename || "";
+			if (fn.includes("server-room")) serverRoomId = m.id;
+			else if (fn.includes("code-screen")) codeScreenId = m.id;
+			else if (fn.includes("hero-abstract")) heroAbstractId = m.id;
+			else if (fn.includes("spec-kit")) specKitId = m.id;
+		}
+	}
+
 	// Create event
 	console.log("Creating event...");
 	await payload.create({
@@ -47,6 +109,7 @@ async function seed() {
 		data: {
 			title: "The Future is Yesterday, Teams Who Adapt will Thrive.",
 			slug: "future-is-yesterday-workshop",
+			...(heroAbstractId ? { featuredImage: heroAbstractId } : {}),
 			date: "2026-10-24T14:00:00.000Z",
 			endDate: "2026-10-24T16:30:00.000Z",
 			location: "Virtual Gallery Studio",
@@ -64,6 +127,7 @@ async function seed() {
 		data: {
 			title: "High-Quality Software Delivery: Beyond the Sprint.",
 			slug: "high-quality-software-delivery",
+			...(serverRoomId ? { featuredImage: serverRoomId } : {}),
 			excerpt:
 				"Why traditional agile metrics are failing your engineering culture and how to shift towards structural quality metrics that drive revenue.",
 			status: "published",
@@ -115,6 +179,7 @@ async function seed() {
 		data: {
 			title: "DevOps for Modern Teams: Radical Automation.",
 			slug: "devops-radical-automation",
+			...(codeScreenId ? { featuredImage: codeScreenId } : {}),
 			excerpt:
 				"Implementing zero-touch deployments in complex legacy environments. A guide to navigating the friction between speed and safety.",
 			status: "published",
@@ -157,6 +222,7 @@ async function seed() {
 		data: {
 			title: "The Art of the Digital Monograph",
 			slug: "art-of-digital-monograph",
+			...(heroAbstractId ? { featuredImage: heroAbstractId } : {}),
 			excerpt:
 				"Translating traditional publishing aesthetics into highly functional SaaS marketing engines.",
 			status: "published",
@@ -200,6 +266,7 @@ async function seed() {
 		data: {
 			title: "Semantic Systems in Modern UI Design",
 			slug: "semantic-systems-ui-design",
+			...(codeScreenId ? { featuredImage: codeScreenId } : {}),
 			excerpt:
 				"How taxonomy and structure influence user trust in complex software environments.",
 			status: "published",
@@ -251,6 +318,7 @@ async function seed() {
 		data: {
 			title: "The ROI of Editorial Design in B2B Software",
 			slug: "roi-editorial-design",
+			...(serverRoomId ? { featuredImage: serverRoomId } : {}),
 			excerpt:
 				"Measuring the intangible: how beauty and whitespace drive conversion in high-ticket software.",
 			status: "published",
@@ -302,6 +370,7 @@ async function seed() {
 		data: {
 			title: "CTO as a Service: When to Bring in Outside Leadership",
 			slug: "cto-as-a-service",
+			...(heroAbstractId ? { featuredImage: heroAbstractId } : {}),
 			excerpt:
 				"Not every organization needs a full-time CTO. But every organization needs CTO-level thinking.",
 			status: "published",
@@ -354,6 +423,7 @@ async function seed() {
 		data: {
 			title: "Spec Kit Deep Dive: From Spec to Ship",
 			slug: "spec-kit-deep-dive",
+			...(specKitId ? { featuredImage: specKitId } : {}),
 			date: "2026-11-12T10:00:00.000Z",
 			endDate: "2026-11-12T12:30:00.000Z",
 			location: "London, EC2A",
