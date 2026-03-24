@@ -113,7 +113,8 @@ describe('Collection configs', () => {
   describe('Users', () => {
     test('has correct slug and auth enabled', () => {
       expect(Users.slug).toBe('users')
-      expect(Users.auth).toBe(true)
+      // Payload normalizes `auth: true` into a full config object at build time
+      expect(Users.auth).toBeTruthy()
     })
 
     test('has role select with admin/premium/registered', () => {
@@ -155,7 +156,8 @@ describe('Collection configs', () => {
   describe('Media', () => {
     test('has correct slug and upload enabled', () => {
       expect(Media.slug).toBe('media')
-      expect(Media.upload).toBe(true)
+      // Payload normalizes `upload: true` into a full config object at build time
+      expect(Media.upload).toBeTruthy()
     })
 
     test('has required alt field', () => {

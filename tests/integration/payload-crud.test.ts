@@ -62,7 +62,10 @@ describe('Payload CRUD — Categories', () => {
   })
 
   test('enforces unique slug', async () => {
-    const data = buildCategory({ slug: 'unique-slug-test' })
+    // Use a unique suffix each run so leftover rows from prior CI runs don't
+    // cause the first create (not the second) to throw the duplicate error.
+    const slug = `unique-slug-test-${Date.now()}`
+    const data = buildCategory({ slug })
     await payload.create({ collection: 'categories' as any, data })
     try {
       await payload.create({ collection: 'categories' as any, data })

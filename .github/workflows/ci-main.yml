@@ -26,16 +26,14 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
-concurrency:
-  group: deploy-main
-  cancel-in-progress: false
-
-env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
   PRODUCTION_URL: ${{ vars.PRODUCTION_URL || 'https://aha-software-marketing.vercel.app' }}
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
 
 jobs:
   # ─── Pre-deploy gates: must pass before Vercel promotes ───
@@ -43,6 +41,7 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -55,11 +54,12 @@ jobs:
         if: always()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: 'Vercel - aha-software-marketing: Unit Tests'
+          name: "Vercel - aha-software-marketing: Unit Tests"
 
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -72,7 +72,7 @@ jobs:
         if: always()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: 'Vercel - aha-software-marketing: Integration Tests'
+          name: "Vercel - aha-software-marketing: Integration Tests"
 
   # Wait for Vercel's own build to finish, then run E2E against the preview URL
   # The deployment URL is available via the GitHub Deployments API
@@ -80,6 +80,7 @@ jobs:
     name: E2E Tests (Playwright)
     needs: [unit-tests, integration-tests]
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -122,7 +123,7 @@ jobs:
         if: always()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: 'Vercel - aha-software-marketing: E2E Tests'
+          name: "Vercel - aha-software-marketing: E2E Tests"
 
   # ─── Post-deploy: canary verification after Rolling Releases starts ───
   # This runs AFTER Vercel promotes (checks passed → rolling release begins at 10%)
@@ -132,6 +133,7 @@ jobs:
     name: Canary Verification
     needs: [e2e-tests]
     runs-on: ubuntu-latest
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -199,7 +201,7 @@ jobs:
         if: always()
         uses: vercel/repository-dispatch/actions/status@v1
         with:
-          name: 'Vercel - aha-software-marketing: Canary Verification'
+          name: "Vercel - aha-software-marketing: Canary Verification"
 
   # ─── Rollback if canary fails ───
   rollback-on-failure:
