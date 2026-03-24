@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { getPayloadClient } from '@/lib/payload'
+import { resolveMediaUrl } from '@/lib/media'
 import BlogHero from '@/components/blog/BlogHero'
 import CategoryFilter from '@/components/blog/CategoryFilter'
 import FeaturedPost from '@/components/blog/FeaturedPost'
@@ -38,7 +39,7 @@ function formatDate(dateStr?: string) {
 function mapPost(doc: PostDoc) {
   const imageUrl =
     doc.featuredImage && typeof doc.featuredImage === 'object'
-      ? doc.featuredImage.url
+      ? resolveMediaUrl(doc.featuredImage.url) ?? undefined
       : undefined
   const imageAlt =
     doc.featuredImage && typeof doc.featuredImage === 'object'

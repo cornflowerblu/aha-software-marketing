@@ -9,6 +9,7 @@ import ReadingProgressBar from '@/components/blog/ReadingProgressBar'
 import Badge from '@/components/ui/Badge'
 import PaywallGate from '@/components/premium/PaywallGate'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/seo'
+import { resolveMediaUrl } from '@/lib/media'
 import { getCurrentUser, isPremiumUser } from '@/lib/auth'
 
 type Props = {
@@ -75,7 +76,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = post.meta?.description || post.excerpt || ''
   const imageUrl =
     post.featuredImage && typeof post.featuredImage === 'object'
-      ? post.featuredImage.url
+      ? resolveMediaUrl(post.featuredImage.url)
       : undefined
 
   return {
@@ -100,7 +101,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const imageUrl =
     post.featuredImage && typeof post.featuredImage === 'object'
-      ? post.featuredImage.url
+      ? resolveMediaUrl(post.featuredImage.url)
       : undefined
   const imageAlt =
     post.featuredImage && typeof post.featuredImage === 'object'

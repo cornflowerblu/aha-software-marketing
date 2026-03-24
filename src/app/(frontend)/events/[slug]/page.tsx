@@ -6,6 +6,7 @@ import { getPayloadClient } from '@/lib/payload'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { generateGoogleCalendarLink } from '@/lib/calendar'
+import { resolveMediaUrl } from '@/lib/media'
 import { generateEventSchema, generateBreadcrumbSchema } from '@/lib/seo'
 import SectionLabel from '@/components/ui/SectionLabel'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
@@ -77,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     event.meta?.description || `Join us on ${formatDate(event.date)}`
   const imageUrl =
     event.featuredImage && typeof event.featuredImage === 'object'
-      ? event.featuredImage.url
+      ? resolveMediaUrl(event.featuredImage.url)
       : undefined
 
   return {
@@ -100,7 +101,7 @@ export default async function EventDetailPage({ params }: Props) {
 
   const imageUrl =
     event.featuredImage && typeof event.featuredImage === 'object'
-      ? event.featuredImage.url
+      ? resolveMediaUrl(event.featuredImage.url)
       : undefined
   const imageAlt =
     event.featuredImage && typeof event.featuredImage === 'object'
