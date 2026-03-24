@@ -28,27 +28,22 @@ export async function POST(request: Request) {
 
 	// 1. Save to DB first (source of truth)
 	const payload = await getPayloadClient();
-	try {
-		await (payload.create as Function)({
-			collection: "subscribers",
-			data: { email, source: "newsletter" },
-		});
-	} catch (err: unknown) {
-		// Duplicate email — that's fine, they're already subscribed.
-		// Postgres: "duplicate key value violates unique constraint"
-		// Payload/other ORMs may say "unique" or "duplicate"
-		const msg =
-			err && typeof err === "object" && "message" in err
-				? String((err as { message: string }).message).toLowerCase()
-				: "";
-		if (msg.includes("unique") || msg.includes("duplicate")) {
-			return NextResponse.json({
-				success: true,
-				message: "Already subscribed",
-			});
-		}
-		throw err;
+
+	// Check for existing subscriber before attempting create to avoid relying
+	// on ORM-specific duplicate-key error shapes.
+	const existing = await payload.find({
+		collection: "subscribers" as "users",
+		where: { email: { equals: email } },
+		limit: 1,
+	});
+	if (existing.docs.length > 0) {
+		return NextResponse.json({ success: true, message: "Already subscribed" });
 	}
+
+	await (payload.create as Function)({
+		collection: "subscribers",
+		data: { email, source: "newsletter" },
+	});
 
 	// 2. Fan out to external services (best-effort, don't block response)
 	const syncPromises: Promise<unknown>[] = [];
