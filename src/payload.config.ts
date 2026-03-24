@@ -12,6 +12,7 @@ import { Posts } from './collections/Posts'
 import { Events } from './collections/Events'
 import { Categories } from './collections/Categories'
 import { Registrations } from './collections/Registrations'
+import { Subscribers } from './collections/Subscribers'
 import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
 
@@ -25,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Posts, Events, Categories, Registrations],
+  collections: [Users, Media, Posts, Events, Categories, Registrations, Subscribers],
   globals: [SiteSettings, Navigation],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'CHANGE-ME-IN-PRODUCTION',
