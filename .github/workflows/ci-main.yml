@@ -12,7 +12,16 @@ name: Main Branch — Test, Gate, Canary, Verify
 #   1. Project Settings → Git → Required Checks → add all check names below
 #   2. Project Settings → Rolling Releases → stages: 10%, 100%
 #   3. Enable Skew Protection
-
+#
+# Setup in GitHub (Repository Settings → Environments):
+#   4. Create a "production-migrations" environment
+#      • Add required reviewers so every push to main must be approved before
+#        payload migrate runs against the production database.
+#      • Add DATABASE_URL and PAYLOAD_SECRET as environment secrets.
+#   5. Ensure the "production" environment also has access to DATABASE_URL and
+#      PAYLOAD_SECRET (e.g., duplicate them as environment secrets, or keep
+#      them as repo-level secrets), along with all other production secrets,
+#      since other jobs in this workflow run with environment: production.
 on:
   push:
     branches: [main]
@@ -42,11 +51,15 @@ concurrency:
 
 jobs:
   # ─── Database migration ─────────────────────────────────────────────────────
+  # Uses the "production-migrations" environment, which should be configured
+  # in GitHub repository settings with required reviewers. This acts as an
+  # explicit manual gate so no migration runs against the production database
+  # without human approval.
 
   migrate:
     name: Run Migrations
     runs-on: ubuntu-latest
-    environment: production
+    environment: production-migrations
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
