@@ -12,6 +12,8 @@ const fadeInUp = {
 export default function NewsletterCTA() {
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
@@ -76,14 +78,39 @@ export default function NewsletterCTA() {
               placeholder="Email address"
             />
             <motion.button
-              onClick={() => {
-                if (email) setSubmitted(true)
+              onClick={async () => {
+                if (!email) return
+                setLoading(true)
+                setError('')
+                try {
+                  const res = await fetch('/api/newsletter', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                  })
+                  if (res.ok) {
+                    setSubmitted(true)
+                  } else {
+                    const data = await res.json()
+                    setError(data.error || 'Something went wrong')
+                  }
+                } catch {
+                  setError('Something went wrong')
+                } finally {
+                  setLoading(false)
+                }
               }}
+              disabled={loading}
               whileHover={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
-              className="bg-on-primary/15 border border-on-primary/20 border-l-0 px-5 py-3 rounded-r cursor-pointer"
+              className="bg-on-primary/15 border border-on-primary/20 border-l-0 px-5 py-3 rounded-r cursor-pointer disabled:opacity-50"
             >
-              <span className="font-label text-sm font-bold text-on-primary">Join</span>
+              <span className="font-label text-sm font-bold text-on-primary">
+                {loading ? '...' : 'Join'}
+              </span>
             </motion.button>
+            {error && (
+              <p className="text-on-primary/70 text-xs mt-2 font-body">{error}</p>
+            )}
           </div>
         )}
       </div>
