@@ -10,8 +10,8 @@ import {
 describe('Fixture factories', () => {
   test('buildPost creates a valid post object', () => {
     const post = buildPost()
-    expect(post.title).toMatch(/^Test Post \d+$/)
-    expect(post.slug).toMatch(/^test-post-\d+$/)
+    expect(post.title).toMatch(/^Test Post .+$/)
+    expect(post.slug).toMatch(/^test-post-.+$/)
     expect(post.status).toBe('published')
     expect(post.premium).toBe(false)
     expect(post.content.root.type).toBe('root')
@@ -27,8 +27,8 @@ describe('Fixture factories', () => {
 
   test('buildEvent creates a valid event object', () => {
     const event = buildEvent()
-    expect(event.title).toMatch(/^Test Event \d+$/)
-    expect(event.slug).toMatch(/^test-event-\d+$/)
+    expect(event.title).toMatch(/^Test Event .+$/)
+    expect(event.slug).toMatch(/^test-event-.+$/)
     expect(event.location).toBe('Virtual')
     expect(event.capacity).toBe(100)
     expect(event.price).toBe(0)
@@ -45,9 +45,9 @@ describe('Fixture factories', () => {
 
   test('buildUser creates a valid user object', () => {
     const user = buildUser()
-    expect(user.email).toMatch(/^testuser-\d+@test\.com$/)
+    expect(user.email).toMatch(/^testuser-.+@test\.com$/)
     expect(user.password).toBe('TestPassword123!')
-    expect(user.name).toMatch(/^Test User \d+$/)
+    expect(user.name).toMatch(/^Test User .+$/)
     expect(user.role).toBe('registered')
   })
 
@@ -66,8 +66,8 @@ describe('Fixture factories', () => {
 
   test('buildCategory creates a valid category object', () => {
     const cat = buildCategory()
-    expect(cat.title).toMatch(/^Test Category \d+$/)
-    expect(cat.slug).toMatch(/^test-category-\d+$/)
+    expect(cat.title).toMatch(/^Test Category .+$/)
+    expect(cat.slug).toMatch(/^test-category-.+$/)
     expect(cat.description).toBeDefined()
   })
 

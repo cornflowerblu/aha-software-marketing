@@ -5,9 +5,10 @@
 
 import type { Payload } from 'payload'
 
+const runId = Date.now().toString(36)
 let counter = 0
 function uniqueId() {
-  return ++counter
+  return `${runId}-${++counter}`
 }
 
 // --- Data builders (plain objects, no DB) ---

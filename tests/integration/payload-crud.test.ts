@@ -15,7 +15,7 @@ import {
 } from '../helpers'
 
 // Payload + Neon init can take 10-15s on first connection
-setDefaultTimeout(30_000)
+setDefaultTimeout(60_000)
 
 let payload: Payload
 

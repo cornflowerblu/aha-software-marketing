@@ -8,7 +8,7 @@ import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical
 import ReadingProgressBar from '@/components/blog/ReadingProgressBar'
 import Badge from '@/components/ui/Badge'
 import PaywallGate from '@/components/premium/PaywallGate'
-import { generateArticleSchema } from '@/lib/seo'
+import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/seo'
 import { getCurrentUser, isPremiumUser } from '@/lib/auth'
 
 type Props = {
@@ -127,6 +127,12 @@ export default async function BlogPostPage({ params }: Props) {
   const hasPremium = user ? isPremiumUser(user) : false
   const isGated = post.premium === true && !hasPremium
 
+  const breadcrumbLd = generateBreadcrumbSchema([
+    { name: 'Home', url: '/' },
+    { name: 'Insights', url: '/blog' },
+    { name: post.title, url: `/blog/${post.slug}` },
+  ])
+
   const jsonLd = generateArticleSchema({
     title: post.title,
     slug: post.slug,
@@ -149,6 +155,10 @@ export default async function BlogPostPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       <article className="max-w-4xl mx-auto px-6 md:px-12 pb-20">
