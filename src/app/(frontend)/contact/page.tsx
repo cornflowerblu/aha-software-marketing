@@ -1,7 +1,12 @@
+import type { Metadata } from 'next'
+import ContactSection from '@/components/home/ContactSection'
+
+export const metadata: Metadata = {
+  title: 'Contact',
+  description:
+    'Schedule a Strategic Alignment workshop with AHA Software. No sales pitches — just technical experts auditing your delivery pipeline.',
+}
+
 export default function ContactPage() {
-  return (
-    <div className="min-h-screen p-8">
-      <h1 className="text-4xl font-bold">Contact</h1>
-    </div>
-  )
+  return <ContactSection />
 }

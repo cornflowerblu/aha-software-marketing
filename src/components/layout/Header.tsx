@@ -84,7 +84,7 @@ export function Header() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="block editorial-gradient text-[--color-on-primary] px-8 py-3 text-center font-label text-sm font-bold tracking-wide uppercase"
+            className="block editorial-gradient text-white px-8 py-3 text-center font-label text-sm font-bold tracking-wide uppercase"
           >
             Work Together
           </Link>

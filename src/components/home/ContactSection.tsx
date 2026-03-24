@@ -36,6 +36,8 @@ export default function ContactSection() {
     const form = new FormData(e.currentTarget)
     const data = {
       name: form.get('name') as string,
+      email: form.get('email') as string,
+      phone: form.get('phone') as string || undefined,
       company: form.get('company') as string,
       challenge: form.get('challenge') as string,
       message: form.get('message') as string,
@@ -111,6 +113,22 @@ export default function ContactSection() {
               >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                   <Input label="Full Name" name="name" placeholder="John Doe" type="text" required />
+                  <Input
+                    label="Email"
+                    name="email"
+                    placeholder="you@company.com"
+                    type="email"
+                    required
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <Input
+                    label="Phone (Optional)"
+                    name="phone"
+                    placeholder="+1 (555) 000-0000"
+                    type="tel"
+                  />
                   <Input
                     label="Company"
                     name="company"
