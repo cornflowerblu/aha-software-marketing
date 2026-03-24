@@ -1,18 +1,32 @@
+'use client'
+
 import Link from 'next/link'
+import { motion, useInView } from 'motion/react'
+import { useRef } from 'react'
 
 interface PaginationProps {
   currentPage: number
   totalPages: number
+  totalPosts?: number
   basePath: string
   searchParams?: Record<string, string>
+}
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const } },
 }
 
 export default function Pagination({
   currentPage,
   totalPages,
+  totalPosts,
   basePath,
   searchParams = {},
 }: PaginationProps) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: '-80px' })
+
   if (totalPages <= 1) return null
 
   function buildHref(page: number) {
@@ -26,75 +40,53 @@ export default function Pagination({
     return qs ? `${basePath}?${qs}` : basePath
   }
 
-  const pages: (number | 'ellipsis')[] = []
+  const pages: number[] = []
   for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 1) {
-      pages.push(i)
-    } else if (pages[pages.length - 1] !== 'ellipsis') {
-      pages.push('ellipsis')
-    }
+    pages.push(i)
   }
 
   return (
-    <div className="mt-28 flex justify-center items-center gap-6">
-      {currentPage <= 1 ? (
-        <span className="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface-variant opacity-40 cursor-not-allowed">
-          <span className="material-symbols-outlined text-sm">arrow_back</span>
-          Previous
-        </span>
-      ) : (
-        <Link
-          href={buildHref(currentPage - 1)}
-          className="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface hover:text-primary transition-colors"
-        >
-          <span className="material-symbols-outlined text-sm">arrow_back</span>
-          Previous
-        </Link>
-      )}
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={fadeInUp}
+      className="mt-16 pt-8 border-t border-outline-variant/30 flex items-center justify-between"
+    >
+      {/* Info text */}
+      <span className="font-label text-xs text-on-surface-variant/60 uppercase tracking-widest">
+        {totalPosts ? `${totalPosts} articles` : ''}{totalPosts ? ' \u00b7 ' : ''}{currentPage} of {totalPages} pages
+      </span>
 
-      <div className="flex gap-4">
-        {pages.map((p, i) =>
-          p === 'ellipsis' ? (
-            <span
-              key={`e${i}`}
-              className="w-8 h-8 flex items-center justify-center text-sm"
-            >
-              ...
-            </span>
-          ) : (
-            <Link
-              key={p}
-              href={buildHref(p)}
-              className={`w-8 h-8 flex items-center justify-center font-bold text-sm transition-colors ${
-                p === currentPage
-                  ? 'bg-primary text-on-primary'
-                  : 'hover:text-primary'
+      {/* Page numbers + next */}
+      <div className="flex items-center gap-2">
+        {pages.map((n) => (
+          <Link key={n} href={buildHref(n)}>
+            <motion.div
+              whileHover={{ scale: 1.1 }}
+              className={`w-8 h-8 rounded flex items-center justify-center cursor-pointer font-label text-sm font-bold transition-colors ${
+                n === currentPage
+                  ? 'editorial-gradient text-on-primary'
+                  : 'text-on-surface-variant ghost-border'
               }`}
             >
-              {p}
-            </Link>
-          ),
+              {n}
+            </motion.div>
+          </Link>
+        ))}
+
+        {currentPage < totalPages && (
+          <Link href={buildHref(currentPage + 1)}>
+            <motion.div
+              whileHover={{ x: 4 }}
+              className="ml-2 flex items-center gap-1 font-label text-sm text-primary uppercase tracking-widest cursor-pointer"
+            >
+              Next
+              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            </motion.div>
+          </Link>
         )}
       </div>
-
-      {currentPage >= totalPages ? (
-        <span className="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface-variant opacity-40 cursor-not-allowed">
-          Next
-          <span className="material-symbols-outlined text-sm">
-            arrow_forward
-          </span>
-        </span>
-      ) : (
-        <Link
-          href={buildHref(currentPage + 1)}
-          className="flex items-center gap-2 font-label text-sm uppercase tracking-widest text-on-surface hover:text-primary transition-colors"
-        >
-          Next
-          <span className="material-symbols-outlined text-sm">
-            arrow_forward
-          </span>
-        </Link>
-      )}
-    </div>
+    </motion.div>
   )
 }

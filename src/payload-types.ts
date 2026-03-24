@@ -73,6 +73,7 @@ export interface Config {
     events: Event;
     categories: Category;
     registrations: Registration;
+    subscribers: Subscriber;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     registrations: RegistrationsSelect<false> | RegistrationsSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -304,6 +306,19 @@ export interface Registration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  source?: ('newsletter' | 'event' | 'premium') | null;
+  resendSynced?: boolean | null;
+  hubspotSynced?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -349,6 +364,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'registrations';
         value: number | Registration;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -513,6 +532,18 @@ export interface RegistrationsSelect<T extends boolean = true> {
   paymentStatus?: T;
   stripePaymentId?: T;
   attended?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  source?: T;
+  resendSynced?: T;
+  hubspotSynced?: T;
   updatedAt?: T;
   createdAt?: T;
 }
