@@ -98,6 +98,8 @@ jobs:
       # Retries up to 30×10s (5 min) — enough for Vercel's build + boot.
       - name: Get per-deployment URL
         id: get-deploy-url
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: |
           echo "Looking for Vercel deployment for commit ${{ github.sha }}..."
           for i in $(seq 1 30); do
@@ -115,8 +117,10 @@ jobs:
 
             if [ -n "$DEPLOY_URL" ]; then
               FULL_URL="https://${DEPLOY_URL}"
-              # Wait until the URL actually responds before handing it to Playwright
-              STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "$FULL_URL" 2>/dev/null || echo "000")
+              # Bypass Vercel Deployment Protection with the automation secret
+              STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "$FULL_URL" \
+                -H "x-vercel-protection-bypass: ${VERCEL_AUTOMATION_BYPASS_SECRET}" \
+                2>/dev/null || echo "000")
               if [ "$STATUS" != "000" ] && [ "$STATUS" -lt 500 ]; then
                 echo "url=${FULL_URL}" >> $GITHUB_OUTPUT
                 echo "Deployment live at: ${FULL_URL} (HTTP $STATUS)"
@@ -137,6 +141,7 @@ jobs:
         run: bunx playwright test
         env:
           PLAYWRIGHT_BASE_URL: ${{ steps.get-deploy-url.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Notify Vercel
         if: always()
@@ -170,12 +175,16 @@ jobs:
           echo "Waiting 30s for Rolling Release to start canary..."
           sleep 30
           STATUS=$(curl -sf -o /dev/null -w "%{http_code}" \
-            "${PRODUCTION_URL}/?vcrrForceCanary=true" 2>/dev/null || echo "000")
+            "${PRODUCTION_URL}/?vcrrForceCanary=true" \
+            -H "x-vercel-protection-bypass: ${VERCEL_AUTOMATION_BYPASS_SECRET}" \
+            2>/dev/null || echo "000")
           echo "Canary HTTP status: $STATUS"
           if [ "$STATUS" = "000" ] || [ "$STATUS" -ge 500 ]; then
             echo "::error::Canary is not responding (status $STATUS)"
             exit 1
           fi
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Traffic simulation on canary (50 req/page)
         run: |
@@ -192,7 +201,9 @@ jobs:
 
             for i in $(seq 1 50); do
               TOTAL=$((TOTAL + 1))
-              STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "$URL" 2>/dev/null || echo "000")
+              STATUS=$(curl -sf -o /dev/null -w "%{http_code}" "$URL" \
+                -H "x-vercel-protection-bypass: ${VERCEL_AUTOMATION_BYPASS_SECRET}" \
+                2>/dev/null || echo "000")
               if [ "$STATUS" -ge 500 ]; then
                 ERRORS=$((ERRORS + 1))
                 echo "ERROR on $URL — HTTP $STATUS"
@@ -207,15 +218,14 @@ jobs:
             exit 1
           fi
           echo "Traffic simulation passed"
+        env:
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Playwright E2E on canary
         run: bunx playwright test
         env:
           PLAYWRIGHT_BASE_URL: ${{ env.PRODUCTION_URL }}
-          # vcrrForceCanary cookie is set via URL param in the traffic sim above;
-          # Playwright tests hit PRODUCTION_URL directly — at 10% canary some
-          # requests will hit old, some new. Full suite pass at this stage means
-          # both versions are serving correctly.
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
 
       - name: Check Vercel runtime logs for errors
         run: |
