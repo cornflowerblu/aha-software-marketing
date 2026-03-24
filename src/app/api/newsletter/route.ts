@@ -78,6 +78,7 @@ export async function POST(request: Request) {
   syncPromises.push(
     createOrUpdateContact({
       email,
+      newsletterSubscriber: true,
       leadStatus: 'NEW',
     }).then(async () => {
       try {
