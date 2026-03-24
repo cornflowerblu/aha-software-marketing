@@ -42,7 +42,7 @@ export function Header() {
         <div className="flex items-center gap-4">
           <Link
             href="/contact"
-            className="hidden md:inline-flex editorial-gradient text-[--color-on-primary] px-8 py-2.5 font-label text-sm font-bold tracking-wide uppercase hover:opacity-90 transition-all active:scale-95 rounded-md"
+            className="hidden md:inline-flex editorial-gradient text-white px-8 py-2.5 font-label text-sm font-bold tracking-wide uppercase hover:opacity-90 transition-all active:scale-95 rounded-md"
           >
             Work Together
           </Link>
@@ -78,7 +78,7 @@ export function Header() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="block editorial-gradient text-[--color-on-primary] px-8 py-3 text-center font-label text-sm font-bold tracking-wide uppercase"
+            className="block editorial-gradient text-white px-8 py-3 text-center font-label text-sm font-bold tracking-wide uppercase"
           >
             Work Together
           </Link>
