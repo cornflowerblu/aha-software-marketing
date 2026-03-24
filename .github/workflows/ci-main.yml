@@ -16,6 +16,13 @@ name: Main Branch — Test, Gate, Canary, Verify
 on:
   push:
     branches: [main]
+  workflow_dispatch:
+    inputs:
+      seed:
+        description: 'Run database seed after migrations'
+        required: false
+        type: boolean
+        default: false
 
 permissions:
   statuses: write
@@ -49,10 +56,29 @@ jobs:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
 
+  # ─── Optional seed (manual trigger only) ─────────────────────────────────────
+
+  seed:
+    name: Seed Database
+    needs: [migrate]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' && inputs.seed == true
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run seed
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+          BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+
   # ─── Pre-deploy gates ────────────────────────────────────────────────────────
 
   unit-tests:
-    needs: [migrate]
+    needs: [migrate, seed]
+    if: always() && needs.migrate.result == 'success'
     name: Unit Tests
     runs-on: ubuntu-latest
     environment: production
@@ -72,6 +98,8 @@ jobs:
           name: "Vercel - aha-software-marketing: Unit Tests"
 
   integration-tests:
+    needs: [migrate, seed]
+    if: always() && needs.migrate.result == 'success'
     name: Integration Tests
     runs-on: ubuntu-latest
     environment: production
