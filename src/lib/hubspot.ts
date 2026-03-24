@@ -14,6 +14,7 @@ export async function createOrUpdateContact({
   challenge,
   message,
   eventName,
+  newsletterSubscriber,
   leadStatus = 'NEW',
 }: {
   email: string
@@ -24,6 +25,7 @@ export async function createOrUpdateContact({
   challenge?: string
   message?: string
   eventName?: string
+  newsletterSubscriber?: boolean
   leadStatus?: 'NEW' | 'OPEN' | 'IN_PROGRESS' | 'OPEN_DEAL' | 'UNQUALIFIED' | 'ATTEMPTED_TO_CONTACT' | 'CONNECTED' | 'BAD_TIMING'
 }) {
   if (!process.env.HUBSPOT_API_KEY) return null
@@ -35,6 +37,7 @@ export async function createOrUpdateContact({
   if (company) properties.company = company
   if (challenge) properties.primary_challenge = challenge
   if (message) properties.message = message
+  if (newsletterSubscriber) properties.newsletter_subscriber = 'true'
   properties.hs_lead_status = leadStatus
 
   try {

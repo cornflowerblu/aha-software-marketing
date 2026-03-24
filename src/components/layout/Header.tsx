@@ -8,6 +8,7 @@ const navLinks = [
   { label: 'Services', href: '/services' },
   { label: 'Insights', href: '/blog' },
   { label: 'Events', href: '/events' },
+  { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
 
@@ -39,7 +40,13 @@ export function Header() {
           ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
+          <Link
+            href="/premium"
+            className="hidden md:inline-flex font-label text-sm uppercase tracking-wide text-[--color-primary] hover:opacity-70 transition-opacity"
+          >
+            Full Access
+          </Link>
           <Link
             href="/contact"
             className="hidden md:inline-flex editorial-gradient text-white px-8 py-2.5 font-label text-sm font-bold tracking-wide uppercase hover:opacity-90 transition-all active:scale-95 rounded-md"

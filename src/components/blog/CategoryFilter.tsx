@@ -1,6 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
+import { motion } from 'motion/react'
 
 interface CategoryFilterProps {
   categories: { title: string; slug: string }[]
@@ -22,31 +23,28 @@ export default function CategoryFilter({ categories, activeSlug }: CategoryFilte
     router.push(`/blog?${params.toString()}`)
   }
 
+  const allCategories = [{ title: 'All Insights', slug: '' }, ...categories]
+
   return (
-    <div className="flex flex-wrap justify-center gap-3 mb-16">
-      <button
-        onClick={() => handleFilter(null)}
-        className={`px-6 py-2 rounded-full font-label text-sm font-bold tracking-wide transition-colors ${
-          !activeSlug
-            ? 'bg-primary text-on-primary'
-            : 'bg-secondary-container text-on-secondary-container hover:bg-surface-container-highest'
-        }`}
-      >
-        All Insights
-      </button>
-      {categories.map((cat) => (
-        <button
-          key={cat.slug}
-          onClick={() => handleFilter(cat.slug)}
-          className={`px-6 py-2 rounded-full font-label text-sm font-medium tracking-wide transition-colors ${
-            activeSlug === cat.slug
-              ? 'bg-primary text-on-primary'
-              : 'bg-secondary-container text-on-secondary-container hover:bg-surface-container-highest'
-          }`}
-        >
-          {cat.title}
-        </button>
-      ))}
+    <div className="flex flex-wrap justify-center gap-3 pt-2">
+      {allCategories.map((cat) => {
+        const isActive = cat.slug === '' ? !activeSlug : activeSlug === cat.slug
+        return (
+          <motion.button
+            key={cat.slug || 'all'}
+            onClick={() => handleFilter(cat.slug || null)}
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className={`px-6 py-2 rounded-full font-label text-sm font-bold tracking-wide transition-colors cursor-pointer border-none outline-none ${
+              isActive
+                ? 'editorial-gradient text-on-primary'
+                : 'bg-secondary-container text-on-secondary-container'
+            }`}
+          >
+            {cat.title}
+          </motion.button>
+        )
+      })}
     </div>
   )
 }

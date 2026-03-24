@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
 import { Suspense } from 'react'
 import { getPayloadClient } from '@/lib/payload'
-import SectionLabel from '@/components/ui/SectionLabel'
+import BlogHero from '@/components/blog/BlogHero'
 import CategoryFilter from '@/components/blog/CategoryFilter'
 import FeaturedPost from '@/components/blog/FeaturedPost'
 import PostCard from '@/components/blog/PostCard'
 import NewsletterCTA from '@/components/blog/NewsletterCTA'
 import Pagination from '@/components/blog/Pagination'
+import ArticleGrid from '@/components/blog/ArticleGrid'
 
 export const metadata: Metadata = {
   title: 'Insights | AHA Software',
@@ -24,7 +25,7 @@ interface PostDoc {
   publishedAt?: string
   featuredImage?: { url?: string; alt?: string } | null
   categories?: { title: string; slug: string }[] | null
-  author?: { name?: string } | null
+  author?: { name?: string; avatar?: { url?: string } } | null
 }
 
 function formatDate(dateStr?: string) {
@@ -35,18 +36,26 @@ function formatDate(dateStr?: string) {
 }
 
 function mapPost(doc: PostDoc) {
-  const imageUrl = doc.featuredImage && typeof doc.featuredImage === 'object'
-    ? doc.featuredImage.url
-    : undefined
-  const imageAlt = doc.featuredImage && typeof doc.featuredImage === 'object'
-    ? doc.featuredImage.alt
-    : undefined
-  const authorName = doc.author && typeof doc.author === 'object'
-    ? doc.author.name
-    : undefined
-  const category = Array.isArray(doc.categories) && doc.categories.length > 0
-    ? (typeof doc.categories[0] === 'object' ? doc.categories[0].title : undefined)
-    : undefined
+  const imageUrl =
+    doc.featuredImage && typeof doc.featuredImage === 'object'
+      ? doc.featuredImage.url
+      : undefined
+  const imageAlt =
+    doc.featuredImage && typeof doc.featuredImage === 'object'
+      ? doc.featuredImage.alt
+      : undefined
+  const authorName =
+    doc.author && typeof doc.author === 'object' ? doc.author.name : undefined
+  const authorImage =
+    doc.author && typeof doc.author === 'object' && doc.author.avatar && typeof doc.author.avatar === 'object'
+      ? doc.author.avatar.url
+      : undefined
+  const category =
+    Array.isArray(doc.categories) && doc.categories.length > 0
+      ? typeof doc.categories[0] === 'object'
+        ? doc.categories[0].title
+        : undefined
+      : undefined
 
   return {
     slug: doc.slug,
@@ -57,6 +66,7 @@ function mapPost(doc: PostDoc) {
     category,
     premium: doc.premium || false,
     authorName,
+    authorImage,
     date: formatDate(doc.publishedAt),
   }
 }
@@ -76,9 +86,7 @@ async function fetchData(searchParams: SearchParams) {
         collection: 'posts',
         where: {
           status: { equals: 'published' },
-          ...(category
-            ? { 'categories.slug': { equals: category } }
-            : {}),
+          ...(category ? { 'categories.slug': { equals: category } } : {}),
         },
         sort: '-publishedAt',
         limit: POSTS_PER_PAGE + 1,
@@ -98,9 +106,7 @@ async function fetchData(searchParams: SearchParams) {
         : null
 
     const gridPosts = (
-      featured
-        ? postsResult.docs.slice(1)
-        : postsResult.docs
+      featured ? postsResult.docs.slice(1) : postsResult.docs
     ).map((d) => mapPost(d as unknown as PostDoc))
 
     return {
@@ -109,6 +115,7 @@ async function fetchData(searchParams: SearchParams) {
       posts: gridPosts,
       currentPage,
       totalPages: postsResult.totalPages ?? 1,
+      totalDocs: postsResult.totalDocs ?? 0,
       activeCategory: category,
     }
   } catch {
@@ -183,6 +190,7 @@ async function fetchData(searchParams: SearchParams) {
       ],
       currentPage,
       totalPages: 3,
+      totalDocs: 8,
       activeCategory: category,
     }
   }
@@ -193,56 +201,94 @@ export default async function BlogPage({
 }: {
   searchParams: SearchParams
 }) {
-  const { categories, featured, posts, currentPage, totalPages, activeCategory } =
-    await fetchData(searchParams)
+  const {
+    categories,
+    featured,
+    posts,
+    currentPage,
+    totalPages,
+    totalDocs,
+    activeCategory,
+  } = await fetchData(searchParams)
 
   const sp = await searchParams
   const searchParamsRecord: Record<string, string> = {}
   if (sp.category) searchParamsRecord.category = sp.category
 
+  // Split posts: first 3 go in primary grid, rest go below with newsletter
+  const primaryPosts = posts.slice(0, 3)
+  const secondaryPosts = posts.slice(3)
+
   return (
-    <div className="pb-20 px-6 md:px-12 max-w-[1440px] mx-auto">
-      <header className="mb-20 pt-8 text-center max-w-4xl mx-auto">
-        <SectionLabel color="tertiary" className="mb-6">
-          The Digital Curator
-        </SectionLabel>
-        <h1 className="font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-8 leading-[1.1]">
-          Perspectives on the{' '}
-          <span className="italic font-normal">Modern Workforce</span>.
-        </h1>
-        <p className="font-body text-xl text-on-surface-variant leading-relaxed opacity-90">
-          Exploring the intersection of technology, strategy, and premium
-          editorial craftsmanship. Dedicated to those who curate experiences.
-        </p>
+    <div className="max-w-[1440px] mx-auto w-full">
+      {/* Hero Section */}
+      <header className="pt-[120px] pb-16 px-6 md:px-12">
+        <BlogHero />
+
+        {/* Category Filters */}
+        <div className="mt-8">
+          <Suspense>
+            <CategoryFilter
+              categories={categories}
+              activeSlug={activeCategory}
+            />
+          </Suspense>
+        </div>
       </header>
 
-      <Suspense>
-        <CategoryFilter
-          categories={categories}
-          activeSlug={activeCategory}
-        />
-      </Suspense>
-
-      {featured && <FeaturedPost {...featured} readTime="12 Min" />}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-20">
-        {posts.slice(0, 4).map((post) => (
-          <PostCard key={post.slug} {...post} />
-        ))}
-
-        <NewsletterCTA />
-
-        {posts.slice(4).map((post) => (
-          <PostCard key={post.slug} {...post} />
-        ))}
+      {/* Featured Story */}
+      <div className="px-6 md:px-12">
+        {featured && <FeaturedPost {...featured} readTime="12 Min" />}
       </div>
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        basePath="/blog"
-        searchParams={searchParamsRecord}
-      />
+      {/* Primary Article Grid (3 columns) */}
+      <div className="px-6 md:px-12 mb-20">
+        <ArticleGrid>
+          {primaryPosts.map((post) => (
+            <PostCard key={post.slug} {...post} />
+          ))}
+        </ArticleGrid>
+      </div>
+
+      {/* Secondary Row: Article + Newsletter CTA + Article */}
+      {(secondaryPosts.length > 0) && (
+        <div className="px-6 md:px-12 mb-32">
+          <ArticleGrid>
+            {/* First secondary article */}
+            {secondaryPosts[0] && (
+              <PostCard key={secondaryPosts[0].slug} {...secondaryPosts[0]} />
+            )}
+
+            {/* Newsletter CTA spanning middle */}
+            <NewsletterCTA />
+
+            {/* Remaining secondary articles */}
+            {secondaryPosts.slice(1).map((post) => (
+              <PostCard key={post.slug} {...post} />
+            ))}
+          </ArticleGrid>
+        </div>
+      )}
+
+      {/* Newsletter CTA fallback if no secondary posts */}
+      {secondaryPosts.length === 0 && (
+        <div className="px-6 md:px-12 mb-32">
+          <ArticleGrid>
+            <NewsletterCTA />
+          </ArticleGrid>
+        </div>
+      )}
+
+      {/* Pagination */}
+      <div className="px-6 md:px-12 pb-20">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          totalPosts={totalDocs}
+          basePath="/blog"
+          searchParams={searchParamsRecord}
+        />
+      </div>
     </div>
   )
 }
