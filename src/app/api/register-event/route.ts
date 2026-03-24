@@ -26,28 +26,51 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
   }
 
+  const { name, email, eventId, eventSlug } = body as {
+    name?: string
+    email?: string
+    eventId?: string
+    eventSlug?: string
+  }
+
+  // Accept either eventId or eventSlug from the frontend
   const validation = validateRegistrationForm(
-    body as { name?: string; email?: string; eventId?: string },
+    { name, email, eventId: eventId || eventSlug || undefined } as {
+      name?: string
+      email?: string
+      eventId?: string
+    },
   )
   if (!validation.valid) {
     return NextResponse.json({ errors: validation.errors }, { status: 400 })
   }
 
-  const { name, email, eventId } = body as { name: string; email: string; eventId: string }
   const payload = await getPayloadClient()
 
-  // Verify event exists and has capacity
+  // Verify event exists — look up by ID or slug
   let event
   try {
-    event = await payload.findByID({ collection: 'events', id: eventId })
+    if (eventId) {
+      event = await payload.findByID({ collection: 'events', id: eventId })
+    } else if (eventSlug) {
+      const result = await payload.find({
+        collection: 'events',
+        where: { slug: { equals: eventSlug } },
+        limit: 1,
+      })
+      event = result.docs[0]
+    }
+    if (!event) throw new Error('Not found')
   } catch {
     return NextResponse.json({ error: 'Event not found' }, { status: 404 })
   }
 
+  const resolvedEventId = event.id
+
   if (event.capacity) {
     const registrations = await payload.find({
       collection: 'registrations',
-      where: { event: { equals: eventId } },
+      where: { event: { equals: resolvedEventId } },
       limit: 0,
     })
     if (registrations.totalDocs >= (event.capacity as number)) {
@@ -82,7 +105,7 @@ export async function POST(request: Request) {
     where: {
       and: [
         { user: { equals: user.id } },
-        { event: { equals: eventId } },
+        { event: { equals: resolvedEventId } },
       ],
     },
     limit: 1,
@@ -96,7 +119,7 @@ export async function POST(request: Request) {
     collection: 'registrations',
     data: {
       user: user.id,
-      event: eventId,
+      event: resolvedEventId,
       paymentStatus: (event.price ?? 0) > 0 ? 'pending' : 'free',
     },
   })
@@ -106,10 +129,10 @@ export async function POST(request: Request) {
     try {
       await getResend()?.emails.send({
         from: 'AHA Software <events@ahasw.com>',
-        to: email,
+        to: email as string,
         subject: `Registration confirmed: ${event.title}`,
         html: `<h1>You're registered!</h1>
-<p>Hi ${escapeHtml(name)},</p>
+<p>Hi ${escapeHtml(name as string)},</p>
 <p>You've been registered for <strong>${escapeHtml(String(event.title))}</strong>.</p>
 <p><strong>Date:</strong> ${new Date(String(event.date)).toLocaleDateString('en-US', { dateStyle: 'full' })}</p>
 ${event.location ? `<p><strong>Location:</strong> ${escapeHtml(String(event.location))}</p>` : ''}
@@ -122,13 +145,13 @@ ${event.location ? `<p><strong>Location:</strong> ${escapeHtml(String(event.loca
   }
 
   // Sync to HubSpot
-  const [firstName, ...lastParts] = name.split(' ')
+  const [firstName, ...lastParts] = (name as string).split(' ')
   createOrUpdateContact({
-    email,
+    email: email as string,
     firstName,
     lastName: lastParts.join(' ') || undefined,
-    source: 'Event Registration',
     eventName: event.title as string,
+    leadStatus: 'OPEN',
   }).catch(() => {})
 
   return NextResponse.json({

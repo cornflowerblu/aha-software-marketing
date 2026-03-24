@@ -57,11 +57,16 @@ ${company ? `<p><strong>Company:</strong> ${escapeHtml(company)}</p>` : ''}
 
   // Sync to HubSpot
   const [firstName, ...lastParts] = name.split(' ')
+  const phone = (body as Record<string, unknown>).phone as string | undefined
+  const challenge = (body as Record<string, unknown>).challenge as string | undefined
   createOrUpdateContact({
     email,
     firstName,
     lastName: lastParts.join(' ') || undefined,
-    source: 'Contact Form',
+    phone: phone || undefined,
+    company: company || undefined,
+    challenge: challenge || undefined,
+    message: message || undefined,
   }).catch(() => {})
 
   return NextResponse.json({ success: true })
