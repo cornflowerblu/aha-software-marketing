@@ -10,6 +10,8 @@ import NewsletterCTA from '@/components/blog/NewsletterCTA'
 import Pagination from '@/components/blog/Pagination'
 import ArticleGrid from '@/components/blog/ArticleGrid'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Insights | AHA Software',
   description:

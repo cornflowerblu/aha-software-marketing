@@ -4,6 +4,8 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import EventCard from '@/components/events/EventCard'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Events | AHA Software',
   description:
