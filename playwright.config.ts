@@ -19,11 +19,11 @@ export default defineConfig({
     },
     {
       name: 'mobile',
-      use: { ...devices['iPhone 14'] },
+      use: { ...devices['Pixel 7'] },
     },
     {
       name: 'tablet',
-      use: { ...devices['iPad (gen 7)'] },
+      use: { ...devices['Galaxy Tab S4'] },
     },
   ],
   ...(!process.env.PLAYWRIGHT_BASE_URL ? {
