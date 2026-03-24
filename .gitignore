@@ -1,6 +1,9 @@
 # dependencies (bun install)
 node_modules
 
+# Playwright canary session state (generated at runtime)
+tests/e2e/.canary-state.json
+
 # Docs Images
 docs/*.png
 

@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Contact Page", () => {
-	test("loads successfully", async ({ page }) => {
+	test("loads successfully @smoke", async ({ page }) => {
 		const response = await page.goto("/contact");
 		expect(response?.status()).toBeLessThan(400);
 	});
@@ -14,7 +14,7 @@ test.describe("Contact Page", () => {
 
 test.describe("Homepage Contact Form", () => {
 	// The main contact form lives on the homepage in section#contact
-	test("has contact form with required fields", async ({ page }) => {
+	test("has contact form with required fields @smoke", async ({ page }) => {
 		await page.goto("/");
 		const form = page.locator("section#contact form");
 		await expect(form).toBeVisible();
