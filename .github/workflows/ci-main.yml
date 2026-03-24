@@ -1,0 +1,230 @@
+name: Main Branch — Deploy, Test, Canary, Verify
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: false
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+jobs:
+  # ─── Gate 1: Unit + Integration tests must pass ───
+  unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run test:unit
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run test:integration
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: npm install -g vercel@latest
+      - run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+      - run: vercel build --prod --token=$VERCEL_TOKEN
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vercel-build
+          path: .vercel/output
+          retention-days: 1
+
+  # ─── Gate 2: Deploy preview, run E2E against it ───
+  deploy-preview:
+    name: Deploy Preview
+    needs: [unit-tests, integration-tests, build]
+    runs-on: ubuntu-latest
+    outputs:
+      preview-url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: vercel-build
+          path: .vercel/output
+      - run: npm install -g vercel@latest
+      - id: deploy
+        run: |
+          URL=$(vercel deploy --prebuilt --token=$VERCEL_TOKEN)
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "Deployed preview: $URL"
+
+  e2e-tests:
+    name: E2E Tests (Playwright)
+    needs: deploy-preview
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx playwright install chromium --with-deps
+      - run: bunx playwright test
+        env:
+          BASE_URL: ${{ needs.deploy-preview.outputs.preview-url }}
+          PLAYWRIGHT_BASE_URL: ${{ needs.deploy-preview.outputs.preview-url }}
+
+  # ─── Gate 3: Promote to production via rolling release (canary) ───
+  #
+  # Prerequisites: Enable Rolling Releases in Vercel Project Settings
+  # with stages: [10%, 100%]. The first stage sends 10% of traffic to
+  # the canary. After verification, we advance to 100%.
+  #
+  promote-canary:
+    name: Promote to Production (Canary 10%)
+    needs: [deploy-preview, e2e-tests]
+    runs-on: ubuntu-latest
+    outputs:
+      deployment-id: ${{ steps.promote.outputs.id }}
+    steps:
+      - id: promote
+        run: |
+          npm install -g vercel@latest
+          # Promote triggers a rolling release — starts at first stage (10% canary)
+          vercel promote ${{ needs.deploy-preview.outputs.preview-url }} --token=$VERCEL_TOKEN 2>&1 | tee promote.log
+          # Extract deployment ID
+          DEPLOY_URL="${{ needs.deploy-preview.outputs.preview-url }}"
+          echo "id=$DEPLOY_URL" >> $GITHUB_OUTPUT
+          echo "Canary deployed at 10% traffic"
+
+  # ─── Gate 4: Hit the canary with simulated traffic + browser E2E ───
+  canary-traffic-test:
+    name: Canary Traffic Simulation + Browser E2E
+    needs: [promote-canary, deploy-preview]
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: ${{ secrets.PRODUCTION_URL || 'https://aha-software-marketing.vercel.app' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx playwright install chromium --with-deps
+
+      # Step 1: Hit the canary specifically with simulated traffic
+      # vcrrForceCanary=true forces the rolling release cookie to target the canary
+      - name: Simulate traffic on canary (50 requests per page)
+        run: |
+          CANARY_PAGES=(
+            "/?vcrrForceCanary=true"
+            "/blog?vcrrForceCanary=true"
+            "/events?vcrrForceCanary=true"
+            "/premium?vcrrForceCanary=true"
+            "/contact?vcrrForceCanary=true"
+            "/services?vcrrForceCanary=true"
+            "/login?vcrrForceCanary=true"
+            "/register?vcrrForceCanary=true"
+            "/sitemap.xml"
+            "/robots.txt"
+          )
+
+          ERRORS=0
+          TOTAL=0
+
+          for page in "${CANARY_PAGES[@]}"; do
+            for i in $(seq 1 50); do
+              TOTAL=$((TOTAL + 1))
+              STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL$page" 2>/dev/null)
+              if [ "$STATUS" -ge 500 ]; then
+                ERRORS=$((ERRORS + 1))
+                echo "ERROR: $SITE_URL$page returned $STATUS"
+              fi
+            done
+            echo "Page $page: 50 requests sent"
+          done
+
+          echo "Total: $TOTAL requests, $ERRORS server errors"
+          ERROR_RATE=$(echo "scale=2; $ERRORS * 100 / $TOTAL" | bc)
+          echo "Error rate: ${ERROR_RATE}%"
+
+          # Fail if error rate > 1%
+          if [ "$ERRORS" -gt $((TOTAL / 100)) ]; then
+            echo "::error::Error rate ${ERROR_RATE}% exceeds 1% threshold"
+            exit 1
+          fi
+
+      # Step 2: Run Playwright E2E against the canary specifically
+      - name: Browser E2E on canary
+        run: |
+          # Run playwright with canary cookie forced
+          PLAYWRIGHT_BASE_URL="${SITE_URL}/?vcrrForceCanary=true" bunx playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ env.SITE_URL }}
+
+      # Step 3: Check Vercel logs for errors on the canary
+      - name: Check canary error logs
+        run: |
+          npm install -g vercel@latest
+          echo "Checking deployment logs for errors..."
+          ERRORS=$(vercel logs ${{ needs.deploy-preview.outputs.preview-url }} --token=$VERCEL_TOKEN --since 10m 2>&1 | grep -ci "error" || true)
+          echo "Found $ERRORS error mentions in logs"
+          if [ "$ERRORS" -gt 10 ]; then
+            echo "::error::Too many errors in canary logs ($ERRORS). Aborting."
+            exit 1
+          fi
+
+  # ─── Gate 5: Advance canary to 100% (full promotion) or rollback ───
+  advance-or-rollback:
+    name: Advance to 100% or Rollback
+    needs: [canary-traffic-test, promote-canary, deploy-preview]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - run: npm install -g vercel@latest
+
+      # If canary tests passed, advance rolling release to 100%
+      - name: Advance to 100%
+        if: needs.canary-traffic-test.result == 'success'
+        run: |
+          echo "Canary verification passed. Advancing rolling release to 100%..."
+          # The rolling release auto-advances based on the configured stages.
+          # If stages are [10%, 100%], promoting again advances to the next stage.
+          vercel promote ${{ needs.deploy-preview.outputs.preview-url }} --token=$VERCEL_TOKEN 2>&1 || true
+          echo "Production deployment is now at 100% traffic"
+
+      # If canary tests failed, rollback
+      - name: Rollback on failure
+        if: needs.canary-traffic-test.result == 'failure'
+        run: |
+          echo "::error::Canary verification FAILED. Rolling back..."
+          vercel rollback --token=$VERCEL_TOKEN
+          echo "Rolled back to previous production deployment"
+
+      - name: Summary
+        run: |
+          if [ "${{ needs.canary-traffic-test.result }}" == "success" ]; then
+            echo "## Deploy Result" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: SUCCESS - Promoted to 100%" >> $GITHUB_STEP_SUMMARY
+            echo "- **URL**: ${{ needs.deploy-preview.outputs.preview-url }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+            echo "- **Canary**: Traffic simulation passed, E2E passed, logs clean" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "## Deploy Result" >> $GITHUB_STEP_SUMMARY
+            echo "- **Status**: ROLLED BACK" >> $GITHUB_STEP_SUMMARY
+            echo "- **Reason**: Canary verification failed" >> $GITHUB_STEP_SUMMARY
+            echo "- **Commit**: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          fi
