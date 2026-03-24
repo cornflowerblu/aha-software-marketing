@@ -42,3 +42,14 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .vercel
 .playwright-mcp/
 test-results/
+playwright-report/index.html
+playwright-report/data/3bf7a511db9f60c59a9cf1956e1108926e9e1650.md
+playwright-report/data/7f2817fffbde9613afa9309fea53df145df62903.md
+playwright-report/data/9e4a41e929882594672e1f694b15dabb4591ba8d.png
+playwright-report/data/9f72b5dc595bf4fb6193ec9139df95082f5db076.png
+playwright-report/data/164ba2afceccf5310ead4f5392d3ca6587de2937.md
+playwright-report/data/0302e1c230f9463eda8a276f6df0938490129f9a.png
+playwright-report/data/806e45c026f60f0e1a7aed4a54b1f50df3358f4b.md
+playwright-report/data/16121e1ed87d47dedf550377ef5f30c1437eb390.png
+playwright-report/data/794714284b08c0141eb4661f65911e006d5931b4.png
+playwright-report/data/b2c6618e36c618b50f24d932e3b12f908b46d320.png
