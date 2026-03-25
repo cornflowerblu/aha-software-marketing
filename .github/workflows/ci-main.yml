@@ -46,7 +46,7 @@ env:
   PRODUCTION_URL: ${{ vars.PRODUCTION_URL || 'https://ahasw.com' }}
 
 concurrency:
-  group: deploy-main-2
+  group: deploy-main
   cancel-in-progress: true
 
 jobs:
@@ -183,6 +183,7 @@ jobs:
   e2e-tests:
     name: E2E Tests (Playwright)
     needs: [unit-tests, integration-tests]
+    if: always() && needs.unit-tests.result == 'success' && needs.integration-tests.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: production
@@ -261,6 +262,7 @@ jobs:
   canary-verification:
     name: Canary Verification
     needs: [e2e-tests]
+    if: always() && needs.e2e-tests.result == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     environment: production
@@ -415,7 +417,7 @@ jobs:
     needs: [canary-verification]
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: success()
+    if: always() && needs.canary-verification.result == 'success'
     steps:
       - name: Summary
         run: |
