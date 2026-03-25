@@ -46,7 +46,7 @@ env:
   PRODUCTION_URL: ${{ vars.PRODUCTION_URL || 'https://ahasw.com' }}
 
 concurrency:
-  group: deploy-main-2
+  group: deploy-main
   cancel-in-progress: true
 
 jobs:
@@ -69,11 +69,14 @@ jobs:
       - name: Check migration status
         id: check
         run: |
-          bunx payload migrate:status | grep -q ' No'
-          if [ $? -eq 0 ]; then
+          STATUS=$(bunx payload migrate:status 2>&1)
+          echo "$STATUS"
+          if echo "$STATUS" | grep -q ' No'; then
             echo "has_pending=true" >> $GITHUB_OUTPUT
+            echo "--- Pending migrations detected ---"
           else
             echo "has_pending=false" >> $GITHUB_OUTPUT
+            echo "--- All migrations already applied ---"
           fi
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -145,6 +148,7 @@ jobs:
           name: "Vercel - aha-software-marketing: Unit Tests"
 
   integration-tests:
+    # We need to fix this
     needs: [migrate, seed]
     if: always() && (needs.migrate.result == 'success' || needs.migrate.result == 'skipped')
     name: Integration Tests
@@ -382,7 +386,7 @@ jobs:
     needs: [canary-verification]
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: failure()
+    if: needs.canary-verification.result == 'failure'
     steps:
       - name: Install Vercel CLI
         run: npm install -g vercel@latest
