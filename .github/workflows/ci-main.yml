@@ -150,23 +150,12 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: |
-          bun run build && bun start
-          echo "Waiting for server to start..."
-          for i in $(seq 1 30); do
-            if curl -sf http://localhost:3000 > /dev/null 2>&1; then
-              echo "Server started after $i attempts"
-              break
-            fi
-            echo "Attempt $i/30 server not ready yet, waiting 2s..."
-            sleep 2
-            if [ "$i" -eq 30 ]; then
-              echo "::error::Server failed to start after 30 attempts"
-              exit 1
-            fi
-          done
-          bun run test:integration
+      - run: bun run test:integration
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
       - run: bun run tests/cleanup.ts
+        if: always()
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
