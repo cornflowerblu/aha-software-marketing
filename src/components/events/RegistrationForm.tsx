@@ -127,8 +127,15 @@ export default function RegistrationForm(props: RegistrationFormProps) {
 								result?.error || "Registration failed. Please try again.",
 							);
 						}
-					} catch {
-						log.error("event_registration_network_error", { eventSlug });
+					} catch (error: unknown) {
+						const errorMessage =
+							error instanceof Error ? error.message : String(error);
+						const errorName = error instanceof Error ? error.name : "UnknownError";
+						log.error("event_registration_network_error", {
+							eventSlug,
+							errorMessage,
+							errorName,
+						});
 						setError("Something went wrong. Please try again.");
 					}
 				}}
