@@ -1,13 +1,8 @@
-import { NextResponse } from "next/server";
 import { Logger } from "next-axiom";
 import { getPayloadClient } from "@/lib/payload";
 import { createCheckoutSession, createCustomer } from "@/lib/stripe";
 import { headers } from "next/headers";
-
-async function flushJson(log: Logger, body: unknown, init?: ResponseInit) {
-	await log.flush();
-	return NextResponse.json(body, init);
-}
+import { flushJson } from "@/lib/axiom";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 const PREMIUM_PRICE_ID = process.env.STRIPE_PREMIUM_PRICE_ID || "";
