@@ -59,23 +59,37 @@ jobs:
     name: Migration Dry Run
     runs-on: ubuntu-latest
     environment: production
+    outputs:
+      has_pending: ${{ steps.check.outputs.has_pending }}
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bunx payload migrate:status
+      - name: Check migration status
+        id: check
+        run: |
+          STATUS=$(bunx payload migrate:status 2>&1)
+          echo "$STATUS"
+          # If every migration shows "Yes" in the Ran column, nothing is pending
+          if echo "$STATUS" | grep -qP '^\s*\|[^|]+\|\s*\d+\s*\|\s*No\s*\|'; then
+            echo "has_pending=true" >> $GITHUB_OUTPUT
+            echo "--- Pending migrations detected ---"
+          else
+            echo "has_pending=false" >> $GITHUB_OUTPUT
+            echo "--- All migrations already applied, skipping migrate step ---"
+          fi
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
 
   # ─── Migration (requires approval) ──────────────────────────────────────────
-  # Gated behind the "production" environment approval. Review the dry-run
-  # output above, then approve to run real migrations — or reject to skip
-  # migrations and proceed straight to tests.
+  # Only runs when migrate-dry-run detects pending migrations.
+  # Gated behind the "production" environment approval.
 
   migrate:
     name: Run Migrations
     needs: [migrate-dry-run]
+    if: always() && needs.migrate-dry-run.result == 'success' && needs.migrate-dry-run.outputs.has_pending == 'true'
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -94,8 +108,8 @@ jobs:
   seed:
     name: Seed Database
     needs: [migrate]
+    if: always() && needs.migrate.result == 'success' && (github.event_name == 'workflow_dispatch' && inputs.seed == true)
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch' && inputs.seed == true
     environment: production
     steps:
       - uses: actions/checkout@v4
@@ -111,7 +125,7 @@ jobs:
 
   unit-tests:
     needs: [migrate, seed]
-    if: always() && needs.migrate.result == 'success'
+    if: always() && (needs.migrate.result == 'success' || needs.migrate.result == 'skipped')
     name: Unit Tests
     runs-on: ubuntu-latest
     environment: production
@@ -132,7 +146,7 @@ jobs:
 
   integration-tests:
     needs: [migrate, seed]
-    if: always() && needs.migrate.result == 'success'
+    if: always() && (needs.migrate.result == 'success' || needs.migrate.result == 'skipped')
     name: Integration Tests
     runs-on: ubuntu-latest
     environment: production
