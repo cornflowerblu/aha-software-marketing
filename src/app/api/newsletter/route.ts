@@ -1,7 +1,8 @@
-import { NextResponse } from "next/server";
+import { Logger } from "next-axiom";
 import { getPayloadClient } from "@/lib/payload";
 import { createOrUpdateContact } from "@/lib/hubspot";
 import { Resend } from "resend";
+import { flushJson } from "@/lib/axiom";
 
 function getResend() {
 	const key = process.env.RESEND_API_KEY;
@@ -10,17 +11,21 @@ function getResend() {
 }
 
 export async function POST(request: Request) {
+	const log = new Logger();
 	let body: unknown;
 	try {
 		body = await request.json();
 	} catch {
-		return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+		log.warn("newsletter_invalid_json", {});
+		return flushJson(log, { error: "Invalid JSON" }, { status: 400 });
 	}
 
 	const { email } = body as { email?: string };
 
 	if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-		return NextResponse.json(
+		log.warn("newsletter_validation_error", { reason: "invalid_email" });
+		return flushJson(
+			log,
 			{ error: "Valid email is required" },
 			{ status: 400 },
 		);
@@ -37,13 +42,15 @@ export async function POST(request: Request) {
 		limit: 1,
 	});
 	if (existing.docs.length > 0) {
-		return NextResponse.json({ success: true, message: "Already subscribed" });
+		log.info("newsletter_duplicate_subscriber", {});
+		return flushJson(log, { success: true, message: "Already subscribed" });
 	}
 
 	await (payload.create as Function)({
 		collection: "subscribers",
 		data: { email, source: "newsletter" },
 	});
+	log.info("newsletter_subscriber_created", { source: "newsletter" });
 
 	// 2. Fan out to external services (best-effort, don't block response)
 	const syncPromises: Promise<unknown>[] = [];
@@ -72,9 +79,16 @@ export async function POST(request: Request) {
 							id: existing.docs[0].id,
 							data: { resendSynced: true } as Record<string, unknown>,
 						});
+						const okLog = new Logger();
+						okLog.info("newsletter_resend_sync_ok", {});
+						await okLog.flush();
 					}
-				} catch {
-					// Don't fail the request if Resend sync fails
+				} catch (err) {
+					const syncLog = new Logger();
+					syncLog.warn("newsletter_resend_sync_failed", {
+						error: err instanceof Error ? err.message : "unknown",
+					});
+					await syncLog.flush();
 				}
 			})(),
 		);
@@ -88,6 +102,7 @@ export async function POST(request: Request) {
 			leadStatus: "NEW",
 		})
 			.then(async () => {
+				const hsLog = new Logger();
 				try {
 					const existing = await payload.find({
 						collection: "subscribers" as "users",
@@ -101,15 +116,25 @@ export async function POST(request: Request) {
 							data: { hubspotSynced: true } as Record<string, unknown>,
 						});
 					}
-				} catch {
-					// Don't fail on sync status update
+					hsLog.info("newsletter_hubspot_sync_ok", {});
+				} catch (err) {
+					hsLog.warn("newsletter_hubspot_status_update_failed", {
+						error: err instanceof Error ? err.message : "unknown",
+					});
 				}
+				await hsLog.flush();
 			})
-			.catch(() => {}),
+			.catch(async (err) => {
+				const hsLog = new Logger();
+				hsLog.warn("newsletter_hubspot_sync_failed", {
+					error: err instanceof Error ? err.message : "unknown",
+				});
+				await hsLog.flush();
+			}),
 	);
 
 	// Fire and forget — don't await
 	Promise.allSettled(syncPromises);
 
-	return NextResponse.json({ success: true });
+	return flushJson(log, { success: true });
 }
