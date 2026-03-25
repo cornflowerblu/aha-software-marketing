@@ -1,5 +1,5 @@
 import { withPayload } from "@payloadcms/next/withPayload";
-const { withAxiom } = require("next-axiom");
+import { withAxiom } from "next-axiom";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
