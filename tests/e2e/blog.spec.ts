@@ -28,13 +28,18 @@ test.describe("Blog", () => {
 
 		test("shows blog post cards when posts exist", async ({ page }) => {
 			await page.goto("/blog");
+			// Wait for page to be ready before checking animated elements
+			await expect(page.locator("h1")).toBeVisible();
 			const posts = page.locator('article, [data-testid="post-card"]');
 			const count = await posts.count();
-			// DB may be empty — verify grid structure exists regardless
-			const grid = page.locator(".grid");
-			await expect(grid.first()).toBeVisible();
 			if (count > 0) {
+				// Scroll the first post into view to trigger its parent ArticleGrid's
+				// IntersectionObserver (Framer Motion useInView starts at opacity:0)
+				await posts.first().scrollIntoViewIfNeeded();
 				await expect(posts.first()).toBeVisible();
+				// The containing grid should be visible now that it's in the viewport
+				const grid = page.locator('[data-testid="article-grid"]').first();
+				await expect(grid).toBeVisible();
 			}
 		});
 
