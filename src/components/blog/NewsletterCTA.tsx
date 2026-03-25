@@ -110,9 +110,13 @@ export default function NewsletterCTA() {
 										});
 										setError(data.error || "Something went wrong");
 									}
-								} catch {
-									log.error("newsletter_cta_network_error", {});
-									setError("Something went wrong");
+								} catch (err) {
+									const errorMessage =
+										err instanceof Error ? err.message : String(err)
+									log.error("newsletter_cta_network_error", {
+										errorMessage,
+									})
+									setError("Something went wrong")
 								} finally {
 									setLoading(false);
 								}

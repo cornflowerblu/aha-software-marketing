@@ -1,14 +1,9 @@
-import { NextResponse } from "next/server";
 import { Logger } from "next-axiom";
 import { getPayloadClient } from "@/lib/payload";
 import { validateRegistrationForm } from "@/lib/validation";
 import { createOrUpdateContact } from "@/lib/hubspot";
 import { Resend } from "resend";
-
-async function flushJson(log: Logger, body: unknown, init?: ResponseInit) {
-	await log.flush();
-	return NextResponse.json(body, init);
-}
+import { flushJson } from "@/lib/axiom";
 
 function getResend() {
 	const key = process.env.RESEND_API_KEY;

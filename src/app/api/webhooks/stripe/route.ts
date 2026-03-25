@@ -1,13 +1,8 @@
-import { NextResponse } from "next/server";
 import { Logger } from "next-axiom";
 import { constructWebhookEvent } from "@/lib/stripe";
 import { getPayloadClient } from "@/lib/payload";
 import type Stripe from "stripe";
-
-async function flushJson(log: Logger, body: unknown, init?: ResponseInit) {
-	await log.flush();
-	return NextResponse.json(body, init);
-}
+import { flushJson } from "@/lib/axiom";
 
 export async function POST(request: Request) {
 	const log = new Logger();
@@ -129,11 +124,7 @@ export async function POST(request: Request) {
 			type: event.type,
 			error: err instanceof Error ? err.message : "unknown",
 		});
-		await log.flush();
-		return NextResponse.json(
-			{ error: "Webhook handler failed" },
-			{ status: 500 },
-		);
+		return flushJson(log, { error: "Webhook handler failed" }, { status: 500 });
 	}
 
 	return flushJson(log, { received: true });
