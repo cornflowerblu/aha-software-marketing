@@ -32,8 +32,12 @@ export default function LoginPage() {
 				log.warn("login_failed", { status: res.status });
 				setError("Invalid email or password.");
 			}
-		} catch {
-			log.error("login_network_error", {});
+		} catch (err) {
+			const errorObj = err instanceof Error ? err : new Error(String(err));
+			log.error("login_network_error", {
+				errorMessage: errorObj.message,
+				errorStack: errorObj.stack,
+			});
 			setError("Something went wrong. Please try again.");
 		}
 	}
