@@ -18,9 +18,12 @@ name: Main Branch — Test, Gate, Canary, Verify
 #      by jobs that mutate the production database (migrate, seed).
 #   5. Create a "production-secrets" environment WITHOUT required reviewers —
 #      used by all other jobs that just need access to secrets (tests, E2E,
-#      canary). Copy all secrets from "production" into "production-secrets".
-#   6. This split means only DB-mutating jobs require manual approval;
-#      tests and deployments run automatically.
+#      canary). Copy only non-destructive secrets into "production-secrets"
+#      (DO NOT copy the production DATABASE_URL; instead use a separate
+#      non-production DB secret such as TEST_DATABASE_URL for tests/E2E).
+#   6. This split means only jobs that use the real production database
+#      require manual approval; tests and deployments run automatically
+#      against non-production data.
 on:
   push:
     branches: [main]
