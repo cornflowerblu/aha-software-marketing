@@ -32,6 +32,7 @@ test.describe("Blog", () => {
 			await expect(page.locator("h1")).toBeVisible();
 			const posts = page.locator('article, [data-testid="post-card"]');
 			const count = await posts.count();
+
 			if (count > 0) {
 				// Scroll the first post into view to trigger its parent ArticleGrid's
 				// IntersectionObserver (Framer Motion useInView starts at opacity:0)

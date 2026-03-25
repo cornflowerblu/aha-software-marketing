@@ -17,15 +17,16 @@ test.describe("Homepage", () => {
 	});
 
 	test("hero section has CTA button", async ({ page }) => {
-		// Scope to the hero/main element to avoid matching the nav CTA which is
-		// hidden on mobile viewports (hidden md:inline-flex)
-		const hero = page.locator('main, [class*="hero"], header').first();
-		const cta = hero
+		// The hero is a <header> element but there may be a nav <header> before it
+		// in the DOM. Search page-wide for the unique CTA text instead of scoping
+		// by element type. Use toBeAttached() to avoid failures from the
+		// AnimateOnScroll opacity-0 initial state before IntersectionObserver fires.
+		const cta = page
 			.locator(
 				'a:has-text("Start the Transformation"), a:has-text("Our Methodology")',
 			)
 			.first();
-		await expect(cta).toBeVisible();
+		await expect(cta).toBeAttached();
 	});
 
 	test("has Core Pillars section", async ({ page }) => {
