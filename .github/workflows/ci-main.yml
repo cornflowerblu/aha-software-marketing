@@ -70,8 +70,8 @@ jobs:
         run: |
           STATUS=$(bunx payload migrate:status 2>&1)
           echo "$STATUS"
-          # If every migration shows "Yes" in the Ran column, nothing is pending
-          if echo "$STATUS" | grep -qP '^\s*\|[^|]+\|\s*\d+\s*\|\s*No\s*\|'; then
+          # If any migration shows "No" in the Ran column, there are pending migrations
+          if echo "$STATUS" | grep -q '| No'; then
             echo "has_pending=true" >> $GITHUB_OUTPUT
             echo "--- Pending migrations detected ---"
           else
