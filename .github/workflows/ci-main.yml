@@ -46,7 +46,7 @@ env:
   PRODUCTION_URL: ${{ vars.PRODUCTION_URL || 'https://ahasw.com' }}
 
 concurrency:
-  group: deploy-main
+  group: deploy-main-2
   cancel-in-progress: true
 
 jobs:
