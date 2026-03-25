@@ -214,13 +214,13 @@ jobs:
             # Only accept READY state — BUILDING/QUEUED deployments are not yet serving.
             DEPLOY_URL=$(echo "$RESPONSE" | \
               jq -r --arg sha "${{ github.sha }}" \
-              '.deployments[] | select(.meta.githubCommitSha == $sha and .state == "READY") | .url' | \
+              '.deployments[]? | select(.meta.githubCommitSha == $sha and .state == "READY") | .url' | \
               head -1)
 
             # Track the current state for diagnostics even when not READY
             LAST_STATE=$(echo "$RESPONSE" | \
               jq -r --arg sha "${{ github.sha }}" \
-              '[.deployments[] | select(.meta.githubCommitSha == $sha) | .state] | first // "not-found"')
+              '[.deployments[]? | select(.meta.githubCommitSha == $sha) | .state] | first // "not-found"')
 
             if [ -n "$DEPLOY_URL" ]; then
               FULL_URL="https://${DEPLOY_URL}"
