@@ -50,16 +50,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # ─── Database migration ─────────────────────────────────────────────────────
-  # Uses the "production-migrations" environment, which should be configured
-  # in GitHub repository settings with required reviewers. This acts as an
-  # explicit manual gate so no migration runs against the production database
-  # without human approval.
+  # ─── Migration dry run ───────────────────────────────────────────────────────
+  # Runs automatically on every push — no approval needed, no DB changes.
+  # Shows pending migrations (or "nothing to migrate") so you can decide
+  # whether to approve the real migration step below.
+
+  migrate-dry-run:
+    name: Migration Dry Run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bunx payload migrate:status
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
+
+  # ─── Migration (requires approval) ──────────────────────────────────────────
+  # Gated behind the "production" environment approval. Review the dry-run
+  # output above, then approve to run real migrations — or reject to skip
+  # migrations and proceed straight to tests.
 
   migrate:
     name: Run Migrations
+    needs: [migrate-dry-run]
     runs-on: ubuntu-latest
-    environment: production-migrations
+    environment: production
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
@@ -70,6 +87,8 @@ jobs:
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
 
   # ─── Optional seed (manual trigger only) ─────────────────────────────────────
+  # Only runs when workflow is manually dispatched with seed=true.
+  # Approve the migration step first, then seed runs automatically after.
 
   seed:
     name: Seed Database
