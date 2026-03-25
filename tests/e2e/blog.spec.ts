@@ -28,11 +28,15 @@ test.describe("Blog", () => {
 
 		test("shows blog post cards when posts exist", async ({ page }) => {
 			await page.goto("/blog");
+			// Wait for page to be ready before checking animated elements
+			await expect(page.locator("h1")).toBeVisible();
+			// Scroll the article grid into view to trigger the IntersectionObserver
+			// (ArticleGrid uses Framer Motion useInView and starts at opacity:0)
+			const grid = page.locator('[data-testid="article-grid"]').first();
+			await grid.scrollIntoViewIfNeeded();
+			await expect(grid).toBeVisible();
 			const posts = page.locator('article, [data-testid="post-card"]');
 			const count = await posts.count();
-			// DB may be empty — verify grid structure exists regardless
-			const grid = page.locator(".grid");
-			await expect(grid.first()).toBeVisible();
 			if (count > 0) {
 				await expect(posts.first()).toBeVisible();
 			}
