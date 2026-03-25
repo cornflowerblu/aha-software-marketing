@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
 import React from "react";
 import { Newsreader, DM_Sans } from "next/font/google";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
-import { AxiomWebVitals } from "next-axiom";
 
 const newsreader = Newsreader({
 	subsets: ["latin"],
@@ -52,12 +49,7 @@ export default function RootLayout({
 					rel='stylesheet'
 				/>
 			</head>
-			<body>
-				{children}
-				<Analytics />
-				<AxiomWebVitals />
-				<SpeedInsights />
-			</body>
+			<body>{children}</body>
 		</html>
 	);
 }
