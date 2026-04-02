@@ -17,6 +17,10 @@ import { Registrations } from './collections/Registrations'
 import { Subscribers } from './collections/Subscribers'
 import { SiteSettings } from './globals/SiteSettings'
 import { Navigation } from './globals/Navigation'
+import { HomepageHero } from './globals/HomepageHero'
+import { HomepagePillars } from './globals/HomepagePillars'
+import { HomepageSpecKit } from './globals/HomepageSpecKit'
+import { HomepageContact } from './globals/HomepageContact'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -29,7 +33,7 @@ export default buildConfig({
     },
   },
   collections: [Users, Media, Posts, Events, Categories, Registrations, Subscribers],
-  globals: [SiteSettings, Navigation],
+  globals: [SiteSettings, Navigation, HomepageHero, HomepagePillars, HomepageSpecKit, HomepageContact],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'CHANGE-ME-IN-PRODUCTION',
   typescript: {

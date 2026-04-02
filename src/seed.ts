@@ -448,9 +448,134 @@ async function seed() {
 		},
 	});
 
+	// Seed homepage globals
+	console.log("Seeding homepage globals...");
+
+	await payload.updateGlobal({
+		slug: "homepage-hero",
+		data: {
+			badgeLabel: "Engineering Enablement",
+			headline: "Engineering Enablement for the Age of AI.",
+			subheadline:
+				"AHA Software is a consulting firm that builds products. Our SpecKit platform turns requirements into executable specifications — helping enterprise engineering teams eliminate rework and ship with confidence. Built enablement programs for AWS consulting partners at scale.",
+			primaryCta: {
+				text: "Explore Our Services",
+				link: "/services",
+			},
+			secondaryCta: {
+				text: "Schedule a Consultation",
+				link: "/contact",
+			},
+		},
+	});
+
+	await payload.updateGlobal({
+		slug: "homepage-pillars",
+		data: {
+			sectionHeading: "How We Deliver Results",
+			sectionSubheading:
+				"A consulting firm that builds products. A product built from consulting expertise. Three ways we help enterprise engineering teams ship better software, faster.",
+			sectionLabel: "Section 01 // How We Deliver",
+			pillars: [
+				{
+					icon: "hub",
+					title: "SpecKit Platform",
+					description:
+						"A spec-driven development platform that turns requirements into executable specifications, bridging the gap between what your teams plan and what they deliver.",
+					capabilities: [
+						{ label: "Spec-Driven Development" },
+						{ label: "Executable Requirements" },
+						{ label: "SDLC Optimization" },
+					],
+				},
+				{
+					icon: "rocket_launch",
+					title: "Enterprise Enablement",
+					description:
+						"AHA deploys SpecKit inside your organization to transform how teams build software. Proven at AWS scale, our enablement programs accelerate delivery and reduce rework across distributed teams.",
+					capabilities: [
+						{ label: "At-Scale Transformation" },
+						{ label: "Team Enablement" },
+						{ label: "Process Modernization" },
+					],
+				},
+				{
+					icon: "strategy",
+					title: "Strategic Advisory",
+					description:
+						"Hands-on CTO advisory for engineering leaders navigating AI adoption, delivery bottlenecks, and organizational change. We assess readiness and chart a path forward.",
+					capabilities: [
+						{ label: "CTO Advisory" },
+						{ label: "AI Readiness Assessment" },
+						{ label: "Delivery Health Check" },
+					],
+				},
+			],
+		},
+	});
+
+	await payload.updateGlobal({
+		slug: "homepage-speckit",
+		data: {
+			sectionLabel: "Product + Framework + Methodology",
+			heading: "Introducing SpecKit.",
+			description:
+				"SpecKit\u2122 is a platform, a framework, and a methodology \u2014 built by AHA Software to close the gap between what you specify and what gets shipped. License the tooling, bring in AHA to implement it, or train your teams to run it independently.",
+			proofPoint:
+				"Proven across enterprise engagements \u2014 from Fortune 500 consulting to AWS-scale enablement.",
+			featureCards: [
+				{
+					icon: "devices",
+					title: "The Platform",
+					description:
+						"Spec-driven development tooling that transforms requirements into executable artifacts \u2014 integrated into the workflows you already use.",
+				},
+				{
+					icon: "engineering",
+					title: "The Framework",
+					description:
+						"AHA embeds SpecKit practices inside your engineering organization, aligning delivery teams around a single source of truth.",
+				},
+				{
+					icon: "school",
+					title: "The Methodology",
+					description:
+						"Workshops, premium content, and a self-serve enablement path \u2014 so your teams internalize spec-driven development long after the engagement ends.",
+				},
+			],
+			integrationTitle: "Seamless Integration",
+			integrationDescription:
+				"SpecKit plugs into your existing CI/CD pipelines and development workflows. No platform migration required \u2014 just better traceability from spec to deployment.",
+			cta: {
+				text: "Join the Waitlist",
+				link: "/contact",
+			},
+		},
+	});
+
+	await payload.updateGlobal({
+		slug: "homepage-contact",
+		data: {
+			heading: "Ready to Transform Your Engineering Organization?",
+			subheadline:
+				"Schedule a consultation to discuss engineering enablement, SpecKit implementation, or a delivery health check. No sales pitches \u2014 just technical experts who understand your stack.",
+			contactEntries: [
+				{ icon: "mail", label: "Email", value: "roger@ahasw.com" },
+			],
+			challengeOptions: [
+				{ label: "AI Readiness Assessment" },
+				{ label: "Engineering Enablement at Scale" },
+				{ label: "SpecKit Implementation" },
+				{ label: "Delivery Health Check" },
+			],
+			submitButtonText: "Schedule a Consultation",
+		},
+	});
+
 	console.log("Seed complete!");
 	console.log("  - 3 events (2 upcoming, 1 past)");
 	console.log("  - 6 posts (4 free, 2 premium)");
+	console.log("  - 4 homepage globals");
 	process.exit(0);
 }
 

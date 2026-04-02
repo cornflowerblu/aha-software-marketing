@@ -1,31 +1,59 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import { resolveMediaUrl } from '@/lib/media'
+import type { Post, Media } from '@/payload-types'
 
-const articles = [
+const fallbackArticles = [
   {
-    slug: 'high-quality-software-delivery',
+    slug: 'why-spec-driven-development-eliminates-rework',
     image: '/assets/insight-server-room.png',
-    category: 'Engineering',
-    title: 'High-Quality Software Delivery: Beyond the Sprint.',
+    category: 'SpecKit',
+    title: 'Why Spec-Driven Development Eliminates Rework',
     excerpt:
-      'Why traditional agile metrics are failing your engineering culture and how to shift towards structural quality metrics that drive revenue.',
+      'Most rework stems from ambiguity, not incompetence. SpecKit replaces assumption-driven handoffs with structured specifications that align engineering, product, and stakeholders before a single line of code is written.',
     readTime: '12 Min',
-    date: 'May 2024',
+    date: 'March 2026',
   },
   {
-    slug: 'devops-radical-automation',
+    slug: 'engineering-enablement-at-scale-lessons-from-enterprise-transformation',
     image: '/assets/insight-code-screen.png',
-    category: 'DevOps',
-    title: 'DevOps for Modern Teams: Radical Automation.',
+    category: 'Enablement',
+    title: 'Engineering Enablement at Scale: Lessons from Enterprise Transformation',
     excerpt:
-      'Implementing zero-touch deployments in complex legacy environments. A guide to navigating the friction between speed and safety.',
+      'What we learned enabling hundreds of engineering teams at enterprise scale — and why the biggest bottleneck is never the technology. A framework for removing systemic friction from your delivery organization.',
     readTime: '09 Min',
-    date: 'June 2024',
+    date: 'March 2026',
   },
 ]
 
-export default function InsightsSection() {
+function formatDate(dateString: string): string {
+  const date = new Date(dateString)
+  return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+}
+
+function mapPostsToArticles(posts: Post[]): typeof fallbackArticles {
+  return posts.map((post) => {
+    const featuredImage = typeof post.featuredImage === 'object' ? post.featuredImage as Media : null
+    return {
+      slug: post.slug ?? '',
+      image: resolveMediaUrl(featuredImage?.url) ?? '/assets/insight-server-room.png',
+      category:
+        (typeof post.categories?.[0] === 'object'
+          ? post.categories[0]?.title
+          : null) ?? 'Insights',
+      title: post.title ?? '',
+      excerpt:
+        post.excerpt ??
+        post.meta?.description ??
+        '',
+      readTime: '10 Min',
+      date: post.publishedAt ? formatDate(post.publishedAt) : '',
+    }
+  })
+}
+
+export default function InsightsSection({ posts }: { posts?: Post[] }) {
   return (
     <section className="py-32 bg-background" id="insights">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -44,7 +72,7 @@ export default function InsightsSection() {
         </AnimateOnScroll>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
-          {articles.map((article, i) => (
+          {(posts && posts.length > 0 ? mapPostsToArticles(posts) : fallbackArticles).map((article, i) => (
             <AnimateOnScroll key={article.slug} delay={i * 200}>
               <article className="group">
                 <Link href={`/blog/${article.slug}`} className="block">

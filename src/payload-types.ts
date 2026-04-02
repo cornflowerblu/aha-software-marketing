@@ -100,10 +100,18 @@ export interface Config {
   globals: {
     'site-settings': SiteSetting;
     navigation: Navigation;
+    'homepage-hero': HomepageHero;
+    'homepage-pillars': HomepagePillar;
+    'homepage-speckit': HomepageSpeckit;
+    'homepage-contact': HomepageContact;
   };
   globalsSelect: {
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
     navigation: NavigationSelect<false> | NavigationSelect<true>;
+    'homepage-hero': HomepageHeroSelect<false> | HomepageHeroSelect<true>;
+    'homepage-pillars': HomepagePillarsSelect<false> | HomepagePillarsSelect<true>;
+    'homepage-speckit': HomepageSpeckitSelect<false> | HomepageSpeckitSelect<true>;
+    'homepage-contact': HomepageContactSelect<false> | HomepageContactSelect<true>;
   };
   locale: null;
   widgets: {
@@ -623,6 +631,230 @@ export interface Navigation {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-hero".
+ */
+export interface HomepageHero {
+  id: number;
+  /**
+   * Small badge text above the headline (e.g., "Engineering Enablement")
+   */
+  badgeLabel: string;
+  /**
+   * Main hero headline — the first thing visitors read
+   */
+  headline: string;
+  /**
+   * Supporting paragraph below the headline — explain what AHA does and why it matters
+   */
+  subheadline: string;
+  /**
+   * Primary action button (left/top)
+   */
+  primaryCta: {
+    /**
+     * Button label
+     */
+    text: string;
+    /**
+     * Button destination URL (e.g., "/services")
+     */
+    link: string;
+  };
+  /**
+   * Secondary action button (right/bottom)
+   */
+  secondaryCta: {
+    /**
+     * Button label
+     */
+    text: string;
+    /**
+     * Button destination URL (e.g., "/contact")
+     */
+    link: string;
+  };
+  /**
+   * Optional pull quote displayed alongside the hero (leave empty to hide)
+   */
+  quote?: {
+    /**
+     * Quote text (optional — leave empty to hide the quote)
+     */
+    text?: string | null;
+    /**
+     * Quote attribution (required if quote text is provided)
+     */
+    attribution?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-pillars".
+ */
+export interface HomepagePillar {
+  id: number;
+  /**
+   * Main heading for the pillars section
+   */
+  sectionHeading: string;
+  /**
+   * Description paragraph below the section heading
+   */
+  sectionSubheading: string;
+  /**
+   * Small label text in the top-right corner of the section
+   */
+  sectionLabel: string;
+  /**
+   * Service pillars — each represents a key offering. Drag to reorder.
+   */
+  pillars: {
+    /**
+     * Material Symbols icon name (e.g., "hub", "rocket_launch", "strategy")
+     */
+    icon: string;
+    /**
+     * Pillar heading (e.g., "SpecKit Platform")
+     */
+    title: string;
+    /**
+     * Pillar description paragraph
+     */
+    description: string;
+    /**
+     * Capability tags listed under the description
+     */
+    capabilities: {
+      /**
+       * Capability tag text (e.g., "Spec-Driven Development")
+       */
+      label: string;
+      id?: string | null;
+    }[];
+    id?: string | null;
+  }[];
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-speckit".
+ */
+export interface HomepageSpeckit {
+  id: number;
+  /**
+   * Small label text above the heading
+   */
+  sectionLabel: string;
+  /**
+   * Main section heading
+   */
+  heading: string;
+  /**
+   * Main description paragraph explaining SpecKit's triple nature
+   */
+  description: string;
+  /**
+   * Qualitative proof point text below the description
+   */
+  proofPoint: string;
+  /**
+   * Feature cards showcasing SpecKit facets (Platform, Framework, Methodology)
+   */
+  featureCards: {
+    /**
+     * Material Symbols icon name (e.g., "devices", "engineering", "school")
+     */
+    icon: string;
+    /**
+     * Card heading
+     */
+    title: string;
+    /**
+     * Card description
+     */
+    description: string;
+    id?: string | null;
+  }[];
+  /**
+   * Heading for the integration highlight card at the bottom
+   */
+  integrationTitle: string;
+  /**
+   * Description for the integration highlight card
+   */
+  integrationDescription: string;
+  /**
+   * Call-to-action link in the integration card
+   */
+  cta: {
+    /**
+     * CTA link text
+     */
+    text: string;
+    /**
+     * CTA destination URL
+     */
+    link: string;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-contact".
+ */
+export interface HomepageContact {
+  id: number;
+  /**
+   * Main heading for the contact section
+   */
+  heading: string;
+  /**
+   * Supporting paragraph below the heading
+   */
+  subheadline: string;
+  /**
+   * Contact info entries shown beside the form (email, phone, address, etc.)
+   */
+  contactEntries?:
+    | {
+        /**
+         * Material Symbols icon name (e.g., "mail", "phone", "location_on")
+         */
+        icon: string;
+        /**
+         * Entry label (e.g., "Email")
+         */
+        label: string;
+        /**
+         * Entry value (e.g., "roger@ahasw.com")
+         */
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Dropdown options for the "Primary Challenge" field in the contact form
+   */
+  challengeOptions: {
+    /**
+     * Challenge option text shown in the dropdown (e.g., "AI Readiness Assessment")
+     */
+    label: string;
+    id?: string | null;
+  }[];
+  /**
+   * Text on the form submit button
+   */
+  submitButtonText: string;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings_select".
  */
 export interface SiteSettingsSelect<T extends boolean = true> {
@@ -653,6 +885,117 @@ export interface NavigationSelect<T extends boolean = true> {
         isActive?: T;
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-hero_select".
+ */
+export interface HomepageHeroSelect<T extends boolean = true> {
+  badgeLabel?: T;
+  headline?: T;
+  subheadline?: T;
+  primaryCta?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  secondaryCta?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  quote?:
+    | T
+    | {
+        text?: T;
+        attribution?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-pillars_select".
+ */
+export interface HomepagePillarsSelect<T extends boolean = true> {
+  sectionHeading?: T;
+  sectionSubheading?: T;
+  sectionLabel?: T;
+  pillars?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        capabilities?:
+          | T
+          | {
+              label?: T;
+              id?: T;
+            };
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-speckit_select".
+ */
+export interface HomepageSpeckitSelect<T extends boolean = true> {
+  sectionLabel?: T;
+  heading?: T;
+  description?: T;
+  proofPoint?: T;
+  featureCards?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  integrationTitle?: T;
+  integrationDescription?: T;
+  cta?:
+    | T
+    | {
+        text?: T;
+        link?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage-contact_select".
+ */
+export interface HomepageContactSelect<T extends boolean = true> {
+  heading?: T;
+  subheadline?: T;
+  contactEntries?:
+    | T
+    | {
+        icon?: T;
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  challengeOptions?:
+    | T
+    | {
+        label?: T;
+        id?: T;
+      };
+  submitButtonText?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
