@@ -3,22 +3,23 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 const features = [
   {
-    icon: 'developer_board',
-    title: 'Automated QA Mapping',
+    icon: 'devices',
+    title: 'The Platform',
     description:
-      'Every spec automatically generates test suites, closing the gap between intent and reality.',
+      'Spec-driven development tooling that transforms requirements into executable artifacts — integrated into the workflows you already use.',
   },
   {
-    icon: 'rebase',
-    title: 'Branch Integrity',
+    icon: 'engineering',
+    title: 'The Framework',
     description:
-      'Structural guardrails that prevent configuration drift across multi-repo environments.',
+      'AHA embeds SpecKit practices inside your engineering organization, aligning delivery teams around a single source of truth.',
   },
-]
-
-const stats = [
-  { value: '94%', label: 'Rework Reduction' },
-  { value: '3.2x', label: 'Velocity Increase' },
+  {
+    icon: 'school',
+    title: 'The Methodology',
+    description:
+      'Workshops, premium content, and a self-serve enablement path — so your teams internalize spec-driven development long after the engagement ends.',
+  },
 ]
 
 export default function SpecKitSection() {
@@ -30,32 +31,24 @@ export default function SpecKitSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
             <span className="text-on-primary-container font-extrabold tracking-[0.3em] text-[10px] uppercase mb-8 block font-label">
-              Proprietary Methodology
+              Product + Framework + Methodology
             </span>
             <h2 className="font-headline text-6xl md:text-7xl font-medium tracking-tight leading-tight mb-8">
-              Introducing Spec Kit.
+              Introducing SpecKit.
             </h2>
             <p className="text-on-primary-container/80 text-xl font-headline italic leading-relaxed mb-12">
-              Software delivery fails when specs are detached from code. Our Spec
-              Kit methodology turns documentation into executable requirements,
-              ensuring that every line of code serves a business intent.
+              SpecKit&#8482; is a platform, a framework, and a methodology — built by
+              AHA Software to close the gap between what you specify and what
+              gets shipped. License the tooling, bring in AHA to implement it,
+              or train your teams to run it independently.
             </p>
-            <div className="flex items-center gap-12">
-              {stats.map((stat) => (
-                <div key={stat.label} className="border-l border-on-primary/20 pl-6">
-                  <span className="block text-5xl font-headline font-medium mb-2">
-                    {stat.value}
-                  </span>
-                  <span className="text-[9px] uppercase tracking-[0.2em] font-extrabold text-on-primary/50 font-label">
-                    {stat.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <p className="text-on-primary/50 text-sm font-label uppercase tracking-[0.15em]">
+              Proven across enterprise engagements — from Fortune 500 consulting to AWS-scale enablement.
+            </p>
           </AnimateOnScroll>
 
           <AnimateOnScroll
-            className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-6"
             animation="slide-left"
             delay={200}
           >
@@ -74,7 +67,7 @@ export default function SpecKitSection() {
               </div>
             ))}
 
-            <div className="md:col-span-2 bg-gradient-to-br from-on-primary/10 to-transparent p-10 border border-on-primary/10 flex flex-col md:flex-row gap-10 items-center">
+            <div className="md:col-span-3 bg-gradient-to-br from-on-primary/10 to-transparent p-10 border border-on-primary/10 flex flex-col md:flex-row gap-10 items-center">
               <div className="w-32 h-32 bg-on-primary/10 flex-shrink-0 overflow-hidden relative">
                 <Image
                   src="/assets/spec-kit-integration.png"
@@ -85,17 +78,18 @@ export default function SpecKitSection() {
               </div>
               <div>
                 <h4 className="font-headline text-2xl mb-4">
-                  Seamless GitHub Integration
+                  Seamless Integration
                 </h4>
                 <p className="text-on-primary/60 text-sm font-body leading-relaxed mb-6">
-                  Native integration into your existing CI/CD flow. No new tools
-                  to learn&mdash;just better results from tools you already have.
+                  SpecKit plugs into your existing CI/CD pipelines and development
+                  workflows. No platform migration required — just better
+                  traceability from spec to deployment.
                 </p>
                 <a
-                  href="#"
+                  href="/contact"
                   className="inline-flex items-center gap-3 text-on-primary font-bold text-[10px] uppercase tracking-[0.2em] border-b border-on-primary/30 pb-1 hover:border-on-primary transition-all font-label"
                 >
-                  Download Whitepaper{' '}
+                  Join the Waitlist{' '}
                   <span className="material-symbols-outlined text-sm">
                     arrow_forward
                   </span>

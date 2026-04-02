@@ -2,25 +2,25 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 const pillars = [
   {
-    icon: 'architecture',
-    title: 'Software Consulting',
+    icon: 'hub',
+    title: 'SpecKit Platform',
     description:
-      'Bespoke architecture, headless CMS ecosystems, and deep systems integration designed for extreme scale and technical durability.',
-    capabilities: ['Legacy Modernization', 'API-First Strategy', 'Enterprise JS/TS'],
+      'A spec-driven development platform that turns requirements into executable specifications, bridging the gap between what your teams plan and what they deliver.',
+    capabilities: ['Spec-Driven Development', 'Executable Requirements', 'SDLC Optimization'],
   },
   {
-    icon: 'terminal',
-    title: 'DevOps Excellence',
+    icon: 'rocket_launch',
+    title: 'Enterprise Enablement',
     description:
-      'Eliminating rework through radical QA alignment and automated governance. We build pipelines that enforce quality by default.',
-    capabilities: ['CI/CD Hardening', 'Zero-Trust Infrastructure', 'SRE Governance'],
+      'AHA deploys SpecKit inside your organization to transform how teams build software. Proven at AWS scale, our enablement programs accelerate delivery and reduce rework across distributed teams.',
+    capabilities: ['At-Scale Transformation', 'Team Enablement', 'Process Modernization'],
   },
   {
-    icon: 'troubleshoot',
+    icon: 'strategy',
     title: 'Strategic Advisory',
     description:
-      'High-level alignment between technical roadmaps and business outcomes. We translate engineering debt into strategic opportunity.',
-    capabilities: ['CTO as a Service', 'AI Implementation Audit', 'Delivery Health Check'],
+      'Hands-on CTO advisory for engineering leaders navigating AI adoption, delivery bottlenecks, and organizational change. We assess readiness and chart a path forward.',
+    capabilities: ['CTO Advisory', 'AI Readiness Assessment', 'Delivery Health Check'],
   },
 ]
 
@@ -32,15 +32,16 @@ export default function CorePillarsSection() {
           <div className="flex flex-col md:flex-row justify-between items-end mb-24 gap-12 border-b border-outline-variant/30 pb-12">
             <div className="max-w-3xl">
               <h2 className="font-headline text-5xl md:text-6xl font-medium text-on-background tracking-tight mb-6">
-                The Pillars of Engineering Rigor
+                How We Deliver Results
               </h2>
               <p className="font-body text-lg text-on-background/60 font-headline italic">
-                We move beyond generic digital transformation. We re-engineer
-                organizational DNA through precise structuralism.
+                A consulting firm that builds products. A product built from
+                consulting expertise. Three ways we help enterprise engineering
+                teams ship better software, faster.
               </p>
             </div>
             <div className="text-[10px] font-black text-primary/40 tracking-[0.4em] uppercase whitespace-nowrap font-label">
-              Section 01 // Capabilities
+              Section 01 // How We Deliver
             </div>
           </div>
         </AnimateOnScroll>

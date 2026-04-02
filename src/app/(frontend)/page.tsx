@@ -7,10 +7,26 @@ import {
   generateOrganizationSchema,
   generateWebSiteSchema,
 } from '@/lib/seo'
+import { getPayloadClient } from '@/lib/payload'
 
-export default function HomePage() {
+export default async function HomePage() {
   const orgSchema = generateOrganizationSchema()
   const siteSchema = generateWebSiteSchema()
+
+  let posts: any[] | undefined
+  try {
+    const payload = await getPayloadClient()
+    const result = await payload.find({
+      collection: 'posts',
+      limit: 2,
+      sort: '-publishedAt',
+      where: { status: { equals: 'published' } },
+      depth: 2,
+    })
+    posts = result.docs
+  } catch {
+    // CMS fetch failed — InsightsSection will render fallback content
+  }
 
   return (
     <>
@@ -23,7 +39,7 @@ export default function HomePage() {
       <HeroSection />
       <CorePillarsSection />
       <SpecKitSection />
-      <InsightsSection />
+      <InsightsSection posts={posts} />
       <ContactSection />
     </>
   )

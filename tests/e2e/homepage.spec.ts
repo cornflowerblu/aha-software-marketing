@@ -23,7 +23,7 @@ test.describe("Homepage", () => {
 		// AnimateOnScroll opacity-0 initial state before IntersectionObserver fires.
 		const cta = page
 			.locator(
-				'a:has-text("Start the Transformation"), a:has-text("Our Methodology")',
+				'a:has-text("Explore Our Services"), a:has-text("Schedule a Consultation")',
 			)
 			.first();
 		await expect(cta).toBeAttached();
@@ -31,13 +31,13 @@ test.describe("Homepage", () => {
 
 	test("has Core Pillars section", async ({ page }) => {
 		const pillarsHeading = page.locator("h2").filter({
-			hasText: /Pillars/i,
+			hasText: /How We Deliver/i,
 		});
 		await expect(pillarsHeading.first()).toBeVisible();
 	});
 
 	test("has Spec Kit section", async ({ page }) => {
-		const specKitHeading = page.locator('h2:has-text("Spec Kit")');
+		const specKitHeading = page.locator('h2:has-text("SpecKit")');
 		await expect(specKitHeading).toBeVisible();
 	});
 

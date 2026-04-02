@@ -8,22 +8,17 @@ import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
 const contactInfo = [
   {
-    icon: 'location_on',
-    label: 'Office Hub',
-    value: '42 Engineering Plaza, London EC2A',
-  },
-  {
     icon: 'mail',
-    label: 'Direct Line',
-    value: 'hello@ahasw.consulting',
+    label: 'Email',
+    value: 'roger@ahasw.com',
   },
 ]
 
 const challengeOptions = [
-  'Eliminating Rework',
-  'DevOps Hardening',
-  'Cloud Architecture',
-  'GitHub Spec Kit Implementation',
+  'AI Readiness Assessment',
+  'Engineering Enablement at Scale',
+  'SpecKit Implementation',
+  'Delivery Health Check',
 ]
 
 export default function ContactSection() {
@@ -64,11 +59,12 @@ export default function ContactSection() {
       <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-24">
         <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
           <h2 className="font-headline text-6xl md:text-7xl font-medium text-on-background leading-none tracking-tighter mb-10">
-            Ready for Radical Change?
+            Ready to Transform Your Engineering Organization?
           </h2>
           <p className="font-body text-xl text-on-background/60 mb-16 font-headline italic leading-relaxed">
-            Contact us to schedule a Strategic Alignment workshop. No sales
-            pitches&mdash;just technical experts auditing your delivery pipeline.
+            Schedule a consultation to discuss engineering enablement,
+            SpecKit implementation, or a delivery health check. No sales
+            pitches&mdash;just technical experts who understand your stack.
           </p>
 
           <div className="space-y-12">
@@ -171,7 +167,7 @@ export default function ContactSection() {
                   type="submit"
                   className="w-full py-6 text-[11px] tracking-[0.3em]"
                 >
-                  Initiate Consultation
+                  Schedule a Consultation
                 </Button>
               </form>
             )}
