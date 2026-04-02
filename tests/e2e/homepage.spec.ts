@@ -36,7 +36,7 @@ test.describe("Homepage", () => {
 		await expect(pillarsHeading.first()).toBeVisible();
 	});
 
-	test("has Spec Kit section", async ({ page }) => {
+	test("has SpecKit section", async ({ page }) => {
 		const specKitHeading = page.locator('h2:has-text("SpecKit")');
 		await expect(specKitHeading).toBeVisible();
 	});

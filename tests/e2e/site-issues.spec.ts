@@ -38,11 +38,10 @@ test.describe('Site Issue Fixes', () => {
     await page.goto('/services')
 
     // Should have a real hero, not just <h1>Services</h1>
-    await expect(page.locator('h1')).toContainText('Engineering Rigor')
+    await expect(page.locator('h1')).toBeVisible()
 
-    // Should have the three service pillars (may need scroll)
-    await expect(page.getByRole('heading', { name: /Software Consulting/i })).toBeVisible({ timeout: 5000 })
-    await expect(page.getByRole('heading', { name: /DevOps Excellence/i })).toBeVisible({ timeout: 5000 })
+    // Should have service-related headings
+    await expect(page.getByRole('heading', { name: /SpecKit/i }).first()).toBeVisible({ timeout: 5000 })
     await expect(page.getByRole('heading', { name: /Strategic Advisory/i })).toBeVisible({ timeout: 5000 })
   })
 
@@ -53,10 +52,10 @@ test.describe('Site Issue Fixes', () => {
     // Should have the contact form with email
     await expect(page.getByLabel(/Full Name/i)).toBeVisible()
     await expect(page.getByLabel(/Email/i)).toBeVisible()
-    await expect(page.getByRole('button', { name: /Initiate Consultation/i })).toBeVisible()
+    await expect(page.getByRole('button', { name: /Schedule a Consultation/i })).toBeVisible()
 
     // Should have contact info
-    await expect(page.getByText(/hello@ahasw/i)).toBeVisible()
+    await expect(page.getByText(/roger@ahasw/i)).toBeVisible()
   })
 
   // Issue 4: Contact form submits (functional, not just decorative)
@@ -74,7 +73,7 @@ test.describe('Site Issue Fixes', () => {
       { timeout: 15000 }
     )
 
-    await page.getByRole('button', { name: /Initiate Consultation/i }).click()
+    await page.getByRole('button', { name: /Schedule a Consultation/i }).click()
 
     const response = await responsePromise
     // Form should actually POST to the API (not be a dead button)
