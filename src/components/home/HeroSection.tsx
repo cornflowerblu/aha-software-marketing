@@ -1,5 +1,6 @@
 import Button from "@/components/ui/Button";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
+import type { HomepageHero } from '@/payload-types'
 
 const defaults = {
 	badgeLabel: 'Engineering Enablement',
@@ -10,7 +11,7 @@ const defaults = {
 	secondaryCta: { text: 'Schedule a Consultation', link: '/contact' },
 }
 
-export default function HeroSection({ hero }: { hero?: any }) {
+export default function HeroSection({ hero }: { hero?: HomepageHero }) {
 	const badgeLabel = hero?.badgeLabel || defaults.badgeLabel
 	const headline = hero?.headline || defaults.headline
 	const subheadline = hero?.subheadline || defaults.subheadline
@@ -33,14 +34,19 @@ export default function HeroSection({ hero }: { hero?: any }) {
 						{badgeLabel}
 					</span>
 					<h1 className='font-headline text-5xl md:text-7xl lg:text-8xl font-medium text-on-background leading-[0.95] tracking-tighter mb-8'>
-						{headline.includes('Age of AI') ? (
-							<>
-								{headline.split('Age of AI')[0]}
-								<span className='italic font-light text-primary'>Age of AI.</span>
-							</>
-						) : (
-							headline
-						)}
+						{(() => {
+							const idx = headline.indexOf('Age of AI')
+							if (idx === -1) return headline
+							const before = headline.slice(0, idx)
+							const after = headline.slice(idx + 'Age of AI'.length)
+							return (
+								<>
+									{before}
+									<span className='italic font-light text-primary'>Age of AI</span>
+									{after}
+								</>
+							)
+						})()}
 					</h1>
 					<p className='font-body text-lg md:text-xl text-on-background/70 max-w-2xl leading-relaxed mb-10'>
 						{subheadline}

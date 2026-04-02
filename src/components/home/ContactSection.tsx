@@ -5,6 +5,7 @@ import Input from '@/components/ui/Input'
 import Textarea from '@/components/ui/Textarea'
 import Button from '@/components/ui/Button'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import type { HomepageContact } from '@/payload-types'
 
 const defaultContactEntries = [
   {
@@ -26,7 +27,7 @@ const defaultSubheadline =
   'Schedule a consultation to discuss engineering enablement, SpecKit implementation, or a delivery health check. No sales pitches\u2014just technical experts who understand your stack.'
 const defaultSubmitButtonText = 'Schedule a Consultation'
 
-export default function ContactSection({ contactData }: { contactData?: any }) {
+export default function ContactSection({ contactData }: { contactData?: HomepageContact }) {
   const heading = contactData?.heading || defaultHeading
   const subheadline = contactData?.subheadline || defaultSubheadline
   const submitButtonText = contactData?.submitButtonText || defaultSubmitButtonText

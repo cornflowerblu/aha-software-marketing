@@ -1,6 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import { resolveMediaUrl } from '@/lib/media'
+import type { Post, Media } from '@/payload-types'
 
 const fallbackArticles = [
   {
@@ -30,25 +32,28 @@ function formatDate(dateString: string): string {
   return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
 }
 
-function mapPostsToArticles(posts: any[]): typeof fallbackArticles {
-  return posts.map((post) => ({
-    slug: post.slug ?? '',
-    image: post.featuredImage?.url ?? '/assets/insight-server-room.png',
-    category:
-      (typeof post.categories?.[0] === 'object'
-        ? post.categories[0]?.title
-        : null) ?? 'Insights',
-    title: post.title ?? '',
-    excerpt:
-      post.excerpt ??
-      post.meta?.description ??
-      '',
-    readTime: '10 Min',
-    date: post.publishedAt ? formatDate(post.publishedAt) : '',
-  }))
+function mapPostsToArticles(posts: Post[]): typeof fallbackArticles {
+  return posts.map((post) => {
+    const featuredImage = typeof post.featuredImage === 'object' ? post.featuredImage as Media : null
+    return {
+      slug: post.slug ?? '',
+      image: resolveMediaUrl(featuredImage?.url) ?? '/assets/insight-server-room.png',
+      category:
+        (typeof post.categories?.[0] === 'object'
+          ? post.categories[0]?.title
+          : null) ?? 'Insights',
+      title: post.title ?? '',
+      excerpt:
+        post.excerpt ??
+        post.meta?.description ??
+        '',
+      readTime: '10 Min',
+      date: post.publishedAt ? formatDate(post.publishedAt) : '',
+    }
+  })
 }
 
-export default function InsightsSection({ posts }: { posts?: any[] }) {
+export default function InsightsSection({ posts }: { posts?: Post[] }) {
   return (
     <section className="py-32 bg-background" id="insights">
       <div className="max-w-7xl mx-auto px-6 md:px-12">

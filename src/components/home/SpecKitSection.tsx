@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import type { HomepageSpeckit } from '@/payload-types'
 
 const defaults = {
   sectionLabel: 'Product + Framework + Methodology',
@@ -34,7 +35,7 @@ const defaults = {
   cta: { text: 'Join the Waitlist', link: '/contact' },
 }
 
-export default function SpecKitSection({ specKitData }: { specKitData?: any }) {
+export default function SpecKitSection({ specKitData }: { specKitData?: HomepageSpeckit }) {
   const data = specKitData || defaults
   const featureCards = data.featureCards || defaults.featureCards
   return (
@@ -63,7 +64,7 @@ export default function SpecKitSection({ specKitData }: { specKitData?: any }) {
             animation="slide-left"
             delay={200}
           >
-            {featureCards.map((feature: any) => (
+            {featureCards.map((feature) => (
               <div
                 key={feature.title}
                 className="bg-on-primary/5 backdrop-blur-sm p-10 border border-on-primary/10 hover:bg-on-primary/10 transition-all"

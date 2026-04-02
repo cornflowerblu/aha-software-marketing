@@ -8,16 +8,19 @@ import {
   generateWebSiteSchema,
 } from '@/lib/seo'
 import { getPayloadClient } from '@/lib/payload'
+import type { Post, HomepageHero, HomepagePillar, HomepageSpeckit, HomepageContact } from '@/payload-types'
+
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const orgSchema = generateOrganizationSchema()
   const siteSchema = generateWebSiteSchema()
 
-  let posts: any[] | undefined
-  let heroData: any | undefined
-  let pillarsData: any | undefined
-  let specKitData: any | undefined
-  let contactData: any | undefined
+  let posts: Post[] | undefined
+  let heroData: HomepageHero | undefined
+  let pillarsData: HomepagePillar | undefined
+  let specKitData: HomepageSpeckit | undefined
+  let contactData: HomepageContact | undefined
 
   try {
     const payload = await getPayloadClient()
@@ -39,8 +42,8 @@ export default async function HomePage() {
     pillarsData = pillars
     specKitData = specKit
     contactData = contact
-  } catch {
-    // CMS fetch failed — all sections will render fallback content
+  } catch (err) {
+    console.error('[HomePage] CMS fetch failed — rendering fallback content:', err)
   }
 
   return (

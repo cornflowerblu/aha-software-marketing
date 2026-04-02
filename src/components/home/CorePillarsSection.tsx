@@ -1,4 +1,5 @@
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
+import type { HomepagePillar } from '@/payload-types'
 
 const defaults = {
   sectionHeading: 'How We Deliver Results',
@@ -30,13 +31,13 @@ const defaults = {
   ],
 }
 
-export default function CorePillarsSection({ pillarsData }: { pillarsData?: any }) {
+export default function CorePillarsSection({ pillarsData }: { pillarsData?: HomepagePillar }) {
   const data = pillarsData || defaults
   const pillars = (data.pillars || defaults.pillars).map(
-    (p: any) => ({
+    (p) => ({
       ...p,
       capabilities: Array.isArray(p.capabilities)
-        ? p.capabilities.map((c: any) => (typeof c === 'string' ? c : c.label))
+        ? p.capabilities.map((c) => (typeof c === 'string' ? c : c.label))
         : [],
     }),
   )

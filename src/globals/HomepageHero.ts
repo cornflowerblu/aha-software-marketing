@@ -105,6 +105,12 @@ export const HomepageHero: GlobalConfig = {
           type: 'text',
           maxLength: 100,
           admin: { description: 'Quote attribution (required if quote text is provided)' },
+          validate: (value: string | null | undefined, { siblingData }: { siblingData: Record<string, unknown> }) => {
+            if (siblingData?.text && !value) {
+              return 'Attribution is required when quote text is provided'
+            }
+            return true
+          },
         },
       ],
     },
