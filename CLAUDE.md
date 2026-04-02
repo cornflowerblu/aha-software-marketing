@@ -109,3 +109,10 @@ bun --hot ./index.ts
 ```
 
 For more information, read the Bun API docs in `node_modules/bun-types/docs/**.mdx`.
+
+## Active Technologies
+- TypeScript 6.0.2 + React 19.2.4 + JSX/TSX + Next.js 16.2.1, Payload CMS 3.80, Tailwind 4.2.2 (001-homepage-content-rewrite)
+- Neon serverless Postgres (via Payload CMS for blog article fetching) (001-homepage-content-rewrite)
+
+## Recent Changes
+- 001-homepage-content-rewrite: Added TypeScript 6.0.2 + React 19.2.4 + JSX/TSX + Next.js 16.2.1, Payload CMS 3.80, Tailwind 4.2.2
