@@ -1,28 +1,42 @@
 import Image from 'next/image'
 import AnimateOnScroll from '@/components/ui/AnimateOnScroll'
 
-const features = [
-  {
-    icon: 'devices',
-    title: 'The Platform',
-    description:
-      'Spec-driven development tooling that transforms requirements into executable artifacts — integrated into the workflows you already use.',
-  },
-  {
-    icon: 'engineering',
-    title: 'The Framework',
-    description:
-      'AHA embeds SpecKit practices inside your engineering organization, aligning delivery teams around a single source of truth.',
-  },
-  {
-    icon: 'school',
-    title: 'The Methodology',
-    description:
-      'Workshops, premium content, and a self-serve enablement path — so your teams internalize spec-driven development long after the engagement ends.',
-  },
-]
+const defaults = {
+  sectionLabel: 'Product + Framework + Methodology',
+  heading: 'Introducing SpecKit.',
+  description:
+    'SpecKit\u2122 is a platform, a framework, and a methodology — built by AHA Software to close the gap between what you specify and what gets shipped. License the tooling, bring in AHA to implement it, or train your teams to run it independently.',
+  proofPoint:
+    'Proven across enterprise engagements — from Fortune 500 consulting to AWS-scale enablement.',
+  featureCards: [
+    {
+      icon: 'devices',
+      title: 'The Platform',
+      description:
+        'Spec-driven development tooling that transforms requirements into executable artifacts — integrated into the workflows you already use.',
+    },
+    {
+      icon: 'engineering',
+      title: 'The Framework',
+      description:
+        'AHA embeds SpecKit practices inside your engineering organization, aligning delivery teams around a single source of truth.',
+    },
+    {
+      icon: 'school',
+      title: 'The Methodology',
+      description:
+        'Workshops, premium content, and a self-serve enablement path — so your teams internalize spec-driven development long after the engagement ends.',
+    },
+  ],
+  integrationTitle: 'Seamless Integration',
+  integrationDescription:
+    'SpecKit plugs into your existing CI/CD pipelines and development workflows. No platform migration required — just better traceability from spec to deployment.',
+  cta: { text: 'Join the Waitlist', link: '/contact' },
+}
 
-export default function SpecKitSection() {
+export default function SpecKitSection({ specKitData }: { specKitData?: any }) {
+  const data = specKitData || defaults
+  const featureCards = data.featureCards || defaults.featureCards
   return (
     <section className="py-32 editorial-gradient overflow-hidden relative text-on-primary">
       <div className="absolute inset-0 carbon-texture" />
@@ -31,19 +45,16 @@ export default function SpecKitSection() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
           <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
             <span className="text-on-primary-container font-extrabold tracking-[0.3em] text-[10px] uppercase mb-8 block font-label">
-              Product + Framework + Methodology
+              {data.sectionLabel || defaults.sectionLabel}
             </span>
             <h2 className="font-headline text-6xl md:text-7xl font-medium tracking-tight leading-tight mb-8">
-              Introducing SpecKit.
+              {data.heading || defaults.heading}
             </h2>
             <p className="text-on-primary-container/80 text-xl font-headline italic leading-relaxed mb-12">
-              SpecKit&#8482; is a platform, a framework, and a methodology — built by
-              AHA Software to close the gap between what you specify and what
-              gets shipped. License the tooling, bring in AHA to implement it,
-              or train your teams to run it independently.
+              {data.description || defaults.description}
             </p>
             <p className="text-on-primary/50 text-sm font-label uppercase tracking-[0.15em]">
-              Proven across enterprise engagements — from Fortune 500 consulting to AWS-scale enablement.
+              {data.proofPoint || defaults.proofPoint}
             </p>
           </AnimateOnScroll>
 
@@ -52,7 +63,7 @@ export default function SpecKitSection() {
             animation="slide-left"
             delay={200}
           >
-            {features.map((feature) => (
+            {featureCards.map((feature: any) => (
               <div
                 key={feature.title}
                 className="bg-on-primary/5 backdrop-blur-sm p-10 border border-on-primary/10 hover:bg-on-primary/10 transition-all"
@@ -78,18 +89,16 @@ export default function SpecKitSection() {
               </div>
               <div>
                 <h4 className="font-headline text-2xl mb-4">
-                  Seamless Integration
+                  {data.integrationTitle || defaults.integrationTitle}
                 </h4>
                 <p className="text-on-primary/60 text-sm font-body leading-relaxed mb-6">
-                  SpecKit plugs into your existing CI/CD pipelines and development
-                  workflows. No platform migration required — just better
-                  traceability from spec to deployment.
+                  {data.integrationDescription || defaults.integrationDescription}
                 </p>
                 <a
-                  href="/contact"
+                  href={data.cta?.link || defaults.cta.link}
                   className="inline-flex items-center gap-3 text-on-primary font-bold text-[10px] uppercase tracking-[0.2em] border-b border-on-primary/30 pb-1 hover:border-on-primary transition-all font-label"
                 >
-                  Join the Waitlist{' '}
+                  {data.cta?.text || defaults.cta.text}{' '}
                   <span className="material-symbols-outlined text-sm">
                     arrow_forward
                   </span>

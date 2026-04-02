@@ -14,18 +14,33 @@ export default async function HomePage() {
   const siteSchema = generateWebSiteSchema()
 
   let posts: any[] | undefined
+  let heroData: any | undefined
+  let pillarsData: any | undefined
+  let specKitData: any | undefined
+  let contactData: any | undefined
+
   try {
     const payload = await getPayloadClient()
-    const result = await payload.find({
-      collection: 'posts',
-      limit: 2,
-      sort: '-publishedAt',
-      where: { status: { equals: 'published' } },
-      depth: 2,
-    })
-    posts = result.docs
+    const [postsResult, hero, pillars, specKit, contact] = await Promise.all([
+      payload.find({
+        collection: 'posts',
+        limit: 2,
+        sort: '-publishedAt',
+        where: { status: { equals: 'published' } },
+        depth: 2,
+      }),
+      payload.findGlobal({ slug: 'homepage-hero' }),
+      payload.findGlobal({ slug: 'homepage-pillars' }),
+      payload.findGlobal({ slug: 'homepage-speckit' }),
+      payload.findGlobal({ slug: 'homepage-contact' }),
+    ])
+    posts = postsResult.docs
+    heroData = hero
+    pillarsData = pillars
+    specKitData = specKit
+    contactData = contact
   } catch {
-    // CMS fetch failed — InsightsSection will render fallback content
+    // CMS fetch failed — all sections will render fallback content
   }
 
   return (
@@ -36,11 +51,11 @@ export default async function HomePage() {
           __html: JSON.stringify([orgSchema, siteSchema]),
         }}
       />
-      <HeroSection />
-      <CorePillarsSection />
-      <SpecKitSection />
+      <HeroSection hero={heroData} />
+      <CorePillarsSection pillarsData={pillarsData} />
+      <SpecKitSection specKitData={specKitData} />
       <InsightsSection posts={posts} />
-      <ContactSection />
+      <ContactSection contactData={contactData} />
     </>
   )
 }
