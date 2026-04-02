@@ -104,8 +104,12 @@ jobs:
           bun -e '
             import pg from "pg";
             const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
-            const res = await pool.query("DELETE FROM _payload_migrations WHERE batch = -1");
-            console.log("Deleted", res.rowCount, "dev-mode migration records");
+            try {
+              const res = await pool.query("DELETE FROM _payload_migrations WHERE batch = -1");
+              console.log("Deleted", res.rowCount, "dev-mode migration records");
+            } catch (e) {
+              console.log("No _payload_migrations table yet — skipping cleanup:", e.message);
+            }
             await pool.end();
           '
         env:
