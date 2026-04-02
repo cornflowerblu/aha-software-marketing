@@ -28,7 +28,7 @@ test.describe('Site Issue Fixes', () => {
       const hamburger = page.getByLabel('Toggle menu')
       await hamburger.click()
 
-      await page.getByRole('link', { name: 'Services' }).click()
+      await page.getByRole('link', { name: 'Services' }).first().click()
       await expect(page).toHaveURL(/\/services/)
     })
   })
