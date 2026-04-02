@@ -2,7 +2,7 @@ import { MigrateUpArgs, MigrateDownArgs, sql } from '@payloadcms/db-postgres'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await db.execute(sql`
-   CREATE TABLE "homepage_hero" (
+   CREATE TABLE IF NOT EXISTS "homepage_hero" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"badge_label" varchar DEFAULT 'Engineering Enablement' NOT NULL,
   	"headline" varchar DEFAULT 'Engineering Enablement for the Age of AI.' NOT NULL,
@@ -17,14 +17,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone
   );
   
-  CREATE TABLE "homepage_pillars_pillars_capabilities" (
+  CREATE TABLE IF NOT EXISTS "homepage_pillars_pillars_capabilities" (
   	"_order" integer NOT NULL,
   	"_parent_id" varchar NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"label" varchar NOT NULL
   );
   
-  CREATE TABLE "homepage_pillars_pillars" (
+  CREATE TABLE IF NOT EXISTS "homepage_pillars_pillars" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -33,7 +33,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"description" varchar NOT NULL
   );
   
-  CREATE TABLE "homepage_pillars" (
+  CREATE TABLE IF NOT EXISTS "homepage_pillars" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"section_heading" varchar DEFAULT 'How We Deliver Results' NOT NULL,
   	"section_subheading" varchar DEFAULT 'A consulting firm that builds products. A product built from consulting expertise. Three ways we help enterprise engineering teams ship better software, faster.' NOT NULL,
@@ -42,7 +42,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone
   );
   
-  CREATE TABLE "homepage_speckit_feature_cards" (
+  CREATE TABLE IF NOT EXISTS "homepage_speckit_feature_cards" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -51,7 +51,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"description" varchar NOT NULL
   );
   
-  CREATE TABLE "homepage_speckit" (
+  CREATE TABLE IF NOT EXISTS "homepage_speckit" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"section_label" varchar DEFAULT 'Product + Framework + Methodology' NOT NULL,
   	"heading" varchar DEFAULT 'Introducing SpecKit.' NOT NULL,
@@ -65,7 +65,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone
   );
   
-  CREATE TABLE "homepage_contact_contact_entries" (
+  CREATE TABLE IF NOT EXISTS "homepage_contact_contact_entries" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
@@ -74,14 +74,14 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"value" varchar NOT NULL
   );
   
-  CREATE TABLE "homepage_contact_challenge_options" (
+  CREATE TABLE IF NOT EXISTS "homepage_contact_challenge_options" (
   	"_order" integer NOT NULL,
   	"_parent_id" integer NOT NULL,
   	"id" varchar PRIMARY KEY NOT NULL,
   	"label" varchar NOT NULL
   );
   
-  CREATE TABLE "homepage_contact" (
+  CREATE TABLE IF NOT EXISTS "homepage_contact" (
   	"id" serial PRIMARY KEY NOT NULL,
   	"heading" varchar DEFAULT 'Ready to Transform Your Engineering Organization?' NOT NULL,
   	"subheadline" varchar DEFAULT 'Schedule a consultation to discuss engineering enablement, SpecKit implementation, or a delivery health check. No sales pitches — just technical experts who understand your stack.' NOT NULL,
@@ -90,21 +90,31 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   	"created_at" timestamp(3) with time zone
   );
   
-  ALTER TABLE "homepage_pillars_pillars_capabilities" ADD CONSTRAINT "homepage_pillars_pillars_capabilities_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_pillars_pillars"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "homepage_pillars_pillars" ADD CONSTRAINT "homepage_pillars_pillars_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_pillars"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "homepage_speckit_feature_cards" ADD CONSTRAINT "homepage_speckit_feature_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_speckit"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "homepage_contact_contact_entries" ADD CONSTRAINT "homepage_contact_contact_entries_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_contact"("id") ON DELETE cascade ON UPDATE no action;
-  ALTER TABLE "homepage_contact_challenge_options" ADD CONSTRAINT "homepage_contact_challenge_options_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_contact"("id") ON DELETE cascade ON UPDATE no action;
-  CREATE INDEX "homepage_pillars_pillars_capabilities_order_idx" ON "homepage_pillars_pillars_capabilities" USING btree ("_order");
-  CREATE INDEX "homepage_pillars_pillars_capabilities_parent_id_idx" ON "homepage_pillars_pillars_capabilities" USING btree ("_parent_id");
-  CREATE INDEX "homepage_pillars_pillars_order_idx" ON "homepage_pillars_pillars" USING btree ("_order");
-  CREATE INDEX "homepage_pillars_pillars_parent_id_idx" ON "homepage_pillars_pillars" USING btree ("_parent_id");
-  CREATE INDEX "homepage_speckit_feature_cards_order_idx" ON "homepage_speckit_feature_cards" USING btree ("_order");
-  CREATE INDEX "homepage_speckit_feature_cards_parent_id_idx" ON "homepage_speckit_feature_cards" USING btree ("_parent_id");
-  CREATE INDEX "homepage_contact_contact_entries_order_idx" ON "homepage_contact_contact_entries" USING btree ("_order");
-  CREATE INDEX "homepage_contact_contact_entries_parent_id_idx" ON "homepage_contact_contact_entries" USING btree ("_parent_id");
-  CREATE INDEX "homepage_contact_challenge_options_order_idx" ON "homepage_contact_challenge_options" USING btree ("_order");
-  CREATE INDEX "homepage_contact_challenge_options_parent_id_idx" ON "homepage_contact_challenge_options" USING btree ("_parent_id");`)
+  DO $$ BEGIN
+    ALTER TABLE "homepage_pillars_pillars_capabilities" ADD CONSTRAINT "homepage_pillars_pillars_capabilities_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_pillars_pillars"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+  DO $$ BEGIN
+    ALTER TABLE "homepage_pillars_pillars" ADD CONSTRAINT "homepage_pillars_pillars_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_pillars"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+  DO $$ BEGIN
+    ALTER TABLE "homepage_speckit_feature_cards" ADD CONSTRAINT "homepage_speckit_feature_cards_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_speckit"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+  DO $$ BEGIN
+    ALTER TABLE "homepage_contact_contact_entries" ADD CONSTRAINT "homepage_contact_contact_entries_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_contact"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+  DO $$ BEGIN
+    ALTER TABLE "homepage_contact_challenge_options" ADD CONSTRAINT "homepage_contact_challenge_options_parent_id_fk" FOREIGN KEY ("_parent_id") REFERENCES "public"."homepage_contact"("id") ON DELETE cascade ON UPDATE no action;
+  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+  CREATE INDEX IF NOT EXISTS "homepage_pillars_pillars_capabilities_order_idx" ON "homepage_pillars_pillars_capabilities" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "homepage_pillars_pillars_capabilities_parent_id_idx" ON "homepage_pillars_pillars_capabilities" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "homepage_pillars_pillars_order_idx" ON "homepage_pillars_pillars" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "homepage_pillars_pillars_parent_id_idx" ON "homepage_pillars_pillars" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "homepage_speckit_feature_cards_order_idx" ON "homepage_speckit_feature_cards" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "homepage_speckit_feature_cards_parent_id_idx" ON "homepage_speckit_feature_cards" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "homepage_contact_contact_entries_order_idx" ON "homepage_contact_contact_entries" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "homepage_contact_contact_entries_parent_id_idx" ON "homepage_contact_contact_entries" USING btree ("_parent_id");
+  CREATE INDEX IF NOT EXISTS "homepage_contact_challenge_options_order_idx" ON "homepage_contact_challenge_options" USING btree ("_order");
+  CREATE INDEX IF NOT EXISTS "homepage_contact_challenge_options_parent_id_idx" ON "homepage_contact_challenge_options" USING btree ("_parent_id");`)
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {

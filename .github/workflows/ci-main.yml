@@ -99,7 +99,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bunx payload migrate <<< "y"
+      - name: Clear dev-mode migration records
+        run: |
+          bun -e '
+            import pg from "pg";
+            const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+            const res = await pool.query("DELETE FROM _payload_migrations WHERE batch = -1");
+            console.log("Deleted", res.rowCount, "dev-mode migration records");
+            await pool.end();
+          '
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - name: Run migrations
+        run: bunx payload migrate
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           PAYLOAD_SECRET: ${{ secrets.PAYLOAD_SECRET }}
