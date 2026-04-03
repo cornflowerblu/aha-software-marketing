@@ -77,29 +77,30 @@ export default function ContactSection({ contactData }: { contactData?: Homepage
   }
 
   return (
-    <section className="py-32 bg-surface-container" id="contact">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-24">
+    <section className="py-24 bg-surface-high" id="contact">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-16">
         <AnimateOnScroll className="lg:col-span-5" animation="fade-up">
-          <h2 className="font-headline text-6xl md:text-7xl font-medium text-on-background leading-none tracking-tighter mb-10">
+          <p className="ea-label mb-4 text-primary">Get in Touch</p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-[-0.02em] text-on-surface leading-tight mb-6">
             {heading}
           </h2>
-          <p className="font-body text-xl text-on-background/60 mb-16 font-headline italic leading-relaxed">
+          <p className="text-on-surface-variant leading-relaxed mb-12">
             {subheadline}
           </p>
 
-          <div className="space-y-12">
+          <div className="space-y-8">
             {contactInfo.map((info: { icon: string; label: string; value: string }) => (
-              <div key={info.label} className="flex gap-8 group">
-                <div className="w-16 h-16 flex items-center justify-center bg-background text-primary border border-outline-variant/30 group-hover:border-primary transition-colors">
-                  <span className="material-symbols-outlined text-3xl">
+              <div key={info.label} className="flex gap-5 group items-center">
+                <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-surface-lowest text-primary shadow-ambient">
+                  <span className="material-symbols-outlined text-xl">
                     {info.icon}
                   </span>
                 </div>
                 <div>
-                  <h4 className="font-extrabold text-[10px] uppercase tracking-[0.3em] mb-2 text-primary font-label">
+                  <p className="ea-label text-tertiary mb-1">
                     {info.label}
-                  </h4>
-                  <p className="text-on-background text-lg font-headline">
+                  </p>
+                  <p className="text-on-surface font-semibold">
                     {info.value}
                   </p>
                 </div>
@@ -109,25 +110,25 @@ export default function ContactSection({ contactData }: { contactData?: Homepage
         </AnimateOnScroll>
 
         <AnimateOnScroll className="lg:col-span-7" animation="slide-left" delay={200}>
-          <div className="bg-background p-8 md:p-12 shadow-ambient-lg ghost-border">
+          <div className="rounded-2xl bg-surface-lowest p-8 md:p-10 shadow-ambient-lg">
             {submitted ? (
               <div className="text-center py-16">
-                <span className="material-symbols-outlined text-5xl text-primary mb-6 block">
+                <span className="material-symbols-outlined text-4xl text-primary mb-4 block">
                   check_circle
                 </span>
-                <h3 className="font-headline text-3xl font-medium mb-4">
+                <h3 className="text-2xl font-bold text-on-surface mb-3">
                   Message Sent
                 </h3>
-                <p className="font-body text-on-background/60">
+                <p className="text-on-surface-variant">
                   We&apos;ll be in touch within 24 hours.
                 </p>
               </div>
             ) : (
               <form
-                className="space-y-10"
+                className="space-y-8"
                 onSubmit={handleSubmit}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <Input label="Full Name" name="name" placeholder="John Doe" type="text" required />
                   <Input
                     label="Email"
@@ -138,7 +139,7 @@ export default function ContactSection({ contactData }: { contactData?: Homepage
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                   <Input
                     label="Phone (Optional)"
                     name="phone"
@@ -156,14 +157,14 @@ export default function ContactSection({ contactData }: { contactData?: Homepage
                 <div>
                   <label
                     htmlFor="challenge"
-                    className="block font-label text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mb-3"
+                    className="ea-label text-tertiary mb-2 block"
                   >
                     Primary Challenge
                   </label>
                   <select
                     id="challenge"
                     name="challenge"
-                    className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-lg font-headline py-2 transition-all outline-none"
+                    className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-on-surface py-2 transition-colors outline-none"
                   >
                     {challengeOptions.map((opt) => (
                       <option key={opt}>{opt}</option>
@@ -179,13 +180,14 @@ export default function ContactSection({ contactData }: { contactData?: Homepage
                 />
 
                 {error && (
-                  <p className="text-error text-sm font-body">{error}</p>
+                  <p className="text-error text-sm">{error}</p>
                 )}
 
                 <Button
                   variant="primary"
                   type="submit"
-                  className="w-full py-6 text-[11px] tracking-[0.3em]"
+                  className="w-full"
+                  size="lg"
                 >
                   {submitButtonText}
                 </Button>
