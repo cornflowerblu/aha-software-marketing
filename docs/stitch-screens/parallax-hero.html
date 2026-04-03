@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Boreal Breeze | The Digital Conservatory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#d1dcdd",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#476063",
+                    "tertiary": "#546073",
+                    "secondary-dim": "#3e575a",
+                    "on-primary": "#e6fdff",
+                    "outline-variant": "#a9b4b5",
+                    "tertiary-dim": "#485466",
+                    "inverse-surface": "#0a0f0f",
+                    "surface-variant": "#dae5e5",
+                    "on-background": "#2a3435",
+                    "on-primary-fixed": "#00474b",
+                    "error-container": "#fa746f",
+                    "on-primary-fixed-variant": "#00666c",
+                    "on-error": "#fff7f6",
+                    "secondary-fixed": "#cce8eb",
+                    "on-secondary": "#e9fdff",
+                    "on-secondary-fixed": "#2b4346",
+                    "surface-bright": "#f6fafa",
+                    "primary-container": "#a0f0f6",
+                    "on-tertiary-fixed-variant": "#525e71",
+                    "on-tertiary-container": "#485467",
+                    "error-dim": "#67040d",
+                    "primary-dim": "#005d62",
+                    "surface": "#f6fafa",
+                    "primary": "#006a70",
+                    "surface-container-high": "#e1eaea",
+                    "outline": "#727d7d",
+                    "on-tertiary": "#f8f8ff",
+                    "on-primary-container": "#005b60",
+                    "on-tertiary-fixed": "#364254",
+                    "surface-container-low": "#eef5f5",
+                    "secondary-fixed-dim": "#bed9dd",
+                    "on-secondary-container": "#3d5659",
+                    "on-surface": "#2a3435",
+                    "tertiary-fixed": "#dae6fd",
+                    "inverse-primary": "#a3f3f9",
+                    "primary-fixed-dim": "#92e1e8",
+                    "surface-container": "#e7eff0",
+                    "inverse-on-surface": "#999e9e",
+                    "secondary-container": "#cce8eb",
+                    "surface-tint": "#006a70",
+                    "error": "#a83836",
+                    "tertiary-container": "#dae6fd",
+                    "primary-fixed": "#a0f0f6",
+                    "background": "#f6fafa",
+                    "secondary": "#4a6366",
+                    "tertiary-fixed-dim": "#ccd8ee",
+                    "on-surface-variant": "#576162",
+                    "surface-container-highest": "#dae5e5",
+                    "on-error-container": "#6e0a12"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "fontFamily": {
+                    "headline": ["Plus Jakarta Sans"],
+                    "body": ["Plus Jakarta Sans"],
+                    "label": ["Plus Jakarta Sans"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f6fafa; color: #2a3435; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+        .glass-nav { backdrop-filter: blur(20px); }
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+    </style>
+</head>
+<body class="antialiased overflow-x-hidden">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_30px_50px_rgba(0,106,112,0.04)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold text-[#006a70] dark:text-[#8bf3fc]">Boreal Breeze</div>
+<div class="hidden md:flex items-center space-gap-8 gap-8">
+<a class="text-[#006a70] dark:text-[#8bf3fc] font-semibold border-b-2 border-[#006a70] text-sm uppercase tracking-widest hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300" href="#">Showcase</a>
+<a class="text-[#4a6366] dark:text-[#dae5e5] text-sm uppercase tracking-widest hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300" href="#">Features</a>
+<a class="text-[#4a6366] dark:text-[#dae5e5] text-sm uppercase tracking-widest hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300" href="#">Library</a>
+<a class="text-[#4a6366] dark:text-[#dae5e5] text-sm uppercase tracking-widest hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300" href="#">About</a>
+</div>
+<button class="bg-[#006a70] text-[#e6fdff] px-6 py-2 rounded-full font-semibold text-sm active:scale-95 transition-transform duration-200">
+                Get Started
+            </button>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 z-0 parallax-bg" data-alt="Cinematic wide shot of a misty pine forest in the Nordic morning with soft ethereal light filtering through layers of fog and tall trees" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCK3nNscc_-8jE6YQTnEZuv4Kh_5gRMcnkIAH-_DjhFW5MljIJK3j2fmbkjioBJDXKh_dsBbaO-ks5aKDgRm12vuUfMRTugd1F6m_WMbfH1py1mvn_m4dKHTIrQViQtD-LfLiOO6h-7d3UBDaUtwxXDh3Vz61T4ZkkqK72ChPE9wDHm0XOELS7GojwLPuwIQcOGNaA-MraP0HDqkt-857KQ12zucS7tw8Imuv8qy_DySLZwtlxK-0YRZcGszaBvwP8VnZ6YgJJk79Os');"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#f6fafa]/20 to-[#f6fafa] z-10"></div>
+<div class="relative z-20 text-center px-6 max-w-4xl">
+<span class="label-md uppercase tracking-[0.3em] text-[#006a70] font-medium mb-6 block">Atmospheric Excellence</span>
+<h1 class="text-6xl md:text-8xl font-extrabold tracking-tighter text-[#2a3435] leading-tight mb-8">
+                The Digital <br/><span class="bg-gradient-to-r from-[#006a70] to-[#546073] bg-clip-text text-transparent">Conservatory</span>
+</h1>
+<p class="text-xl md:text-2xl text-[#4a6366] leading-relaxed max-w-2xl mx-auto mb-12">
+                A sanctuary for refined design, where light, air, and organic flow redefine the modern interface experience.
+            </p>
+<div class="flex flex-col md:flex-row gap-6 justify-center">
+<button class="bg-gradient-to-br from-[#006a70] to-[#005d63] text-white px-10 py-4 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300">
+                    Explore Showcase
+                </button>
+<button class="bg-white/40 backdrop-blur-md text-[#006a70] px-10 py-4 rounded-full text-lg font-semibold border border-white/20 hover:bg-white/60 transition-all duration-300">
+                    Our Philosophy
+                </button>
+</div>
+</div>
+</section>
+<!-- Philosophy Section -->
+<section class="py-24 px-8 bg-[#f6fafa]">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16 items-center">
+<div class="md:col-span-5 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-2xl relative z-10">
+<img class="w-full h-full object-cover" data-alt="Minimalist architectural interior with large windows looking out to a misty forest, clean lines, and soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCT9LRSBgbIOm5f4cByRCgdwcoOZxvgh2POhbiasRumRHOjK3yjVyK1a5uVVqiBwG0A2oo0fJKmLq2qBtyG6YrbEFSgn8YaB9UWnrf8e9Xd55GGB7Py9uLCfym2w5m8WCWoFBrAbcG2xV0R5TlS1uLcJVuxpWUDgJ_bEGtJjwWPeOk82SnCs-7zVMkDCZ16NMQGG7XSvgInjSY4ebAnlyH9ngAzOmXdFdUp1htWob5KWUCRD0OTa5xqSUYjprxJxlKTsbsmbzaYCXWP"/>
+</div>
+<div class="absolute -bottom-8 -right-8 w-48 h-48 bg-[#a0f0f6] rounded-xl -z-0 opacity-40"></div>
+</div>
+<div class="md:col-span-7">
+<div class="label-md uppercase tracking-widest text-[#546073] mb-4">The Philosophy</div>
+<h2 class="text-4xl md:text-5xl font-bold tracking-tight text-[#2a3435] mb-8 leading-[1.2]">Ethereal Atrium: A Rejection of the Box.</h2>
+<p class="text-lg text-[#4a6366] leading-[1.8] mb-8">
+                    Traditional design traps users in grids and boxes. We embrace **Intentional Asymmetry**. Our interfaces feel like looking through layers of frosted glass—an atmospheric journey where hierarchy is dictated by light, not lines.
+                </p>
+<div class="grid grid-cols-2 gap-8">
+<div class="space-y-2">
+<span class="material-symbols-outlined text-[#006a70] text-3xl">filter_vintage</span>
+<h4 class="font-bold text-[#2a3435]">Organic Flow</h4>
+<p class="text-sm text-[#546073]">Fluid movements that mimic the natural ease of the Boreal breeze.</p>
+</div>
+<div class="space-y-2">
+<span class="material-symbols-outlined text-[#006a70] text-3xl">blur_on</span>
+<h4 class="font-bold text-[#2a3435]">Tonal Depth</h4>
+<p class="text-sm text-[#546073]">Layered surfaces that breathe without the clutter of borders.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Core Features - Bento Grid -->
+<section class="py-24 px-8 bg-[#eef5f5] rounded-t-[3rem]">
+<div class="max-w-7xl mx-auto">
+<div class="text-center mb-16">
+<div class="label-md uppercase tracking-widest text-[#006a70] mb-4">Functionality</div>
+<h2 class="text-4xl font-bold tracking-tight text-[#2a3435]">Curated Precision</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[250px]">
+<!-- Bento Item 1 -->
+<div class="md:col-span-2 md:row-span-2 bg-white rounded-xl p-10 flex flex-col justify-between shadow-[0_30px_50px_rgba(0,106,112,0.03)] hover:translate-y-[-4px] transition-all duration-300">
+<div>
+<div class="w-12 h-12 bg-[#cce8eb] rounded-full flex items-center justify-center mb-6">
+<span class="material-symbols-outlined text-[#006a70]">ac_unit</span>
+</div>
+<h3 class="text-3xl font-bold text-[#2a3435] mb-4">Frost Engine</h3>
+<p class="text-[#4a6366] text-lg leading-relaxed">Our proprietary rendering core delivers 120fps fluid transitions with real-time blur calculation.</p>
+</div>
+<div class="mt-8">
+<img class="w-full h-48 object-cover rounded-lg" data-alt="Abstract 3D visualization of soft crystalline structures with teal and lavender color gradients" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARu3S_vpRa9hc-X92uwwx4yoRaLBR4E078ZJZMhmNAek5LxjtDf0NIGtijmDOVVQgIjgBQBYDYPQh-GdlXvokk8fkE_cplwThRRRw8wLECLEnrUcBXmvgMyXjgC9tCHYrzsGKcbXnXl8o02dK4oyL7hPWIS1_mX59GaVYppxrEYaSOwr154INJoTiWeUkvdgixCYvg8BZfelkOX4O2fRvsRBKbzTJNmDmLAe6_fyJH40WhlPchbrMG2y4OQzpvC1-ZQ0_bZsTcKC2a"/>
+</div>
+</div>
+<!-- Bento Item 2 -->
+<div class="md:col-span-2 bg-[#006a70] rounded-xl p-10 flex items-center justify-between overflow-hidden relative group">
+<div class="relative z-10 max-w-[60%]">
+<h3 class="text-2xl font-bold text-white mb-2">Editorial Layouts</h3>
+<p class="text-[#a0f0f6] text-sm">Magazine-grade typography systems for deep immersion.</p>
+</div>
+<span class="material-symbols-outlined text-white/10 text-[120px] absolute -right-4 -bottom-4 group-hover:scale-110 transition-transform duration-500">auto_stories</span>
+</div>
+<!-- Bento Item 3 -->
+<div class="bg-white rounded-xl p-8 shadow-[0_30px_50px_rgba(0,106,112,0.03)] hover:translate-y-[-4px] transition-all duration-300">
+<span class="material-symbols-outlined text-[#546073] mb-4">opacity</span>
+<h4 class="font-bold text-[#2a3435] mb-2">Glassmorphism</h4>
+<p class="text-xs text-[#546073]">Multi-layered surface nesting logic.</p>
+</div>
+<!-- Bento Item 4 -->
+<div class="bg-[#dae6fd] rounded-xl p-8 hover:translate-y-[-4px] transition-all duration-300">
+<span class="material-symbols-outlined text-[#485467] mb-4">palette</span>
+<h4 class="font-bold text-[#364254] mb-2">Boreal Palette</h4>
+<p class="text-xs text-[#525e71]">Dynamic cooling of UI based on user activity.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-8 bg-white overflow-hidden">
+<div class="max-w-5xl mx-auto bg-[#006a70] rounded-[2rem] p-12 md:p-24 text-center relative overflow-hidden">
+<div class="absolute inset-0 opacity-10" data-alt="Subtle noise texture with soft flowing organic lines" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCwKr__WGYl0J3u1zljWLdNjvco-x8MlkcVW90HGbl2GvxxLE9m0XfTyTfU6U771GvwmzQY2D-oq0xIbGZEan1hu7ZMHOoEINVjSEThgqf5_2R-GhRytSAJShhH1ZtcSZK4bIvEflYMQvWYVjhRv9bCQte8UVwKViJbH4beROC1RE-DgdJ9SvL3S2uru6N6g88PxT-L8PW4c3U4VVnr606i210sHrXXhpTEpYD68WQ_jz9MX3-fBKzzsntvVuCrIAKZm4YS-8Ty9gHq'); background-size: cover;"></div>
+<div class="relative z-10">
+<h2 class="text-4xl md:text-5xl font-bold text-white mb-8 tracking-tight">Step into the conservatory.</h2>
+<p class="text-[#a0f0f6] text-xl mb-12 max-w-xl mx-auto leading-relaxed">
+                    Experience the future of interface design. Refined, refreshing, and remarkably light.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="bg-[#8bf3fc] text-[#00474b] px-12 py-4 rounded-full text-lg font-bold shadow-lg hover:bg-white transition-all duration-300">
+                        Start Building
+                    </button>
+<button class="bg-transparent border border-white/30 text-white px-12 py-4 rounded-full text-lg font-semibold hover:bg-white/10 transition-all duration-300">
+                        View Documentation
+                    </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full rounded-t-[1.5rem] bg-[#f6fafa] dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="text-lg font-bold text-[#006a70] dark:text-[#8bf3fc] mb-2">Boreal Breeze</div>
+<p class="text-xs uppercase tracking-widest text-[#546073] dark:text-[#dae5e5]">© 2024 Boreal Breeze. Designed for the Digital Conservatory.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-sm uppercase tracking-widest text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all duration-300" href="#">Privacy</a>
+<a class="text-sm uppercase tracking-widest text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all duration-300" href="#">Terms</a>
+<a class="text-sm uppercase tracking-widest text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all duration-300" href="#">Github</a>
+<a class="text-sm uppercase tracking-widest text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all duration-300" href="#">Documentation</a>
+</div>
+</div>
+</footer>
+</body></html>

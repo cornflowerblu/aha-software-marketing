@@ -31,6 +31,7 @@ customer is Enterprise CTOs/CIOs. The core value proposition is
 engineering enablement at scale in the age of AI, proven at Amazon (AWS).
 
 All user-facing copy MUST:
+
 - Clearly communicate AHA's hybrid consulting + product identity
 - Position SpecKit's triple nature (product, framework, methodology)
 - Speak to C-suite decision-makers, not developer-marketing audiences
@@ -57,10 +58,13 @@ actually work?" should be answerable with "we used it to build this site."
 
 ### III. Design System Fidelity
 
-The design system (Figma file `wHqVLyVESensvFpFBbYhMk`) is the visual
-source of truth. All implementations MUST:
+**Canonical product specification:** _Ethereal Atrium_ (_Digital Conservatory_) —
+`docs/DESIGN.md`, with interactive tokens at `/styleguide` when
+`ENABLE_STYLEGUIDE=true`.
 
-- Use CSS custom property tokens from `src/app/globals.css` — never hardcode hex colors
+**Visual source of truth (Figma):** [AHA Design System](https://www.figma.com/design/zlXMI6B9Y88ykFSawN4hqO/AHA-Design-System) (`zlXMI6B9Y88ykFSawN4hqO`). **Shipped marketing UI** still uses `src/app/globals.css` in many places until tokens align with Figma + Ethereal Atrium. All implementations MUST:
+
+- Use CSS custom property tokens from `src/app/globals.css` for production routes — never hardcode hex colors
 - Use `font-headline` (Newsreader) for headings and `font-body` (DM Sans) for body text
 - Use custom shadow utilities (`shadow-ambient`, `shadow-lift`) — never standard Tailwind shadows
 - Follow the No-Line Rule: define boundaries through background color shifts, not borders
@@ -131,6 +135,7 @@ All dynamic content (blog posts, events, premium articles) MUST be
 managed through Payload CMS collections — not hardcoded in components.
 
 Fallback/placeholder content displayed when the CMS is unavailable MUST:
+
 - Accurately represent AHA's actual services and positioning
 - Be clearly representative of the type of content (not typography articles
   on a consulting site)
@@ -143,20 +148,24 @@ CMS is down.
 ## Technology & Stack Constraints
 
 **Runtime**: Bun (NOT npm/node) for all operations:
+
 - `bun install`, `bun run dev`, `bun test`, `bunx` for all tooling
 - Bun auto-loads `.env` — do not use dotenv
 
 **Framework**: Next.js 16 App Router + Payload CMS v3
+
 - Server Components by default; Client Components only when interactivity requires it
 - Payload collections in `src/collections/`, globals in `src/globals/`
 - Rich text via Payload Lexical editor, rendered with `.editorial-rich-text` wrapper
 
 **Database**: Neon serverless Postgres
+
 - Three branches: main (prod), vercel-dev (preview), local-dev
 - Migrations managed by Payload CLI (`bunx payload migrate`)
 - Migration detection in CI MUST use structured output, not fragile grep
 
 **Deployment**: Vercel
+
 - Rolling Releases with canary verification
 - Vercel Blob for media storage
 - Axiom for observability (web vitals, structured logging)
@@ -190,6 +199,7 @@ No hardcoded colors. No standard Tailwind shadows.
 ### Code Review Requirements
 
 All PRs MUST verify:
+
 - No hardcoded colors or inline styles (Principle III)
 - No silent error catching without logging (Principle IV)
 - No fire-and-forget for critical data syncs (Principle IV)
@@ -199,6 +209,7 @@ All PRs MUST verify:
 ### Amendment Procedure
 
 Amendments to this constitution require:
+
 1. A PR with the proposed change and rationale
 2. Version bump following semver (MAJOR: principle removal/redefinition,
    MINOR: new principle or material expansion, PATCH: clarification/wording)
@@ -219,6 +230,7 @@ Complexity that violates a principle MUST be justified in the
 Complexity Tracking section of the implementation plan.
 
 For runtime development guidance, refer to:
+
 - `docs/PROJECT-PLAN.md` — phased roadmap and task details
 - `.specify/memory/constitution.md` — this file (governance)
 - `CLAUDE.md` — tooling conventions (Bun, testing, frontend patterns)
