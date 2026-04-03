@@ -1,150 +1,262 @@
 @import 'tailwindcss';
 
 /*
- * AHA Software Design System
- * Creative Direction: "The Digital Curator"
- * Fonts: Fraunces (headline) + DM Sans (body/label)
- * Colors: Full Material Design 3 token set
- * See docs/DESIGN.md for rules and philosophy
+ * AHA Software — Ethereal Atrium Design System
+ * Creative Direction: "The Digital Conservatory"
+ * Font: Plus Jakarta Sans (all weights)
+ * Colors: Cool teal / frost Material tokens
+ * Migrated from Warm Stone. See docs/DESIGN.md for rules and philosophy.
  */
 
-@theme {
-  /* ──────────────────────────────────────────────
-   * COLORS — Material Design 3 Token Set
-   * ────────────────────────────────────────────── */
+/* Global pointer cursor for interactive elements */
+button,
+[role="button"],
+a,
+select,
+summary {
+  cursor: pointer !important;
+}
 
+/* ========================================================================
+   Ethereal Atrium — Design Tokens (CSS Custom Properties)
+   Cool-toned, teal-primary system. Dark mode overrides below.
+   ======================================================================== */
+
+:root {
   /* Primary */
-  --color-primary: #005c55;
-  --color-primary-container: #0f766e;
-  --color-on-primary: #ffffff;
-  --color-on-primary-container: #a3faef;
-  --color-primary-fixed: #9cf2e8;
-  --color-primary-fixed-dim: #80d5cb;
-  --color-on-primary-fixed: #00201d;
-  --color-on-primary-fixed-variant: #00504a;
+  --ea-primary: #006a70;
+  --ea-primary-dim: #005d63;
+  --ea-primary-container: #c4f9fc;
+  --ea-on-primary: #ffffff;
+  --ea-on-primary-container: #003335;
 
   /* Secondary */
-  --color-secondary: #466460;
-  --color-secondary-container: #c5e6e1;
-  --color-on-secondary: #ffffff;
-  --color-on-secondary-container: #4a6864;
-  --color-secondary-fixed: #c8e9e4;
-  --color-secondary-fixed-dim: #accdc8;
-  --color-on-secondary-fixed: #00201d;
-  --color-on-secondary-fixed-variant: #2e4c48;
+  --ea-secondary: #4a6366;
+  --ea-secondary-container: #cde8eb;
+  --ea-on-secondary: #ffffff;
+  --ea-on-secondary-container: #051f22;
 
-  /* Tertiary (Clay Accent) */
-  --color-tertiary: #7f4025;
-  --color-tertiary-container: #9c573a;
-  --color-on-tertiary: #ffffff;
-  --color-on-tertiary-container: #ffe5db;
-  --color-tertiary-fixed: #ffdbce;
-  --color-tertiary-fixed-dim: #ffb598;
-  --color-on-tertiary-fixed: #370e00;
-  --color-on-tertiary-fixed-variant: #72361b;
+  /* Tertiary (lavender) */
+  --ea-tertiary: #546073;
+  --ea-tertiary-container: #d8e4f7;
+  --ea-on-tertiary: #ffffff;
+  --ea-on-tertiary-container: #101c2b;
 
-  /* Background & Surface ("Warm Stone" philosophy) */
-  --color-background: #fff8f2;
-  --color-on-background: #1e1b17;
-  --color-surface: #fff8f2;
-  --color-on-surface: #1e1b17;
-  --color-on-surface-variant: #3e4947;
+  /* Surfaces */
+  --ea-surface: #f6fafa;
+  --ea-surface-low: #eef5f5;
+  --ea-surface-lowest: #ffffff;
+  --ea-surface-high: #e4eeee;
+  --ea-surface-highest: #dae5e5;
 
-  /* Surface Layers (Tonal Depth — "stacked sheets of fine paper") */
-  --color-surface-container-lowest: #ffffff;
-  --color-surface-container-low: #faf2eb;
-  --color-surface-container: #f4ede6;
-  --color-surface-container-high: #eee7e0;
-  --color-surface-container-highest: #e8e1db;
-  --color-surface-variant: #e8e1db;
-  --color-surface-dim: #e0d9d2;
-  --color-surface-bright: #fff8f2;
-  --color-surface-tint: #006a63;
+  /* On-surface */
+  --ea-on-surface: #2a3435;
+  --ea-on-surface-variant: #3f4e50;
 
   /* Outline */
-  --color-outline: #6e7977;
-  --color-outline-variant: #bdc9c6;
+  --ea-outline: #4a6366;
+  --ea-outline-variant: rgba(74, 99, 102, 0.18);
 
   /* Error */
-  --color-error: #ba1a1a;
-  --color-error-container: #ffdad6;
-  --color-on-error: #ffffff;
-  --color-on-error-container: #93000a;
+  --ea-error: #ba1a1a;
+  --ea-error-container: #ffdad6;
+  --ea-on-error: #ffffff;
+  --ea-on-error-container: #410002;
+}
 
-  /* Inverse */
-  --color-inverse-surface: #33302c;
-  --color-inverse-on-surface: #f7efe9;
-  --color-inverse-primary: #80d5cb;
+/* ========================================================================
+   Dark Mode — inverted tonal scale (Material Design 3 convention)
+   ======================================================================== */
 
-  /* ──────────────────────────────────────────────
-   * FONTS
-   * ────────────────────────────────────────────── */
-  --font-headline: var(--font-newsreader), 'Newsreader', serif;
-  --font-body: var(--font-dm-sans), 'DM Sans', sans-serif;
-  --font-label: var(--font-dm-sans), 'DM Sans', sans-serif;
+.dark {
+  --ea-primary: #53dde5;
+  --ea-primary-dim: #22c1c9;
+  --ea-primary-container: #004f54;
+  --ea-on-primary: #003335;
+  --ea-on-primary-container: #8bf3fc;
 
-  /* ──────────────────────────────────────────────
-   * BORDER RADIUS (minimal, editorial)
-   * ────────────────────────────────────────────── */
-  --radius-DEFAULT: 0.125rem;
-  --radius-sm: 0.125rem;
-  --radius-md: 0.375rem;
-  --radius-lg: 0.25rem;
-  --radius-xl: 0.5rem;
+  --ea-secondary: #b0cbcf;
+  --ea-secondary-container: #1c3538;
+  --ea-on-secondary: #051f22;
+  --ea-on-secondary-container: #cde8eb;
+
+  --ea-tertiary: #bac8de;
+  --ea-tertiary-container: #263242;
+  --ea-on-tertiary: #101c2b;
+  --ea-on-tertiary-container: #d8e4f7;
+
+  --ea-surface: #151e1f;
+  --ea-surface-low: #1c2829;
+  --ea-surface-lowest: #0f1718;
+  --ea-surface-high: #2a3435;
+  --ea-surface-highest: #3f4e50;
+
+  --ea-on-surface: #dae5e5;
+  --ea-on-surface-variant: #a3b4b4;
+
+  --ea-outline: #a3b4b4;
+  --ea-outline-variant: rgba(169, 184, 184, 0.18);
+
+  --ea-error: #ffb4ab;
+  --ea-error-container: #93000a;
+  --ea-on-error: #690005;
+  --ea-on-error-container: #ffdad6;
+}
+
+/* ========================================================================
+   Tailwind v4 Theme — maps EA tokens to utility classes
+   Includes backwards-compatible aliases for existing components.
+   ======================================================================== */
+
+@theme {
+  /* ── Core Brand ──────────────────────────────────────── */
+  --color-primary: var(--ea-primary);
+  --color-primary-dim: var(--ea-primary-dim);
+  --color-primary-container: var(--ea-primary-container);
+  --color-on-primary: var(--ea-on-primary);
+  --color-on-primary-container: var(--ea-on-primary-container);
+
+  /* ── Secondary ───────────────────────────────────────── */
+  --color-secondary: var(--ea-secondary);
+  --color-secondary-container: var(--ea-secondary-container);
+  --color-on-secondary: var(--ea-on-secondary);
+  --color-on-secondary-container: var(--ea-on-secondary-container);
+
+  /* ── Tertiary ────────────────────────────────────────── */
+  --color-tertiary: var(--ea-tertiary);
+  --color-tertiary-container: var(--ea-tertiary-container);
+  --color-on-tertiary: var(--ea-on-tertiary);
+  --color-on-tertiary-container: var(--ea-on-tertiary-container);
+
+  /* ── Surfaces (canonical EA names) ───────────────────── */
+  --color-background: var(--ea-surface);
+  --color-surface: var(--ea-surface);
+  --color-surface-low: var(--ea-surface-low);
+  --color-surface-lowest: var(--ea-surface-lowest);
+  --color-surface-high: var(--ea-surface-high);
+  --color-surface-highest: var(--ea-surface-highest);
+
+  /* ── Surfaces (old "container" aliases for compat) ───── */
+  --color-surface-container-lowest: var(--ea-surface-lowest);
+  --color-surface-container-low: var(--ea-surface-low);
+  --color-surface-container: var(--ea-surface-high);
+  --color-surface-container-high: var(--ea-surface-high);
+  --color-surface-container-highest: var(--ea-surface-highest);
+  --color-surface-variant: var(--ea-surface-high);
+  --color-surface-dim: var(--ea-surface-highest);
+  --color-surface-bright: var(--ea-surface);
+  --color-surface-tint: var(--ea-primary);
+
+  /* ── On-surface ──────────────────────────────────────── */
+  --color-on-surface: var(--ea-on-surface);
+  --color-on-surface-variant: var(--ea-on-surface-variant);
+  --color-on-background: var(--ea-on-surface);
+  --color-foreground: var(--ea-on-surface);
+
+  /* ── Semantic (card / muted) ─────────────────────────── */
+  --color-card: var(--ea-surface-lowest);
+  --color-card-foreground: var(--ea-on-surface);
+  --color-muted: var(--ea-surface-low);
+  --color-muted-foreground: var(--ea-tertiary);
+
+  /* ── Outline ─────────────────────────────────────────── */
+  --color-outline: var(--ea-outline);
+  --color-outline-variant: var(--ea-outline-variant);
+
+  /* ── Error ───────────────────────────────────────────── */
+  --color-error: var(--ea-error);
+  --color-error-container: var(--ea-error-container);
+  --color-on-error: var(--ea-on-error);
+  --color-on-error-container: var(--ea-on-error-container);
+
+  /* ── Inverse ─────────────────────────────────────────── */
+  --color-inverse-surface: var(--ea-on-surface);
+  --color-inverse-on-surface: var(--ea-surface-low);
+  --color-inverse-primary: #53dde5;
+
+  /* ── Fonts (Plus Jakarta Sans for everything) ────────── */
+  --font-sans: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  --font-headline: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+  --font-label: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  /* ── Border Radii (Round Eight) ──────────────────────── */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-DEFAULT: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* ──────────────────────────────────────────────
-   * SHADOWS (Ambient only — large, diffused)
-   * ────────────────────────────────────────────── */
-  --shadow-ambient: 0 20px 40px rgba(30, 27, 23, 0.05);
-  --shadow-ambient-lg: 0 40px 80px rgba(30, 27, 23, 0.06);
-  --shadow-editorial: 0 20px 40px rgba(30, 27, 23, 0.05);
-  --shadow-lift: 0 40px 80px rgba(0, 92, 85, 0.08);
+  /* ── Shadows (teal-grey tinted, never pure black) ────── */
+  --shadow-ambient: 0 2px 30px 0 rgba(74, 99, 102, 0.06);
+  --shadow-ambient-lg: 0 4px 40px 0 rgba(74, 99, 102, 0.07);
+  --shadow-editorial: 0 2px 30px 0 rgba(74, 99, 102, 0.06);
+  --shadow-lift: 0 16px 60px 0 rgba(42, 52, 53, 0.12);
+  --shadow-raised: 0 8px 40px 0 rgba(74, 99, 102, 0.09);
+  --shadow-floating: 0 16px 60px 0 rgba(42, 52, 53, 0.12);
 }
 
-/* ──────────────────────────────────────────────
- * BASE STYLES
- * ────────────────────────────────────────────── */
+/* ========================================================================
+   Dark mode glass overrides
+   ======================================================================== */
 
-body {
-  @apply bg-background text-on-background font-body antialiased;
-  overflow-x: hidden;
+.dark .glassmorphism,
+.dark .ea-glass {
+  background: rgba(21, 30, 31, 0.6);
 }
 
-::selection {
-  @apply bg-secondary-container text-on-secondary-container;
+.dark .ea-glass-solid {
+  background: rgba(21, 30, 31, 0.85);
 }
 
-/* ──────────────────────────────────────────────
- * CUSTOM UTILITIES
- * ────────────────────────────────────────────── */
+/* ========================================================================
+   Custom Utilities
+   ======================================================================== */
 
 /* Signature Gradient — Primary CTAs */
 @utility editorial-gradient {
-  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-container) 100%);
+  background: linear-gradient(135deg, var(--ea-primary) 0%, var(--ea-primary-dim) 100%);
+}
+
+@utility ea-gradient {
+  background: linear-gradient(135deg, var(--ea-primary) 0%, var(--ea-primary-dim) 100%);
 }
 
 /* Editorial Dot Grid Background */
 @utility editorial-grid {
-  background-image: radial-gradient(circle, var(--color-outline-variant) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--ea-outline-variant) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 
 @utility editorial-grid-sm {
-  background-image: radial-gradient(circle, var(--color-outline-variant) 1px, transparent 1px);
+  background-image: radial-gradient(circle, var(--ea-outline-variant) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 /* Glassmorphism (for nav, floating elements) */
 @utility glassmorphism {
-  background: color-mix(in srgb, var(--color-background) 80%, transparent);
+  background: rgba(246, 250, 250, 0.6);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
 
-/* Ghost Border — outline-variant at 15% max */
+/* EA Glass variants */
+@utility ea-glass {
+  background: rgba(246, 250, 250, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+@utility ea-glass-solid {
+  background: rgba(246, 250, 250, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Ghost Border — outline-variant */
 @utility ghost-border {
-  border: 1px solid color-mix(in srgb, var(--color-outline-variant) 15%, transparent);
+  border: 1px solid var(--ea-outline-variant);
 }
 
 /* Carbon Texture (for branded sections) */
@@ -152,16 +264,61 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4'%3E%3Cpath d='M1 3h1v1H1V3zm2-2h1v1H3V1z' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E");
 }
 
-/* ──────────────────────────────────────────────
- * MATERIAL SYMBOLS ICON FONT
- * ────────────────────────────────────────────── */
+/* Shadow utilities */
+@utility ea-card-shadow {
+  box-shadow: 0 2px 30px 0 rgba(74, 99, 102, 0.06);
+}
+
+@utility ea-ambient-shadow {
+  box-shadow: 0 4px 40px 0 rgba(74, 99, 102, 0.07);
+}
+
+/* ========================================================================
+   Base Styles
+   ======================================================================== */
+
+@layer base {
+  body {
+    background-color: var(--ea-surface);
+    color: var(--ea-on-surface);
+    font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--ea-secondary-container);
+    color: var(--ea-on-secondary-container);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--ea-on-surface);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .ea-label {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ea-tertiary);
+  }
+}
+
+/* ========================================================================
+   Material Symbols Icon Font
+   ======================================================================== */
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* ──────────────────────────────────────────────
- * EDITORIAL RICH TEXT (for Payload Lexical content)
- * ────────────────────────────────────────────── */
+/* ========================================================================
+   Editorial Rich Text (for Payload Lexical content)
+   ======================================================================== */
+
 .editorial-rich-text p {
   margin-bottom: 1.5rem;
   line-height: 1.8;
@@ -170,14 +327,67 @@ body {
 .editorial-rich-text blockquote {
   font-style: italic;
   padding-left: 2rem;
-  border-left: 3px solid var(--color-primary);
+  border-left: 3px solid var(--ea-primary);
   margin: 2rem 0;
-  color: var(--color-primary);
+  color: var(--ea-primary);
 }
 
-/* ──────────────────────────────────────────────
- * SCROLLBAR STYLING
- * ────────────────────────────────────────────── */
+/* ========================================================================
+   Scrollbar & Smooth Scroll
+   ======================================================================== */
+
 html {
   scroll-behavior: smooth;
+}
+
+/* ========================================================================
+   Boreal Animations
+   ======================================================================== */
+
+@keyframes boreal-blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(4%, -3%) scale(1.05); }
+  66% { transform: translate(-3%, 4%) scale(0.96); }
+}
+
+.boreal-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0) scale(0.98);
+  filter: blur(8px);
+  transition:
+    opacity 680ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 680ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 680ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.boreal-reveal[data-boreal-in-view="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+.boreal-hover {
+  --boreal-tilt-x: 0deg;
+  --boreal-tilt-y: 0deg;
+  --boreal-lift: 0px;
+  transition:
+    transform 420ms cubic-bezier(0.2, 0.75, 0.2, 1.05),
+    box-shadow 420ms cubic-bezier(0.2, 0.75, 0.2, 1.05);
+}
+
+.boreal-hover[data-boreal-pointer="on"] {
+  transform: perspective(1000px) rotateX(var(--boreal-tilt-x))
+    rotateY(var(--boreal-tilt-y)) translate3d(0, var(--boreal-lift), 0)
+    scale(1.015);
+  box-shadow: var(--shadow-floating);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boreal-reveal,
+  .boreal-hover {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
 }

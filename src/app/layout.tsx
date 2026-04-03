@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 import React from "react";
-import { Newsreader, DM_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const plusJakarta = Plus_Jakarta_Sans({
 	subsets: ["latin"],
-	variable: "--font-newsreader",
-	display: "swap",
-	axes: ["opsz"],
-});
-
-const dmSans = DM_Sans({
-	subsets: ["latin"],
-	variable: "--font-dm-sans",
+	variable: "--font-plus-jakarta",
 	display: "swap",
 });
 
@@ -41,7 +34,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang='en'
-			className={`${newsreader.variable} ${dmSans.variable} scroll-smooth`}
+			className={`${plusJakarta.variable} scroll-smooth`}
 		>
 			<head>
 				<link
