@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { navSections } from "../tokens";
 
 interface SidebarProps {
@@ -9,18 +10,18 @@ interface SidebarProps {
 
 export default function Sidebar({ active, onNav }: SidebarProps) {
 	return (
-		<aside className="w-[220px] flex-shrink-0 sticky top-[80px] self-start">
-			<nav className="bg-surface-low/70 backdrop-blur-[16px] rounded-[1.25rem] p-[1.25rem_0.875rem] shadow-ambient">
-				<p className="text-[0.5625rem] font-bold tracking-[0.12em] uppercase text-tertiary px-3 mb-2.5">
+		<aside className='w-[220px] flex-shrink-0 sticky top-[80px] self-start'>
+			<nav className='bg-surface-low/70 backdrop-blur-[16px] rounded-[1.25rem] p-[1.25rem_0.875rem] shadow-ambient'>
+				<p className='text-[0.5625rem] font-bold tracking-[0.12em] uppercase text-tertiary px-3 mb-2.5'>
 					Sections
 				</p>
-				<ul className="flex flex-col gap-0.5">
+				<ul className='flex flex-col gap-0.5'>
 					{navSections.map((section) => {
 						const isActive = active === section.id;
 						return (
 							<li key={section.id}>
 								<button
-									type="button"
+									type='button'
 									onClick={() => onNav(section.id)}
 									className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-[0.625rem] text-[0.8125rem] transition-colors text-left ${
 										isActive
@@ -41,12 +42,19 @@ export default function Sidebar({ active, onNav }: SidebarProps) {
 				</ul>
 			</nav>
 
+			<Link
+				href='/styleguide/boreal'
+				className='mt-3 block rounded-[0.625rem] px-3 py-2 text-[0.8125rem] font-semibold text-primary transition-colors hover:bg-primary/[0.09]'
+			>
+				Boreal (Figma demos) →
+			</Link>
+
 			{/* Version badge */}
-			<div className="mt-4 bg-primary/[0.06] rounded-xl p-[0.875rem_0.75rem]">
-				<p className="text-[0.75rem] font-semibold text-on-surface">
+			<div className='mt-4 bg-primary/[0.06] rounded-xl p-[0.875rem_0.75rem]'>
+				<p className='text-[0.75rem] font-semibold text-on-surface'>
 					Ethereal Atrium v1.0
 				</p>
-				<p className="text-[0.625rem] text-on-surface-variant mt-0.5">
+				<p className='text-[0.625rem] text-on-surface-variant mt-0.5'>
 					Plus Jakarta Sans · Material Tokens · Tailwind v4
 				</p>
 			</div>
