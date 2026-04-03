@@ -6,17 +6,17 @@ The current ahasw.com is a single-page static HTML file (~19KB, all inline CSS/J
 
 ## Decided Stack
 
-| Layer | Choice | Rationale |
-|---|---|---|
-| **Framework** | Next.js (App Router) | SSR/SSG for SEO, React ecosystem, API routes for backend logic |
-| **CMS** | Payload CMS v3 | Built on Next.js, lives in the same app at `/admin`, TypeScript-first, auth/media/versioning included |
-| **Database** | Neon (serverless Postgres) | Payload's recommended DB, serverless, generous free tier, works great with Vercel |
-| **Hosting** | Vercel | Best-in-class Next.js support, automatic deploys, image optimization, preview URLs |
-| **Payments** | Stripe | Subscriptions + one-time payments for premium content and paid events |
-| **CRM** | HubSpot (free tier) | Sync event registrations and contact form submissions as leads |
-| **Email** | Resend (or AWS SES) | Event confirmations, registration emails |
-| **Styling** | Tailwind CSS | Carry forward Fraunces + DM Sans typography, teal (#0f766e) + warm stone palette |
-| **Media Storage** | Vercel Blob or S3 | For Payload media uploads (images, video thumbnails) |
+| Layer             | Choice                     | Rationale                                                                                             |
+| ----------------- | -------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Framework**     | Next.js (App Router)       | SSR/SSG for SEO, React ecosystem, API routes for backend logic                                        |
+| **CMS**           | Payload CMS v3             | Built on Next.js, lives in the same app at `/admin`, TypeScript-first, auth/media/versioning included |
+| **Database**      | Neon (serverless Postgres) | Payload's recommended DB, serverless, generous free tier, works great with Vercel                     |
+| **Hosting**       | Vercel                     | Best-in-class Next.js support, automatic deploys, image optimization, preview URLs                    |
+| **Payments**      | Stripe                     | Subscriptions + one-time payments for premium content and paid events                                 |
+| **CRM**           | HubSpot (free tier)        | Sync event registrations and contact form submissions as leads                                        |
+| **Email**         | Resend (or AWS SES)        | Event confirmations, registration emails                                                              |
+| **Styling**       | Tailwind CSS               | Carry forward Fraunces + DM Sans typography, teal (#0f766e) + warm stone palette                      |
+| **Media Storage** | Vercel Blob or S3          | For Payload media uploads (images, video thumbnails)                                                  |
 
 ## Project Structure
 
@@ -110,6 +110,7 @@ aha-software-marketing/
 ## Payload CMS Collections
 
 ### Posts
+
 - `title` (text, required)
 - `slug` (auto-generated from title)
 - `content` (Lexical rich text with blocks: video embed, code block, CTA, image gallery)
@@ -123,6 +124,7 @@ aha-software-marketing/
 - SEO fields via `@payloadcms/plugin-seo` (meta title, description, image)
 
 ### Events
+
 - `title` (text)
 - `slug` (auto-generated)
 - `description` (Lexical rich text)
@@ -140,6 +142,7 @@ aha-software-marketing/
 - SEO fields
 
 ### Users
+
 - Payload default auth fields (email, password, hash, salt)
 - `name` (text)
 - `role` (admin | premium | registered | public)
@@ -147,6 +150,7 @@ aha-software-marketing/
 - `subscriptionStatus` (active | cancelled | none)
 
 ### Registrations
+
 - `user` (relationship -> Users)
 - `event` (relationship -> Events)
 - `registeredAt` (date, auto)
@@ -155,11 +159,13 @@ aha-software-marketing/
 - `attended` (boolean)
 
 ### Categories
+
 - `title` (text)
 - `slug` (auto-generated)
 - `description` (textarea)
 
 ### Media
+
 - Payload default upload fields
 - `alt` (text, required for accessibility/SEO)
 - `caption` (text)
@@ -214,14 +220,18 @@ aha-software-marketing/
 3. Premium signups -> update HubSpot contact with lifecycle stage
 4. Use HubSpot free CRM API (no paid tier needed for this volume)
 
-## Design System (from Stitch Comps)
+## Design system
 
-Reference comps are saved in `docs/stitch-*.html` (homepage, blog, event, premium).
+**Canonical specification — Ethereal Atrium ("Digital Conservatory"):** See [`docs/DESIGN.md`](./DESIGN.md). Interactive tokens and components: `/styleguide` when `ENABLE_STYLEGUIDE=true` (source: `src/app/(styleguide)/styleguide.css`).
 
-### Creative Direction: "The Digital Curator"
-High-end editorial aesthetic. Treat the software marketing site like a premium broadsheet or luxury gallery monograph. Authority through whitespace, sophisticated serif typography, and a "layered paper" philosophy.
+**Production marketing site (current `globals.css`):** Reference HTML comps live in `docs/stitch-*.html` (homepage, blog, event, premium). The tables below describe **shipped** tokens until pages align with Ethereal Atrium.
+
+### Creative direction (production site — pre-migration)
+
+High-end editorial marketing: premium broadsheet / gallery-monograph feel. Authority through whitespace, layered surfaces, and intentional asymmetry. **Figma (source of truth):** [AHA Design System](https://www.figma.com/design/zlXMI6B9Y88ykFSawN4hqO/AHA-Design-System); legacy page comps: _Consulting Homepage — Refined Style_ in the older Webpage file.
 
 ### Typography
+
 - **Headline**: `Fraunces` (serif) - italic for brand voice, tight tracking (`-0.02em`)
 - **Body**: `DM Sans` (sans-serif) - clean, professional readability
 - **Labels**: `DM Sans` uppercase with `tracking-[0.2em]` for metadata/overlines
@@ -230,40 +240,43 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 ### Color Tokens (Material Design 3)
 
 #### Core
-| Token | Value | Usage |
-|-------|-------|-------|
-| `primary` | `#005c55` | Brand anchor, high-action CTAs |
-| `primary-container` | `#0f766e` | Hero moments, gradient endpoint |
-| `on-primary` | `#ffffff` | Text on primary surfaces |
-| `on-primary-container` | `#a3faef` | Text on primary-container |
-| `background` | `#fff8f2` | "Warm Stone" base - warmer than standard white |
-| `on-background` | `#1e1b17` | Primary text (never pure black) |
-| `tertiary` | `#7f4025` | Clay/copper accent for badges, notifications |
-| `tertiary-container` | `#9c573a` | Tertiary surface |
+
+| Token                  | Value     | Usage                                          |
+| ---------------------- | --------- | ---------------------------------------------- |
+| `primary`              | `#005c55` | Brand anchor, high-action CTAs                 |
+| `primary-container`    | `#0f766e` | Hero moments, gradient endpoint                |
+| `on-primary`           | `#ffffff` | Text on primary surfaces                       |
+| `on-primary-container` | `#a3faef` | Text on primary-container                      |
+| `background`           | `#fff8f2` | "Warm Stone" base - warmer than standard white |
+| `on-background`        | `#1e1b17` | Primary text (never pure black)                |
+| `tertiary`             | `#7f4025` | Clay/copper accent for badges, notifications   |
+| `tertiary-container`   | `#9c573a` | Tertiary surface                               |
 
 #### Surface Layers (Tonal Depth)
-| Token | Value | Role |
-|-------|-------|------|
-| `surface` | `#fff8f2` | Base (the desk) |
-| `surface-container-lowest` | `#ffffff` | Card backgrounds (the paper) |
-| `surface-container-low` | `#faf2eb` | Section backgrounds (the blotter) |
-| `surface-container` | `#f4ede6` | Default containers |
-| `surface-container-high` | `#eee7e0` | Elevated surfaces |
-| `surface-container-highest` | `#e8e1db` | Highest elevation |
-| `surface-variant` | `#e8e1db` | Input backgrounds |
-| `surface-dim` | `#e0d9d2` | Dimmed/disabled surfaces |
+
+| Token                       | Value     | Role                              |
+| --------------------------- | --------- | --------------------------------- |
+| `surface`                   | `#fff8f2` | Base (the desk)                   |
+| `surface-container-lowest`  | `#ffffff` | Card backgrounds (the paper)      |
+| `surface-container-low`     | `#faf2eb` | Section backgrounds (the blotter) |
+| `surface-container`         | `#f4ede6` | Default containers                |
+| `surface-container-high`    | `#eee7e0` | Elevated surfaces                 |
+| `surface-container-highest` | `#e8e1db` | Highest elevation                 |
+| `surface-variant`           | `#e8e1db` | Input backgrounds                 |
+| `surface-dim`               | `#e0d9d2` | Dimmed/disabled surfaces          |
 
 #### Utility
-| Token | Value | Usage |
-|-------|-------|-------|
-| `outline` | `#6e7977` | Subtle metadata text |
-| `outline-variant` | `#bdc9c6` | Borders (at low opacity only) |
-| `on-surface-variant` | `#3e4947` | Secondary text |
-| `secondary` | `#466460` | Secondary actions |
-| `secondary-container` | `#c5e6e1` | Category chips, tags |
-| `error` | `#ba1a1a` | Error states |
-| `inverse-surface` | `#33302c` | Dark mode surfaces |
-| `inverse-on-surface` | `#f7efe9` | Dark mode text |
+
+| Token                 | Value     | Usage                         |
+| --------------------- | --------- | ----------------------------- |
+| `outline`             | `#6e7977` | Subtle metadata text          |
+| `outline-variant`     | `#bdc9c6` | Borders (at low opacity only) |
+| `on-surface-variant`  | `#3e4947` | Secondary text                |
+| `secondary`           | `#466460` | Secondary actions             |
+| `secondary-container` | `#c5e6e1` | Category chips, tags          |
+| `error`               | `#ba1a1a` | Error states                  |
+| `inverse-surface`     | `#33302c` | Dark mode surfaces            |
+| `inverse-on-surface`  | `#f7efe9` | Dark mode text                |
 
 ### The Rules
 
@@ -277,6 +290,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 ### Component Patterns (from Comps)
 
 #### Navigation (shared across all screens)
+
 - Fixed position, glassmorphism background
 - Logo: `font-headline font-bold text-2xl tracking-tighter`
 - Links: `font-headline italic text-lg tracking-tight` with `opacity-80 hover:opacity-100`
@@ -284,40 +298,48 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 - CTA button: Primary gradient, uppercase tracking
 
 #### Buttons
+
 - **Primary**: Signature gradient, `text-on-primary`, uppercase `tracking-[0.2em]`, bold
 - **Secondary**: `bg-surface-container-high text-on-surface`, no border
 - **Outline**: `border-2 border-primary text-primary`, hover fills
 - **Text/Link**: Primary color, uppercase tracking, optional underline on hover
 
 #### Cards
+
 - **Blog cards**: No visible border, image with `group-hover:scale-105`, category badge overlay
 - **Service pillars**: `border-t border-outline-variant` with `hover:border-primary`
 - **Premium content cards**: `bg-surface-container-lowest`, `hover:translate-y-[-8px]` with teal-tinted shadow
 - **Event capacity**: Progress bar with `bg-primary` fill
 
 #### Forms (from event registration & contact)
+
 - Input: `bg-surface-container` with `border-b-2 border-transparent focus:border-primary`
 - Label: `text-xs uppercase tracking-widest text-outline`
 - No rounded corners on inputs (minimal border-radius)
 
 #### Section Labels
+
 - `text-xs uppercase tracking-[0.2em]` in tertiary or primary color
 - Often followed by large serif headline
 
 #### Footer
+
 - 4-column grid on `bg-[#f5ede4]`
 - Category headers: `text-sm uppercase tracking-wide font-bold text-[#005c55]`
 - Links: `opacity-60 hover:opacity-100 hover:translate-x-1 transition-all`
 
 #### Editorial Grid Background
+
 - Dot pattern: `radial-gradient(circle, #bdc9c6 1px, transparent 1px)` at `40-60px` size
 - Applied at `opacity-10-20` as subtle texture
 
 #### Icons
+
 - Material Symbols Outlined (Google)
 - Variable weight/fill: `font-variation-settings: 'FILL' 0, 'wght' 400`
 
 ### Enhancements (Phase 5)
+
 - **View Transitions API** - smooth crossfade between page navigations
 - **Scroll-driven animations** - elements fade/slide in on viewport entry
 - **Dark mode** - full token set supports it, toggle with smooth transition
@@ -328,6 +350,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 ## Phased Implementation
 
 ### Phase 1: Foundation (build first)
+
 - `create-payload-app` with Next.js template
 - Neon Postgres connection
 - Tailwind config with design system tokens (colors, fonts, spacing)
@@ -341,6 +364,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 - Vercel deployment
 
 ### Phase 2: Blog & Content
+
 - Posts + Categories + Media collections in Payload
 - Payload SEO plugin
 - Blog listing page with pagination
@@ -351,6 +375,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 - Open Graph images
 
 ### Phase 3: Events
+
 - Events + Registrations collections
 - Events listing page (list view + optional calendar)
 - Event detail page with registration form
@@ -360,6 +385,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 - Capacity tracking
 
 ### Phase 4: Auth & Premium Content
+
 - User registration + login pages
 - Payload auth configuration
 - Stripe integration (subscriptions)
@@ -369,6 +395,7 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 - User profile/dashboard
 
 ### Phase 5: CRM & Polish
+
 - HubSpot integration (contact form, event registration, signup syncs)
 - Dark mode implementation
 - View Transitions
@@ -381,22 +408,22 @@ High-end editorial aesthetic. Treat the software marketing site like a premium b
 
 ```json
 {
-  "dependencies": {
-    "next": "^15",
-    "react": "^19",
-    "react-dom": "^19",
-    "payload": "^3",
-    "@payloadcms/next": "^3",
-    "@payloadcms/db-postgres": "^3",
-    "@payloadcms/richtext-lexical": "^3",
-    "@payloadcms/plugin-seo": "^3",
-    "@payloadcms/storage-vercel-blob": "^3",
-    "stripe": "^17",
-    "resend": "^4",
-    "@hubspot/api-client": "^12",
-    "tailwindcss": "^4",
-    "@tailwindcss/typography": "^0.5"
-  }
+	"dependencies": {
+		"next": "^15",
+		"react": "^19",
+		"react-dom": "^19",
+		"payload": "^3",
+		"@payloadcms/next": "^3",
+		"@payloadcms/db-postgres": "^3",
+		"@payloadcms/richtext-lexical": "^3",
+		"@payloadcms/plugin-seo": "^3",
+		"@payloadcms/storage-vercel-blob": "^3",
+		"stripe": "^17",
+		"resend": "^4",
+		"@hubspot/api-client": "^12",
+		"tailwindcss": "^4",
+		"@tailwindcss/typography": "^0.5"
+	}
 }
 ```
 

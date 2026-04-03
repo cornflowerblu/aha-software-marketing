@@ -37,16 +37,15 @@ export default function PostCard({
   return (
     <motion.article
       variants={fadeInUp}
-      whileHover={{ y: -8 }}
+      whileHover={{ y: -4 }}
       transition={{ duration: 0.3 }}
       className="flex flex-col cursor-pointer"
     >
-      {/* Image with overlay badge */}
       <Link
         href={`/blog/${slug}`}
-        className="relative mb-6 group cursor-pointer overflow-hidden block"
+        className="relative mb-5 group cursor-pointer overflow-hidden block"
       >
-        <div className="aspect-[4/3] overflow-hidden rounded relative">
+        <div className="aspect-[4/3] overflow-hidden rounded-2xl relative">
           {image ? (
             <motion.div
               whileHover={{ scale: 1.04 }}
@@ -61,17 +60,16 @@ export default function PostCard({
               />
             </motion.div>
           ) : (
-            <div className="w-full h-full bg-surface-container-high" />
+            <div className="w-full h-full bg-surface-high" />
           )}
-          {/* Category badge overlay */}
-          <div className="absolute top-3 left-4 flex gap-2">
+          <div className="absolute top-3 left-3 flex gap-2">
             {category && (
-              <span className="bg-surface/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-primary font-label">
+              <span className="bg-surface-lowest/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.08em] text-primary">
                 {category}
               </span>
             )}
             {premium && (
-              <span className="editorial-gradient px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest text-on-primary flex items-center gap-1 font-label">
+              <span className="ea-gradient px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-[0.08em] text-on-primary flex items-center gap-1">
                 <span
                   className="material-symbols-outlined text-[10px]"
                   style={{ fontVariationSettings: '"FILL" 1' }}
@@ -85,23 +83,21 @@ export default function PostCard({
         </div>
       </Link>
 
-      {/* Text content */}
-      <div className="flex flex-col gap-3.5 flex-grow">
+      <div className="flex flex-col gap-2.5 flex-grow">
         <Link href={`/blog/${slug}`}>
-          <h3 className="font-headline text-2xl text-on-surface leading-8 hover:text-primary transition-colors">
+          <h3 className="text-xl font-bold text-on-surface leading-tight hover:text-primary transition-colors">
             {title}
           </h3>
         </Link>
-        <p className="font-body text-on-surface-variant text-sm leading-relaxed">
+        <p className="text-on-surface-variant text-sm leading-relaxed">
           {excerpt}
         </p>
       </div>
 
-      {/* Author row with separator */}
-      <div className="pt-6 mt-auto border-t border-outline-variant/15 flex justify-between items-center">
+      <div className="pt-4 mt-auto flex justify-between items-center">
         {authorName && (
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-xl bg-surface-container-high overflow-hidden relative">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-surface-high overflow-hidden relative">
               {authorImage ? (
                 <Image
                   src={authorImage}
@@ -110,7 +106,7 @@ export default function PostCard({
                   className="object-cover"
                 />
               ) : (
-                <div className="w-full h-full flex items-center justify-center font-headline text-sm text-primary">
+                <div className="w-full h-full flex items-center justify-center text-xs font-bold text-primary">
                   {authorName.charAt(0)}
                 </div>
               )}
@@ -119,7 +115,7 @@ export default function PostCard({
           </div>
         )}
         {date && (
-          <span className="text-[10px] font-label text-on-surface-variant/60 uppercase">
+          <span className="text-[10px] text-on-surface-variant/60 uppercase tracking-[0.08em]">
             {date}
           </span>
         )}

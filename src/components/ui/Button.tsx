@@ -22,23 +22,23 @@ type ButtonAsLink = ButtonBaseProps & {
 export type ButtonProps = ButtonAsButton | ButtonAsLink
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: 'editorial-gradient text-on-primary hover:opacity-90 active:scale-95',
+  primary: 'ea-gradient text-on-primary shadow-raised hover:opacity-90 active:scale-[0.97]',
   secondary:
-    'bg-surface-container-high text-on-surface hover:bg-surface-container-highest active:scale-95',
+    'bg-surface-high text-on-surface hover:bg-surface-highest active:scale-[0.97]',
   outline:
-    'border border-outline-variant text-on-background hover:bg-surface-container active:scale-95',
+    'border border-outline-variant bg-surface-lowest text-primary hover:bg-surface-low active:scale-[0.97]',
   text: 'text-primary hover:underline underline-offset-4',
 }
 
 const sizeStyles: Record<ButtonSize, string> = {
   sm: 'px-6 py-2.5 text-[11px]',
-  md: 'px-8 py-4 text-xs',
-  lg: 'px-10 py-5 text-xs',
+  md: 'px-8 py-3 text-sm',
+  lg: 'px-10 py-4 text-sm',
 }
 
 export default function Button(props: ButtonProps) {
   const classes = [
-    'font-label font-bold tracking-[0.2em] uppercase transition-all duration-200 inline-flex items-center justify-center gap-2 rounded-md',
+    'font-semibold tracking-wide transition-all duration-200 inline-flex items-center justify-center gap-2 rounded-full',
     variantStyles[props.variant ?? 'primary'],
     sizeStyles[props.size ?? 'md'],
     props.className ?? '',

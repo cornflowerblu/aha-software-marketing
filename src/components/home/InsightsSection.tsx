@@ -55,47 +55,50 @@ function mapPostsToArticles(posts: Post[]): typeof fallbackArticles {
 
 export default function InsightsSection({ posts }: { posts?: Post[] }) {
   return (
-    <section className="py-32 bg-background" id="insights">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section className="py-24 bg-surface" id="insights">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12">
         <AnimateOnScroll>
-          <div className="flex justify-between items-baseline mb-20 border-b border-outline-variant/30 pb-8">
-            <h2 className="font-headline text-5xl font-medium text-on-background tracking-tight italic">
-              Technical Insights
-            </h2>
+          <div className="mb-12 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p className="ea-label mb-3 text-primary">Latest Writing</p>
+              <h2 className="text-3xl md:text-4xl font-bold tracking-[-0.02em] text-on-surface">
+                Technical Insights
+              </h2>
+            </div>
             <Link
               href="/blog"
-              className="text-[10px] font-black uppercase tracking-[0.3em] text-primary hover:opacity-70 transition-opacity font-label"
+              className="text-xs font-semibold uppercase tracking-[0.1em] text-primary hover:text-primary-dim transition-colors"
             >
-              All Articles // 08
+              All Articles
             </Link>
           </div>
         </AnimateOnScroll>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {(posts && posts.length > 0 ? mapPostsToArticles(posts) : fallbackArticles).map((article, i) => (
             <AnimateOnScroll key={article.slug} delay={i * 200}>
               <article className="group">
                 <Link href={`/blog/${article.slug}`} className="block">
-                  <div className="aspect-[16/9] bg-surface-container overflow-hidden mb-10 relative">
+                  <div className="aspect-[16/9] rounded-2xl bg-surface-high overflow-hidden mb-6 relative">
                     <Image
                       src={article.image}
                       alt={article.title}
                       fill
-                      className="object-cover grayscale transition-transform duration-1000 group-hover:scale-105"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-6 left-6 bg-primary text-on-primary text-[9px] font-extrabold px-3 py-1.5 uppercase tracking-widest font-label">
+                    <div className="absolute top-4 left-4 rounded-full bg-primary text-on-primary text-[9px] font-bold px-3 py-1 uppercase tracking-[0.08em]">
                       {article.category}
                     </div>
                   </div>
-                  <h3 className="font-headline text-4xl font-medium mb-6 leading-tight group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-bold mb-3 leading-tight text-on-surface group-hover:text-primary transition-colors">
                     {article.title}
                   </h3>
-                  <p className="font-body text-on-background/60 leading-relaxed mb-8 text-lg">
+                  <p className="text-on-surface-variant text-sm leading-relaxed mb-4">
                     {article.excerpt}
                   </p>
-                  <div className="flex items-center gap-6 text-[10px] font-bold uppercase tracking-[0.2em] text-outline font-label">
+                  <div className="flex items-center gap-4 text-[10px] font-bold uppercase tracking-[0.08em] text-tertiary">
                     <span>Read Time: {article.readTime}</span>
-                    <span className="w-1 h-1 bg-outline-variant rounded-full" />
+                    <span className="w-1 h-1 bg-tertiary/40 rounded-full" />
                     <span>{article.date}</span>
                   </div>
                 </Link>

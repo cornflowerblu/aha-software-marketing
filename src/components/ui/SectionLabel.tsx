@@ -8,13 +8,13 @@ interface SectionLabelProps {
 
 export default function SectionLabel({
   children,
-  color = 'tertiary',
+  color = 'primary',
   className = '',
 }: SectionLabelProps) {
   return (
     <span
       className={[
-        'font-label text-xs uppercase tracking-[0.2em] block',
+        'ea-label block',
         color === 'tertiary' ? 'text-tertiary' : 'text-primary',
         className,
       ]

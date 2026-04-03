@@ -41,7 +41,6 @@ function RegisterForm() {
 			});
 
 			if (res.ok) {
-				// Auto-login
 				const loginRes = await fetch("/api/users/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
@@ -76,21 +75,21 @@ function RegisterForm() {
 	return (
 		<div className='min-h-[70vh] flex items-center justify-center px-6 py-20'>
 			<div className='w-full max-w-md'>
-				<div className='text-center mb-12'>
-					<h1 className='font-headline text-5xl font-bold tracking-tighter text-on-surface mb-4'>
+				<div className='text-center mb-10'>
+					<h1 className='text-3xl font-bold tracking-[-0.02em] text-on-surface mb-3'>
 						{plan === "full-access"
 							? "Start Full Access"
 							: "Join the Community"}
 					</h1>
-					<p className='font-body text-on-surface-variant'>
+					<p className='text-on-surface-variant'>
 						{plan === "full-access"
 							? "Create your account and unlock the entire knowledge base."
 							: "Create an account to access community content and events."}
 					</p>
 				</div>
 
-				<div className='bg-surface-container-lowest p-10 shadow-ambient ghost-border'>
-					<form onSubmit={handleSubmit} className='space-y-8'>
+				<div className='rounded-2xl bg-surface-lowest p-8 shadow-ambient-lg'>
+					<form onSubmit={handleSubmit} className='space-y-6'>
 						<Input
 							label='Full Name'
 							name='name'
@@ -113,18 +112,18 @@ function RegisterForm() {
 							required
 						/>
 
-						{error && <p className='text-error text-sm font-body'>{error}</p>}
+						{error && <p className='text-error text-sm'>{error}</p>}
 
-						<Button type='submit' variant='primary' className='w-full py-4'>
+						<Button type='submit' variant='primary' className='w-full' size='lg'>
 							Create Account
 						</Button>
 					</form>
 
-					<p className='mt-8 text-center text-sm text-on-surface-variant font-body'>
+					<p className='mt-6 text-center text-sm text-on-surface-variant'>
 						Already have an account?{" "}
 						<Link
 							href='/login'
-							className='text-primary font-bold hover:underline'
+							className='text-primary font-semibold hover:underline'
 						>
 							Sign in
 						</Link>

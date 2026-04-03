@@ -1,4 +1,5 @@
 **Add your own guidelines here**
+
 <!--
 
 System Guidelines
@@ -20,6 +21,8 @@ For example:
 --------------
 
 # Design system guidelines
+Canonical written spec for this repo: `docs/DESIGN.md` (**Ethereal Atrium** / *Digital Conservatory*); live tokens at `/styleguide` when enabled. Shipped marketing pages still follow `globals.css` until migrated.
+
 Rules for how the AI should make generations look like your company's design system
 
 Additionally, if you select a design system to use in the prompt box, you can reference

@@ -40,19 +40,18 @@ export default function FeaturedPost({
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section className="mb-20" ref={ref}>
+    <section className="mb-16" ref={ref}>
       <motion.div
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
         variants={fadeInUp}
       >
         <motion.div
-          whileHover={{ boxShadow: '0 20px 40px rgba(30,27,23,0.08)' }}
+          whileHover={{ boxShadow: '0 8px 40px rgba(74,99,102,0.09)' }}
           transition={{ duration: 0.3 }}
-          className="bg-surface-container-low rounded-lg overflow-hidden"
+          className="bg-surface-low rounded-2xl overflow-hidden"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-12 items-center px-8 lg:px-12 pt-8 pb-12">
-            {/* Image — 7 columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-x-10 items-center p-6 lg:p-10">
             <Link
               href={`/blog/${slug}`}
               className="lg:col-span-7 group cursor-pointer overflow-hidden block"
@@ -60,7 +59,7 @@ export default function FeaturedPost({
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.4 }}
-                className="aspect-video rounded overflow-hidden relative"
+                className="aspect-video rounded-xl overflow-hidden relative"
               >
                 {image ? (
                   <Image
@@ -71,46 +70,45 @@ export default function FeaturedPost({
                     priority
                   />
                 ) : (
-                  <div className="w-full h-full bg-surface-container-high" />
+                  <div className="w-full h-full bg-surface-high" />
                 )}
               </motion.div>
             </Link>
 
-            {/* Text — 5 columns */}
-            <div className="lg:col-span-5 mt-8 lg:mt-0">
-              <div className="flex items-center gap-3 mb-6">
+            <div className="lg:col-span-5 mt-6 lg:mt-0">
+              <div className="flex items-center gap-3 mb-5">
                 {premium && (
-                  <div className="editorial-gradient px-3 py-1 rounded-full flex items-center gap-1">
+                  <div className="ea-gradient px-3 py-1 rounded-full flex items-center gap-1">
                     <span
                       className="material-symbols-outlined text-on-primary text-[10px]"
                       style={{ fontVariationSettings: '"FILL" 1' }}
                     >
                       star
                     </span>
-                    <span className="font-label text-on-primary text-[10px] font-bold uppercase tracking-widest">
+                    <span className="text-on-primary text-[10px] font-bold uppercase tracking-[0.08em]">
                       Premium
                     </span>
                   </div>
                 )}
                 {readTime && (
-                  <span className="text-xs font-label text-on-surface-variant/60 uppercase tracking-widest">
+                  <span className="text-xs text-on-surface-variant/60 uppercase tracking-[0.08em]">
                     {readTime} Read
                   </span>
                 )}
               </div>
 
               <Link href={`/blog/${slug}`}>
-                <h2 className="font-headline text-4xl text-on-surface mb-6 leading-tight hover:text-primary transition-colors">
+                <h2 className="text-2xl lg:text-3xl font-bold text-on-surface mb-4 leading-tight hover:text-primary transition-colors">
                   {title}
                 </h2>
               </Link>
-              <p className="font-body text-lg text-on-surface-variant mb-8 leading-relaxed">
+              <p className="text-on-surface-variant mb-6 leading-relaxed">
                 {excerpt}
               </p>
 
               {authorName && (
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-surface-container-highest overflow-hidden relative">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-surface-highest overflow-hidden relative">
                     {authorImage ? (
                       <Image
                         src={authorImage}
@@ -119,17 +117,17 @@ export default function FeaturedPost({
                         className="object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center font-headline text-lg text-primary">
+                      <div className="w-full h-full flex items-center justify-center text-sm font-bold text-primary">
                         {authorName.charAt(0)}
                       </div>
                     )}
                   </div>
                   <div>
-                    <p className="font-body text-sm font-bold text-on-surface">
+                    <p className="text-sm font-bold text-on-surface">
                       {authorName}
                     </p>
                     {date && (
-                      <p className="font-body text-xs text-on-surface-variant/70">
+                      <p className="text-xs text-on-surface-variant/70">
                         {date}
                       </p>
                     )}

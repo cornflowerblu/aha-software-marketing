@@ -1,6 +1,6 @@
 # AHA Software Marketing Site
 
-> **Status: Active Development** — Core scaffold, CMS collections, design system, and layout components are in place. Blog, events, auth, and premium content features are in progress.
+> **Status: Active Development** — Core scaffold, CMS collections, layout components, and design docs (_Ethereal Atrium_ in [`docs/DESIGN.md`](docs/DESIGN.md); `/styleguide` when enabled) are in place. Blog, events, auth, and premium content features are in progress.
 
 A full-stack marketing platform for AHA Software, built to support thought leadership, event management, premium content paywalls, and SEO-optimized publishing. Replaces the previous single-page static site with a production-grade CMS-driven platform.
 
@@ -179,30 +179,32 @@ Content is managed through the Payload admin panel at `/admin`.
 
 ---
 
-## Design System
+## Design system
 
-**Creative direction:** "The Digital Curator" — high-end editorial aesthetic inspired by premium broadsheets and luxury gallery monographs.
+**Canonical spec:** _Ethereal Atrium_ (_Digital Conservatory_) — [`docs/DESIGN.md`](docs/DESIGN.md). **Figma (visual source of truth):** [AHA Design System](https://www.figma.com/design/zlXMI6B9Y88ykFSawN4hqO/AHA-Design-System). Tokens + components: `/styleguide` when `ENABLE_STYLEGUIDE=true`.
 
-### Typography
+**Production site (`globals.css` today):** high-end editorial marketing (warm stone base, layered surfaces). Typography and colors below match **shipped** pages until they align with Ethereal Atrium.
+
+### Typography (production)
 
 - **Headlines:** `Fraunces` (serif) — italic brand voice, tight tracking (`-0.02em`)
 - **Body / Labels:** `DM Sans` (sans-serif) — clean, professional readability
 - Both fonts are self-hosted via `next/font`
 
-### Color Palette
+### Color palette (`globals.css`)
 
 | Token                 | Value     | Usage                           |
 | --------------------- | --------- | ------------------------------- |
 | `primary`             | `#005c55` | Brand anchor, high-action CTAs  |
 | `primary-container`   | `#0f766e` | Hero moments, gradient endpoint |
-| `background`          | `#fff8f2` | "Warm Stone" base               |
+| `background`          | `#fff8f2` | Warm stone base                 |
 | `on-background`       | `#1e1b17` | Primary text (never pure black) |
 | `tertiary`            | `#7f4025` | Clay/copper accent, badges      |
 | `secondary-container` | `#c5e6e1` | Category chips, tags            |
 
-Surface layers follow a "stacked sheets of fine paper" philosophy (`surface` → `surface-container-low` → `surface-container-lowest`) for depth without drop shadows.
+Surface layers use tonal stacking (`surface` → `surface-container-low` → `surface-container-lowest`) for depth without relying on borders.
 
-**Key rules:** no 1px borders for sectioning (use tonal color shifts), no pure black text, ambient shadows only (large + diffused at low opacity), signature gradient on all primary CTAs (`linear-gradient(135deg, #005c55, #0f766e)`).
+**Key rules:** no 1px borders for sectioning (use tonal shifts), no pure black text, ambient shadows only (large + diffused at low opacity), signature gradient on primary CTAs (`linear-gradient(135deg, #005c55, #0f766e)`).
 
 ---
 

@@ -37,75 +37,69 @@ export default function ArchiveSection({
   const isInView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section className="max-w-[1440px] mx-auto px-6 md:px-12 mb-32">
-      {/* Heading with decorative lines */}
+    <section className="max-w-[1280px] mx-auto px-6 md:px-12 mb-24">
       <motion.div
         ref={ref}
         initial="hidden"
         animate={isInView ? 'visible' : 'hidden'}
         variants={fadeInUp}
-        className="flex items-center gap-4 mb-12"
+        className="mb-12"
       >
-        <div className="h-px bg-outline-variant/30 flex-grow" />
-        <h2 className="font-headline text-3xl italic px-4 tracking-tighter text-on-background">
+        <p className="ea-label mb-3 text-primary">Archive</p>
+        <h2 className="text-3xl md:text-4xl font-bold tracking-[-0.02em] text-on-surface">
           From the Archive
         </h2>
-        <div className="h-px bg-outline-variant/30 flex-grow" />
       </motion.div>
 
-      {/* 4/8 asymmetric grid */}
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: '-80px' }}
         variants={staggerContainer}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-12"
+        className="grid grid-cols-1 lg:grid-cols-12 gap-8"
       >
-        {/* Left: Curator Series info card */}
         <motion.div variants={fadeInUp} className="lg:col-span-4">
-          <div className="bg-surface-container-low p-10 rounded-lg h-full flex flex-col">
-            <h3 className="font-headline text-3xl mb-6 text-on-background tracking-tighter">
+          <div className="rounded-2xl bg-surface-low p-8 h-full flex flex-col">
+            <h3 className="text-2xl font-bold mb-4 text-on-surface">
               The Curator Series
             </h3>
-            <p className="text-on-surface-variant font-body leading-relaxed mb-8">
+            <p className="text-on-surface-variant text-sm leading-relaxed mb-6">
               Access our legacy of symposiums and unedited workshop sessions
               focused on the architecture of modern enterprise software.
             </p>
-            <div className="flex items-center gap-4 mt-auto">
-              <div className="flex -space-x-4">
+            <div className="flex items-center gap-3 mt-auto">
+              <div className="flex -space-x-3">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 rounded-xl border-2 border-background bg-secondary-container flex items-center justify-center"
+                    className="w-10 h-10 rounded-lg border-2 border-surface bg-secondary-container flex items-center justify-center"
                   >
-                    <span className="material-symbols-outlined text-on-secondary-container text-lg">
+                    <span className="material-symbols-outlined text-on-secondary-container text-sm">
                       person
                     </span>
                   </div>
                 ))}
               </div>
-              <span className="text-xs font-label uppercase tracking-[0.1em] text-outline">
+              <span className="ea-label text-tertiary">
                 25+ Expert Sessions
               </span>
             </div>
           </div>
         </motion.div>
 
-        {/* Right: 2-column recording grid */}
         <motion.div
           variants={fadeInUp}
           className="lg:col-span-8"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {recordings.map((rec, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {recordings.map((rec) => (
               <motion.div
                 key={rec.title}
                 variants={fadeInUp}
-                whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
                 className="group cursor-pointer"
               >
-                {/* Grayscale image with hover color transition */}
-                <div className="aspect-video bg-surface-container relative mb-4 overflow-hidden rounded">
+                <div className="aspect-video bg-surface-high relative mb-4 overflow-hidden rounded-2xl">
                   {rec.image ? (
                     <>
                       <Image
@@ -117,26 +111,24 @@ export default function ArchiveSection({
                       <div className="absolute inset-0 bg-white mix-blend-saturation group-hover:opacity-0 transition-opacity duration-500" />
                     </>
                   ) : (
-                    <div className="w-full h-full bg-surface-container" />
+                    <div className="w-full h-full bg-surface-high" />
                   )}
 
-                  {/* Play icon overlay on hover */}
                   <div className="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="material-symbols-outlined text-background text-6xl">
+                    <span className="material-symbols-outlined text-surface-lowest text-5xl">
                       play_circle
                     </span>
                   </div>
 
-                  {/* Duration badge */}
-                  <div className="absolute bottom-4 left-4 bg-background px-3 py-1 text-[10px] font-bold uppercase tracking-wider font-label text-on-background">
+                  <div className="absolute bottom-3 left-3 rounded-lg bg-surface-lowest px-3 py-1 ea-label text-on-surface">
                     {rec.duration}
                   </div>
                 </div>
 
-                <h4 className="font-headline text-xl group-hover:text-primary transition-colors text-on-background">
+                <h4 className="text-lg font-bold group-hover:text-primary transition-colors text-on-surface">
                   {rec.title}
                 </h4>
-                <p className="text-sm text-on-surface-variant mt-1 italic font-body">
+                <p className="text-sm text-on-surface-variant mt-1">
                   Full Access Archive &bull; {rec.date}
                 </p>
               </motion.div>

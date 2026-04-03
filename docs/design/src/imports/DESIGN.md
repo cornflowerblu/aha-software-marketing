@@ -1,96 +1,106 @@
-# Design System Document: High-End Editorial Software Marketing
+# Design System Specification: The Ethereal Atrium
 
-## 1. Overview & Creative North Star
+## 1. Overview & Creative North Star: "The Digital Conservatory"
 
-### The Creative North Star: "The Digital Curator"
-This design system rejects the "SaaS-in-a-box" aesthetic. Instead of rigid grids and neon accents, we lean into a **High-End Editorial** experience. We treat software marketing like a premium broadsheet or a luxury gallery monograph. The "Digital Curator" approach prioritizes authority through whitespace, sophisticated serif typography, and a "layered paper" philosophy.
+This design system is anchored in the philosophy of the **Ethereal Atrium**. It rejects the heavy, boxed-in nature of traditional dashboard design in favor of a "Digital Conservatory"—a space defined by light, air, and organic flow.
 
-**The Signature Feel:**
-- **Intentional Asymmetry:** Break the 12-column monotony. Use wide margins and offset text blocks to guide the eye.
-- **Tonal Authority:** Trust is built through the "Warm Stone" palette, providing a softer, more humanistic foundation than pure white.
-- **Structural Breathing Room:** We use the spacing scale to create "moments of pause," ensuring that high-level software concepts are digestible and prestigious.
+To achieve a high-end editorial feel, we move away from rigid, predictable grids. Instead, we embrace **Intentional Asymmetry** and **Tonal Depth**. By utilizing the "cool and refreshing" palette of deep teals and the newly introduced muted lavender-slate, the interface should feel like looking through layers of mist and glass. This is not a "flat" design; it is a "layered" design where hierarchy is dictated by light and atmosphere rather than lines and boxes.
 
 ---
 
-## 2. Colors & Surface Philosophy
+## 2. Color & Atmosphere
 
-The palette is rooted in organic, earth-toned neutrals contrasted by a deep, authoritative teal.
+The palette is a transition from the refreshing depth of a boreal forest to the soft light of a Nordic morning.
 
-### Color Tokens
-- **Primary (`#005c55` / `#0f766e`):** Used for brand anchoring. Use the `primary_container` for hero moments and `primary` for high-action CTAs.
-- **Surface & Background (`#fff8f2`):** Our "Warm Stone" base. It is warmer than standard digital backgrounds, reducing eye strain and feeling more "physical."
-- **Tertiary (`#7f4025`):** A sophisticated clay-red used sparingly for accents, notifications, or secondary data points to provide warmth.
+### The Palette (Material Design Tokens)
+
+- **Primary (Teal):** `#006a70` (Core Action) / `#c4f9fc` (Container — softer tint; see styleguide `bg-primary-container`)
+- **Secondary (Slate Green):** `#4a6366` (Subtle Utility)
+- **Tertiary (Muted Lavender/Slate):** `#546073` (Sophisticated Accent)
+- **Neutral (Frost):** `#f6fafa` (Background) / `#ffffff` (Highest Surface)
 
 ### The "No-Line" Rule
-**Explicit Instruction:** Prohibit 1px solid borders for sectioning. Structural boundaries must be defined solely through background color shifts.
-- To separate a "Features" section from a "Hero," transition from `surface` to `surface-container-low`.
-- **Nesting:** Treat the UI as stacked sheets of fine paper. A card (`surface-container-lowest`) should sit on a section (`surface-container-low`) to create natural depth without a single stroke of a pen.
+
+**Explicit Instruction:** Designers are prohibited from using 1px solid borders for sectioning or containment. Traditional "hairline" borders create visual clutter and break the airy aesthetic.
+
+- **Solution:** Boundaries must be defined solely through background color shifts. For example, a `surface-container-low` section sitting on a `surface` background provides all the definition a user needs without the "grid-lock" of lines.
+
+### Surface Hierarchy & Nesting
+
+Treat the UI as a series of physical layers—like stacked sheets of frosted glass.
+
+- **Base:** `surface` (`#f6fafa`)
+- **Secondary Content:** `surface-container-low` (`#eef5f5`)
+- **Interactive Cards:** `surface-container-lowest` (`#ffffff`) for a "lifted" feel.
+- **Deep Inset/Modals:** `surface-container-highest` (`#dae5e5`)
 
 ### The "Glass & Gradient" Rule
-To avoid a flat, "templated" look, use Glassmorphism for floating navigation and modal overlays:
-- **Surface Blur:** Use `surface` at 80% opacity with a `20px` backdrop-blur.
-- **Signature Gradients:** For primary CTAs, apply a subtle linear gradient from `primary` (#005c55) to `primary_container` (#0f766e) at a 135° angle. This adds a "jewel-tone" depth that feels bespoke.
+
+To escape the "out-of-the-box" look, use **Glassmorphism** for floating elements (Navigation bars, Overlays). Use semi-transparent surface colors with a `backdrop-blur` of 12px–20px.
+
+- **Signature Textures:** For Hero sections or primary CTAs, apply a subtle linear gradient from `primary` (#006a70) to `primary-dim` (#005d63) at a 135-degree angle. This adds "visual soul" that flat hex codes cannot replicate.
 
 ---
 
-## 3. Typography
+## 3. Typography: Editorial Authority
 
-The system uses a high-contrast pairing: **Newsreader** (Serif) for authority and **Manrope** (Sans-Serif) for functional clarity.
+We use **Plus Jakarta Sans** for its geometric clarity and modern breathability.
 
-### Typography Scale
-- **Display (Newsreader):** Use `display-lg` (3.5rem) for hero headlines. Character spacing should be set to `-0.02em` to feel tight and editorial.
-- **Headlines (Newsreader):** `headline-lg` through `headline-sm`. These are the "voice" of the brand. Use "Sentence case" to maintain a sophisticated, approachable tone.
-- **Body (Manrope):** `body-lg` (1rem) is the standard for marketing copy. Manrope’s geometric yet friendly structure balances the traditional feel of the serifs.
-- **Labels (Manrope):** `label-md` (0.75rem) in All-Caps with `0.05em` letter spacing should be used for overlines or small categories to provide a "metadata" feel.
-
----
-
-## 4. Elevation & Depth
-
-### The Layering Principle
-Forget shadows in 90% of use cases. Depth is achieved via **Tonal Layering**:
-1. **Base:** `surface` (The desk)
-2. **Section:** `surface-container-low` (The blotter)
-3. **Card/Element:** `surface-container-lowest` (The paper)
-
-### Ambient Shadows
-When an element must float (e.g., a dropdown or a "sticky" CTA), use **Ambient Shadows**:
-- **Color:** A tinted version of `on-surface` (Deep Charcoal) at 4-6% opacity.
-- **Blur:** Large and diffused (e.g., `box-shadow: 0 20px 40px rgba(30, 27, 23, 0.05)`).
-- **The Ghost Border:** If a border is required for accessibility, use `outline-variant` at **15% opacity**. 100% opaque borders are strictly forbidden as they "trap" the content.
+- **Display (lg/md/sm):** Used for "Statement" moments. These should be set with tight letter-spacing (-0.02em) to feel like a high-end magazine masthead.
+- **Headlines:** The "Anchor" of the page. Use `headline-lg` to create a clear entry point into content.
+- **Body (lg/md):** Primary reading weight. Ensure a generous line-height (1.6) to maintain the "airy" feel.
+- **Labels:** Use `label-md` in all-caps with increased letter-spacing (+0.05em) for category headers to create a sophisticated, curated look.
 
 ---
 
-## 5. Components
+## 4. Elevation & Depth: Tonal Layering
 
-### Buttons
-- **Primary:** Filled with the "Signature Gradient" (`primary` to `primary_container`). Use `rounded-md` (0.375rem). The text should be `title-sm` (Manrope) for a bold, functional feel.
-- **Secondary:** `surface-container-high` background with `on-surface` text. No border.
-- **Tertiary:** Text-only in `primary` color, with a 2px underline that appears on hover.
+We do not use shadows to signify "drop"; we use light to signify "presence."
 
-### Cards & Content Blocks
-- **The Rule of No Dividers:** Forbid the use of horizontal rules (`<hr>`). Separate content using the Spacing Scale (typically `spacing-12` or `spacing-16`).
-- **Composition:** Use `surface-container-lowest` for card backgrounds. Apply a generous `padding-8` (2.75rem) to give the content "gallery room."
+- **The Layering Principle:** Depth is achieved by stacking. Place a `surface-container-lowest` card on a `surface-container-low` section. This creates a soft, natural lift.
+- **Ambient Shadows:** If a floating effect is required (e.g., a dropdown or popover), use a shadow with a blur radius of 30px–50px at 4% opacity. The color should be a tinted teal-grey (derived from `on-surface`) rather than pure black.
+- **The "Ghost Border" Fallback:** For accessibility in high-density data, use a "Ghost Border": `outline-variant` at **10% opacity**. It should be felt, not seen.
 
-### Input Fields
-- **Styling:** Soft `surface-variant` backgrounds.
-- **Focus State:** Instead of a heavy border change, use a `2px` solid `primary` bottom-border only. This mimics high-end stationery.
+---
 
-### Interactive Chips
-- Use `rounded-full` for category tags. Background: `secondary_container`; Text: `on_secondary_container`. These should feel like small, polished stones.
+## 5. Components: Fluidity & Softness
+
+### Corner Radius: Round Eight
+
+Following the **Round Eight** scale, the `DEFAULT` is `0.5rem` (8px).
+
+- **Buttons:** `full` (9999px) for a soft, pill-shaped organic feel.
+- **Cards/Sections:** `lg` (1rem) or `xl` (1.5rem) to emphasize a friendly, approachable structure.
+
+### Key Components
+
+- **Buttons:**
+- _Primary:_ Gradient fill (Primary to Primary-Dim) with `on-primary` text.
+- _Secondary:_ `secondary-container` fill with `on-secondary-container` text. No border.
+- **Cards:** Never use a divider line inside a card. Use `body-sm` text in the `tertiary` color to separate metadata from titles.
+- **Input Fields:** Use a `surface-container-high` background. On focus, transition the background to `surface-container-lowest` and add a 1px "Ghost Border" in `primary`.
+- **Chips:** Use `tertiary-container` with `on-tertiary-container` text for a sophisticated, muted accent that differentiates from primary actions.
 
 ---
 
 ## 6. Do's and Don'ts
 
-### Do
-- **Do** use asymmetrical layouts (e.g., a 7-column image next to a 4-column text block with a 1-column gap).
-- **Do** use `Newsreader` for any text meant to be "heard" in the brand's voice.
-- **Do** lean into the "Warm Stone" (`#fff8f2`) background; white space should feel warm, not sterile.
-- **Do** use the `spacing-20` (7rem) for vertical section gaps to emphasize the premium nature of the content.
+### Do:
 
-### Don't
-- **Don't** use 1px solid borders to wrap cards or sections.
-- **Don't** use pure black (`#000000`) for text. Use `on-surface` (`#1e1b17`) to maintain the organic editorial feel.
-- **Don't** use standard "drop shadows" with high opacity or small blurs. 
-- **Don't** cram content. If a section feels "full," double the padding. Premium is synonymous with space.
+- **Do** use white space as a structural element. If an element feels cramped, increase the spacing rather than adding a line.
+- **Do** use the Tertiary Lavender-Slate (`#546073`) for secondary information like "Date Created" or "Breadcrumbs" to keep the UI feeling cool.
+- **Do** lean into asymmetry. A hero image that is slightly offset from the text creates a custom, editorial feel.
+
+### Don't:
+
+- **Don't** use pure black (#000000) for text. Always use `on-surface` (`#2a3435`) to maintain the Boreal softness.
+- **Don't** use standard "Drop Shadows." If it looks like a default Photoshop shadow, it’s too heavy.
+- **Don't** use high-contrast orange or red for anything other than critical errors. This system thrives on harmony.
+- **Don't** use dividers. If you feel the need for a horizontal rule, use a 24px vertical gap instead.
+
+---
+
+## Living reference
+
+- **Figma (visual source of truth):** [AHA Design System](https://www.figma.com/design/zlXMI6B9Y88ykFSawN4hqO/AHA-Design-System?node-id=11-4) — file key `zlXMI6B9Y88ykFSawN4hqO`; in MCP/API, `node-id=11-4` → `11:4`.
+- **Code:** When `ENABLE_STYLEGUIDE=true`, the interactive token and component reference is **`/styleguide`** (Ethereal Atrium — Material tokens, Tailwind v4). Production marketing pages may still use **`src/app/globals.css`** until aligned with Figma and this specification.

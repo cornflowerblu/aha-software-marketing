@@ -1,7 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 const navLinks = [
@@ -14,42 +15,69 @@ const navLinks = [
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <nav className="fixed top-0 w-full z-50 bg-[--color-background]/80 backdrop-blur-lg shadow-[0_20px_40px_rgba(30,27,23,0.05)] border-b border-[--color-outline-variant]/10">
-      <div className="flex justify-between items-center px-6 md:px-12 py-5 max-w-[1440px] mx-auto">
-        <Link href="/" className="font-headline font-bold text-2xl text-[--color-on-background] tracking-tighter">
-          AHA Software
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-shadow duration-300 backdrop-blur-[12px] bg-surface-lowest/70 ${
+        scrolled ? 'shadow-ambient' : ''
+      }`}
+    >
+      <div className="flex justify-between items-center px-6 md:px-12 py-4 max-w-[1280px] mx-auto">
+        <Link
+          href="/"
+          className="flex items-center gap-2.5 group"
+        >
+          <Image
+            src="/assets/logo-mark-traced.svg"
+            alt=""
+            width={28}
+            height={28}
+            className="transition-transform duration-300 group-hover:scale-105"
+          />
+          <span className="text-lg font-bold text-primary tracking-tight">
+            AHA Software
+          </span>
         </Link>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-10">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className={`font-headline italic text-lg tracking-tight transition-all duration-300 pb-1 ${
-                pathname === link.href || pathname?.startsWith(link.href + '/')
-                  ? 'text-[--color-primary] border-b-2 border-[--color-primary]'
-                  : 'text-[--color-on-background] opacity-80 hover:opacity-100 hover:text-[--color-primary-container]'
-              }`}
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
+        <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
+          {navLinks.map((link) => {
+            const isActive =
+              pathname === link.href || pathname?.startsWith(link.href + '/')
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`text-[10px] font-semibold uppercase tracking-[0.1em] transition-colors duration-200 ${
+                  isActive
+                    ? 'border-b-2 border-primary pb-0.5 text-primary'
+                    : 'text-secondary hover:text-primary'
+                }`}
+              >
+                {link.label}
+              </Link>
+            )
+          })}
+        </nav>
 
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
           <Link
             href="/premium"
-            className="hidden md:inline-flex font-label text-sm uppercase tracking-wide text-[--color-primary] hover:opacity-70 transition-opacity"
+            className="hidden md:inline-flex text-[10px] font-semibold uppercase tracking-[0.1em] text-secondary hover:text-primary transition-colors"
           >
             Full Access
           </Link>
           <Link
             href="/contact"
-            className="hidden md:inline-flex editorial-gradient text-white px-8 py-2.5 font-label text-sm font-bold tracking-wide uppercase hover:opacity-90 transition-all active:scale-95 rounded-md"
+            className="hidden md:inline-flex rounded-full bg-primary px-6 py-2 text-sm font-semibold text-on-primary hover:bg-primary-dim transition-colors active:scale-[0.97]"
           >
             Work Together
           </Link>
@@ -61,9 +89,21 @@ export function Header() {
             aria-label="Toggle menu"
           >
             <div className="flex flex-col gap-1.5">
-              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? 'rotate-45 translate-y-[8px]' : ''}`} />
-              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? 'opacity-0' : ''}`} />
-              <span className={`block w-6 h-[2px] bg-on-background transition-all duration-300 ${mobileOpen ? '-rotate-45 -translate-y-[8px]' : ''}`} />
+              <span
+                className={`block w-5 h-[1.5px] bg-on-surface transition-all duration-300 ${
+                  mobileOpen ? 'rotate-45 translate-y-[7px]' : ''
+                }`}
+              />
+              <span
+                className={`block w-5 h-[1.5px] bg-on-surface transition-all duration-300 ${
+                  mobileOpen ? 'opacity-0' : ''
+                }`}
+              />
+              <span
+                className={`block w-5 h-[1.5px] bg-on-surface transition-all duration-300 ${
+                  mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''
+                }`}
+              />
             </div>
           </button>
         </div>
@@ -71,13 +111,13 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <div className="md:hidden bg-[--color-background] border-t border-[--color-outline-variant]/10 px-6 py-8 space-y-6">
+        <div className="md:hidden bg-surface-lowest/90 backdrop-blur-[12px] px-6 py-8 space-y-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setMobileOpen(false)}
-              className="block font-headline italic text-xl tracking-tight text-[--color-on-background] hover:text-[--color-primary]"
+              className="block text-xs font-semibold uppercase tracking-[0.1em] text-on-surface hover:text-primary transition-colors"
             >
               {link.label}
             </Link>
@@ -85,7 +125,7 @@ export function Header() {
           <Link
             href="/contact"
             onClick={() => setMobileOpen(false)}
-            className="block editorial-gradient text-white px-8 py-3 text-center font-label text-sm font-bold tracking-wide uppercase"
+            className="block rounded-lg ea-gradient text-center text-on-primary px-8 py-3 text-sm font-semibold"
           >
             Work Together
           </Link>

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Boreal Breeze - Feature Showcase</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-dim": "#d1dcdd",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#476063",
+                      "tertiary": "#546073",
+                      "secondary-dim": "#3e575a",
+                      "on-primary": "#e6fdff",
+                      "outline-variant": "#a9b4b5",
+                      "tertiary-dim": "#485466",
+                      "inverse-surface": "#0a0f0f",
+                      "surface-variant": "#dae5e5",
+                      "on-background": "#2a3435",
+                      "on-primary-fixed": "#00474b",
+                      "error-container": "#fa746f",
+                      "on-primary-fixed-variant": "#00666c",
+                      "on-error": "#fff7f6",
+                      "secondary-fixed": "#cce8eb",
+                      "on-secondary": "#e9fdff",
+                      "on-secondary-fixed": "#2b4346",
+                      "surface-bright": "#f6fafa",
+                      "primary-container": "#a0f0f6",
+                      "on-tertiary-fixed-variant": "#525e71",
+                      "on-tertiary-container": "#485467",
+                      "error-dim": "#67040d",
+                      "primary-dim": "#005d62",
+                      "surface": "#f6fafa",
+                      "primary": "#006a70",
+                      "surface-container-high": "#e1eaea",
+                      "outline": "#727d7d",
+                      "on-tertiary": "#f8f8ff",
+                      "on-primary-container": "#005b60",
+                      "on-tertiary-fixed": "#364254",
+                      "surface-container-low": "#eef5f5",
+                      "secondary-fixed-dim": "#bed9dd",
+                      "on-secondary-container": "#3d5659",
+                      "on-surface": "#2a3435",
+                      "tertiary-fixed": "#dae6fd",
+                      "inverse-primary": "#a3f3f9",
+                      "primary-fixed-dim": "#92e1e8",
+                      "surface-container": "#e7eff0",
+                      "inverse-on-surface": "#999e9e",
+                      "secondary-container": "#cce8eb",
+                      "surface-tint": "#006a70",
+                      "error": "#a83836",
+                      "tertiary-container": "#dae6fd",
+                      "primary-fixed": "#a0f0f6",
+                      "background": "#f6fafa",
+                      "secondary": "#4a6366",
+                      "tertiary-fixed-dim": "#ccd8ee",
+                      "on-surface-variant": "#576162",
+                      "surface-container-highest": "#dae5e5",
+                      "on-error-container": "#6e0a12"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "fontFamily": {
+                      "headline": ["Plus Jakarta Sans"],
+                      "body": ["Plus Jakarta Sans"],
+                      "label": ["Plus Jakarta Sans"]
+              },
+              "animation": {
+                "float": "float 6s ease-in-out infinite",
+                "float-delayed": "float 8s ease-in-out infinite 1s",
+                "pulse-gentle": "pulse-gentle 4s ease-in-out infinite",
+                "fade-in-up": "fade-in-up 1s ease-out forwards",
+                "morph": "morph 20s linear infinite alternate",
+              },
+              "keyframes": {
+                float: {
+                  "0%, 100%": { transform: "translateY(0)" },
+                  "50%": { transform: "translateY(-15px)" },
+                },
+                "pulse-gentle": {
+                  "0%, 100%": { opacity: "1", transform: "scale(1)" },
+                  "50%": { opacity: "0.92", transform: "scale(1.03)" },
+                },
+                "fade-in-up": {
+                  "0%": { opacity: "0", transform: "translateY(20px)" },
+                  "100%": { opacity: "1", transform: "translateY(0)" },
+                },
+                morph: {
+                  "0%": { borderRadius: "40% 60% 60% 40% / 60% 30% 70% 40%", transform: "translate(0, 0) rotate(0deg)" },
+                  "100%": { borderRadius: "60% 40% 30% 70% / 50% 60% 40% 60%", transform: "translate(20px, 20px) rotate(15deg)" },
+                }
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f6fafa; }
+        ::-webkit-scrollbar-thumb { background: #d1dcdd; border-radius: 10px; }
+
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+
+        /* Smooth transitions for all hover states */
+        * {
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 400ms;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container relative overflow-x-hidden">
+<!-- Background Ethereal Blobs -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-primary/5 blur-[120px] animate-morph"></div>
+<div class="absolute top-[40%] -right-[5%] w-[40%] h-[40%] bg-secondary/5 blur-[100px] animate-morph" style="animation-duration: 25s; animation-delay: -5s;"></div>
+<div class="absolute -bottom-[10%] left-[20%] w-[45%] h-[45%] bg-tertiary/5 blur-[110px] animate-morph" style="animation-duration: 30s; animation-delay: -2s;"></div>
+</div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl shadow-[0_30px_50px_rgba(0,106,112,0.04)]">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="text-xl font-bold text-[#006a70] dark:text-[#8bf3fc]">Boreal Breeze</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-[#4a6366] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300 uppercase tracking-widest text-[10px] font-medium" href="#">Showcase</a>
+<a class="text-[#006a70] dark:text-[#8bf3fc] font-semibold border-b-2 border-[#006a70] uppercase tracking-widest text-[10px]" href="#">Features</a>
+<a class="text-[#4a6366] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300 uppercase tracking-widest text-[10px] font-medium" href="#">Library</a>
+<a class="text-[#4a6366] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-[#8bf3fc] transition-colors duration-300 uppercase tracking-widest text-[10px] font-medium" href="#">About</a>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-dim text-on-primary px-6 py-2 rounded-full font-semibold text-sm active:scale-95 transition-transform duration-200 animate-pulse-gentle">
+                Get Started
+            </button>
+</div>
+</nav>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-8 py-20 md:py-32 flex flex-col md:flex-row items-center gap-16">
+<div class="w-full md:w-1/2 space-y-6 opacity-0 animate-fade-in-up">
+<span class="label-md uppercase tracking-widest text-tertiary font-bold text-xs">Innovation Framework</span>
+<h1 class="text-5xl md:text-7xl font-extrabold text-primary tracking-tighter leading-tight">
+                    The Architecture <br/> of Atmosphere.
+                </h1>
+<p class="text-lg text-on-surface-variant leading-relaxed max-w-lg">
+                    Experience a design system that breathes. Boreal Breeze leverages tonal depth and light-driven hierarchy to create digital spaces that feel like a Nordic morning.
+                </p>
+<div class="flex gap-4 pt-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-full font-bold shadow-lg hover:shadow-primary/20 transition-all hover:-translate-y-1 active:scale-95">Explore Elements</button>
+<button class="bg-secondary-container text-on-secondary-container px-8 py-4 rounded-full font-bold hover:bg-secondary-fixed transition-all hover:-translate-y-1 active:scale-95">Documentation</button>
+</div>
+</div>
+<div class="w-full md:w-1/2 relative animate-float">
+<div class="aspect-square rounded-[3rem] bg-surface-container-high overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-700">
+<img class="w-full h-full object-cover" data-alt="Abstract translucent glass sculptures in a bright minimalist gallery with soft shadows and teal accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDk8qd6m0flop7m4dc4vgfU_WlxuH95pP5D9p_aOUM6dE5eRotcMDNplDYUVJDtqgHg40WW_Hb2lFeRFUowT8GqrwF3Lv4zHlRDgd6Wkxl0hL7JLTMOmv6rxGB52Dj14XK2cyj-uV5ws0n6Jbu-pEppjXGIw4NAjOGs2TheXMh7S7k3d2iL4ZYwWppLH4z76L7E5YV2PW0xGja9EZeXZDkr9D9hEgCmE_Zf4ZFmhYP55-4BhrkSJDcY4O7l_XwYmye_UI6207ghpWFx"/>
+</div>
+<div class="absolute -bottom-8 -left-8 bg-white/40 backdrop-blur-2xl p-8 rounded-2xl shadow-xl border border-white/20 max-w-xs animate-float-delayed">
+<p class="text-primary font-bold italic">"Design is not a box, it's a breath."</p>
+<p class="text-tertiary text-sm mt-2">— The Digital Conservatory</p>
+</div>
+</div>
+</section>
+<!-- Bento Grid Feature Showcase -->
+<section class="bg-surface-container-low py-32 rounded-t-[3rem]">
+<div class="max-w-7xl mx-auto px-8">
+<div class="mb-16 opacity-0 animate-fade-in-up stagger-1">
+<h2 class="text-3xl font-bold text-primary tracking-tight">The Library of Fluidity</h2>
+<p class="text-on-surface-variant mt-2">A curated collection of components designed for focus.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Large Feature: Glassmorphism -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-3xl p-12 flex flex-col justify-between group hover:bg-white transition-all duration-500 shadow-sm opacity-0 animate-fade-in-up stagger-2 hover:-translate-y-2">
+<div class="space-y-4">
+<span class="material-symbols-outlined text-4xl text-primary animate-pulse-gentle" data-icon="blur_on">blur_on</span>
+<h3 class="text-2xl font-bold text-primary">Glassmorphism Engine</h3>
+<p class="text-on-surface-variant max-w-md">Our engine calculates real-time refraction and background blur, ensuring your UI elements feel like physical layers of frosted glass.</p>
+</div>
+<div class="mt-12 flex flex-wrap gap-4">
+<div class="px-6 py-3 rounded-xl bg-surface-container-high text-on-surface-variant font-medium hover:bg-surface-dim transition-colors">Standard Blur</div>
+<div class="px-6 py-3 rounded-xl bg-tertiary-container text-on-tertiary-container font-medium hover:brightness-95 transition-all">Deep Refraction</div>
+<div class="px-6 py-3 rounded-xl bg-primary-container text-on-primary-container font-medium hover:brightness-95 transition-all">Luminous Frost</div>
+</div>
+</div>
+<!-- Small Feature: Typography -->
+<div class="md:col-span-4 bg-primary text-on-primary rounded-3xl p-10 flex flex-col justify-between overflow-hidden relative group opacity-0 animate-fade-in-up stagger-3 hover:-translate-y-2">
+<div class="z-10">
+<h3 class="text-xl font-bold">Editorial Precision</h3>
+<p class="mt-4 text-on-primary/80 text-sm">Plus Jakarta Sans provides the geometric clarity required for high-end editorial experiences.</p>
+</div>
+<div class="absolute -bottom-10 -right-10 opacity-20 group-hover:scale-110 group-hover:-rotate-6 transition-transform duration-700">
+<span class="text-[12rem] font-extrabold leading-none">Aa</span>
+</div>
+</div>
+<!-- Medium Feature: Input & Motion -->
+<div class="md:col-span-4 bg-surface-container-highest rounded-3xl p-10 space-y-6 opacity-0 animate-fade-in-up stagger-3 hover:-translate-y-2">
+<h3 class="text-xl font-bold text-on-surface">Interactive Inputs</h3>
+<div class="space-y-4">
+<div class="space-y-1">
+<label class="text-[10px] uppercase tracking-widest font-bold text-tertiary">Search Library</label>
+<div class="relative group">
+<input class="w-full bg-surface-container-lowest border-none rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary/20 text-sm transition-shadow" placeholder="Start typing..." type="text"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary opacity-50 group-focus-within:opacity-100 transition-opacity" data-icon="search">search</span>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<span class="bg-white text-primary text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-primary hover:text-white cursor-default transition-colors">Active</span>
+<span class="bg-surface-dim text-on-surface-variant text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider hover:bg-white cursor-default transition-colors">Hovered</span>
+<span class="bg-surface-variant text-on-surface-variant text-[10px] px-3 py-1 rounded-full font-bold uppercase tracking-wider opacity-60 cursor-not-allowed">Disabled</span>
+</div>
+</div>
+</div>
+<!-- Long Feature: Tonal Depth -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-3xl overflow-hidden flex flex-col md:flex-row group shadow-sm hover:shadow-xl transition-all duration-700 opacity-0 animate-fade-in-up stagger-4 hover:-translate-y-2">
+<div class="p-10 md:w-1/2 space-y-4">
+<h3 class="text-2xl font-bold text-primary">Tonal Depth System</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed">By rejecting the use of borders, we create hierarchy through subtle shifts in background tones. This "No-Line" approach reduces cognitive load and enhances the ethereal feel of the atrium.</p>
+<button class="flex items-center gap-2 text-primary font-bold text-sm group/btn">
+                                Read Whitepaper 
+                                <span class="material-symbols-outlined transition-transform group-hover/btn:translate-x-2" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+<div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+<img class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-110 group-hover:scale-100" data-alt="Macro photo of frozen pine needles with crystalline ice structures and soft blue-green lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSYT-GxrRDCTHYi61THbnfnJz4J8LX5BVOPi987ubXpyVc0JFfmdaiI4zWpX5bbrF66DZec_VHoPsOYD9eFla_GMeOATuw2E_hgErzVWWF3thwjli-G6W5o_kGwG-ZmIqfXDePO7eQbZVgVDTnAt67vn9iTsMGyn56lvsRWsi_dVlN7He5MAVYzsWqxPsuuo6yWCyv6s9N2MQOirvJdgWxgmNzhk4Vo09440FCng9M2ovhCJZocTL9NpyVsjK3VFCiQoDBabhU82bn"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Components Grid Showcase -->
+<section class="max-w-7xl mx-auto px-8 py-32">
+<div class="text-center mb-20 space-y-4 opacity-0 animate-fade-in-up">
+<span class="label-md uppercase tracking-widest text-tertiary font-bold text-xs">The UI Toolkit</span>
+<h2 class="text-4xl font-extrabold text-primary">Atomistic Design Elements</h2>
+<div class="h-1 w-20 bg-primary mx-auto rounded-full"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+<!-- Button Set -->
+<div class="space-y-6 opacity-0 animate-fade-in-up stagger-1">
+<h4 class="text-xs font-bold uppercase tracking-widest text-tertiary">Action Drivers</h4>
+<div class="space-y-4">
+<button class="w-full bg-primary text-on-primary py-3 rounded-full font-bold text-sm shadow-md hover:-translate-y-1 hover:shadow-primary/20 animate-pulse-gentle">Primary CTA</button>
+<button class="w-full bg-secondary-container text-on-secondary-container py-3 rounded-full font-bold text-sm hover:-translate-y-1 transition-transform">Secondary</button>
+<button class="w-full bg-tertiary-container text-on-tertiary-container py-3 rounded-full font-bold text-sm hover:-translate-y-1 transition-transform">Tertiary</button>
+</div>
+</div>
+<!-- Chips & Badges -->
+<div class="space-y-6 opacity-0 animate-fade-in-up stagger-2">
+<h4 class="text-xs font-bold uppercase tracking-widest text-tertiary">Status Markers</h4>
+<div class="flex flex-wrap gap-3">
+<span class="px-4 py-2 bg-primary-container text-on-primary-container rounded-full text-xs font-bold hover:scale-105 transition-transform cursor-default">In Progress</span>
+<span class="px-4 py-2 bg-error-container text-on-error-container rounded-full text-xs font-bold hover:scale-105 transition-transform cursor-default">Alert</span>
+<span class="px-4 py-2 bg-surface-container-high text-on-surface-variant rounded-full text-xs font-bold hover:scale-105 transition-transform cursor-default">Archived</span>
+<span class="px-4 py-2 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold hover:scale-105 transition-transform cursor-default">Beta</span>
+</div>
+</div>
+<!-- Icons & Labels -->
+<div class="space-y-6 opacity-0 animate-fade-in-up stagger-3">
+<h4 class="text-xs font-bold uppercase tracking-widest text-tertiary">Navigation Icons</h4>
+<div class="grid grid-cols-3 gap-4">
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="eco">eco</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="cloud">cloud</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="water_drop">water_drop</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="wind_power">wind_power</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="waves">waves</span>
+</div>
+<div class="aspect-square bg-surface-container-low rounded-xl flex items-center justify-center hover:bg-primary-container group/icon transition-colors">
+<span class="material-symbols-outlined text-primary group-hover/icon:scale-110 transition-transform" data-icon="filter_vintage">filter_vintage</span>
+</div>
+</div>
+</div>
+<!-- Toggle & Selection -->
+<div class="space-y-6 opacity-0 animate-fade-in-up stagger-4">
+<h4 class="text-xs font-bold uppercase tracking-widest text-tertiary">Control Patterns</h4>
+<div class="space-y-6">
+<div class="flex items-center justify-between group/toggle cursor-pointer">
+<span class="text-sm font-medium text-on-surface-variant group-hover/toggle:text-primary transition-colors">Motion Blur</span>
+<div class="w-12 h-6 bg-primary rounded-full relative p-1 transition-colors">
+<div class="w-4 h-4 bg-white rounded-full translate-x-6 transition-transform"></div>
+</div>
+</div>
+<div class="flex items-center justify-between group/toggle cursor-pointer">
+<span class="text-sm font-medium text-on-surface-variant group-hover/toggle:text-primary transition-colors">Glass Effects</span>
+<div class="w-12 h-6 bg-surface-container-high rounded-full relative p-1 hover:bg-surface-dim transition-colors">
+<div class="w-4 h-4 bg-white rounded-full transition-transform"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="max-w-7xl mx-auto px-8 pb-32">
+<div class="bg-[#006a70] rounded-[3rem] p-16 md:p-24 text-center space-y-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 w-96 h-96 bg-primary-dim rounded-full blur-[120px] opacity-30 -translate-y-1/2 translate-x-1/2 animate-morph"></div>
+<div class="absolute bottom-0 left-0 w-64 h-64 bg-secondary rounded-full blur-[100px] opacity-20 translate-y-1/2 -translate-x-1/2 animate-morph" style="animation-duration: 15s;"></div>
+<h2 class="text-4xl md:text-6xl font-bold text-on-primary leading-tight relative z-10 transition-transform group-hover:scale-[1.02] duration-1000">
+                    Ready to build in the <br/> <span class="text-primary-container">Ethereal Atrium?</span>
+</h2>
+<p class="text-on-primary/70 text-lg max-w-2xl mx-auto relative z-10">
+                    Join the conservatory and transform your interface from a series of boxes into a unified digital landscape.
+                </p>
+<div class="relative z-10 pt-4">
+<button class="bg-white text-primary px-10 py-5 rounded-full font-extrabold text-lg shadow-xl hover:scale-105 transition-transform animate-pulse-gentle active:scale-95">Get Started Free</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full rounded-t-[1.5rem] bg-[#f6fafa] dark:bg-slate-950 border-t border-surface-variant/30">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 w-full max-w-7xl mx-auto">
+<div class="space-y-4 mb-8 md:mb-0 text-center md:text-left">
+<div class="text-lg font-bold text-[#006a70] dark:text-[#8bf3fc]">Boreal Breeze</div>
+<p class="text-xs text-[#546073] dark:text-[#dae5e5] tracking-widest uppercase">© 2024 Boreal Breeze. Designed for the Digital Conservatory.</p>
+</div>
+<div class="flex gap-12">
+<div class="space-y-4">
+<h5 class="text-[10px] font-bold uppercase tracking-widest text-[#006a70] dark:text-[#8bf3fc]">Product</h5>
+<ul class="space-y-2">
+<li><a class="text-sm text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all hover:translate-x-1 inline-block" href="#">Showcase</a></li>
+<li><a class="text-sm text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all hover:translate-x-1 inline-block" href="#">Documentation</a></li>
+</ul>
+</div>
+<div class="space-y-4">
+<h5 class="text-[10px] font-bold uppercase tracking-widest text-[#006a70] dark:text-[#8bf3fc]">Connect</h5>
+<ul class="space-y-2">
+<li><a class="text-sm text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all hover:translate-x-1 inline-block" href="#">Github</a></li>
+<li><a class="text-sm text-[#546073] dark:text-[#dae5e5] hover:text-[#006a70] dark:hover:text-white transition-all hover:translate-x-1 inline-block" href="#">Privacy</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

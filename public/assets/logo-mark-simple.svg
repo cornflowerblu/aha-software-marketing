@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#53dde5"/>
+      <stop offset="50%" stop-color="#006a70"/>
+      <stop offset="100%" stop-color="#005d63"/>
+    </linearGradient>
+  </defs>
+  <!-- Simplified A mark for favicon -->
+  <polygon points="16,2 4,30 10,30 16,15" fill="url(#g)"/>
+  <polygon points="16,2 28,30 22,30 16,15" fill="#005d63"/>
+  <polygon points="9,22 23,22 22,18 10,18" fill="#22c1c9"/>
+  <!-- Minimal fragments -->
+  <polygon points="5,6 7,8 5,10" fill="#53dde5" opacity="0.8"/>
+  <polygon points="3,10 5,9 4,12" fill="#22c1c9" opacity="0.6"/>
+  <polygon points="8,3 10,5 7,5" fill="#8bf3fc" opacity="0.7"/>
+</svg>

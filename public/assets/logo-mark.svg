@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="teal-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#53dde5"/>
+      <stop offset="50%" stop-color="#006a70"/>
+      <stop offset="100%" stop-color="#005d63"/>
+    </linearGradient>
+    <linearGradient id="light-grad" x1="0" y1="0" x2="0.5" y2="1">
+      <stop offset="0%" stop-color="#8bf3fc"/>
+      <stop offset="100%" stop-color="#22c1c9"/>
+    </linearGradient>
+    <linearGradient id="dark-grad" x1="0.5" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#006a70"/>
+      <stop offset="100%" stop-color="#003335"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Main "A" shape — faceted geometry -->
+  <!-- Left leg -->
+  <polygon points="60,8 22,108 38,108 60,52" fill="url(#teal-grad)"/>
+  <!-- Right leg -->
+  <polygon points="60,8 98,108 82,108 60,52" fill="url(#dark-grad)"/>
+  <!-- Crossbar -->
+  <polygon points="36,78 84,78 80,66 40,66" fill="url(#light-grad)"/>
+
+  <!-- Facet lines — crystalline cuts -->
+  <line x1="60" y1="8" x2="48" y2="42" stroke="#8bf3fc" stroke-width="0.8" opacity="0.6"/>
+  <line x1="60" y1="8" x2="72" y2="42" stroke="#c4f9fc" stroke-width="0.6" opacity="0.4"/>
+  <line x1="48" y1="42" x2="60" y2="52" stroke="#8bf3fc" stroke-width="0.6" opacity="0.5"/>
+  <line x1="72" y1="42" x2="60" y2="52" stroke="#c4f9fc" stroke-width="0.6" opacity="0.4"/>
+  <line x1="34" y1="72" x2="48" y2="42" stroke="#53dde5" stroke-width="0.5" opacity="0.3"/>
+  <line x1="86" y1="72" x2="72" y2="42" stroke="#53dde5" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Shattering fragments — upper left -->
+  <polygon points="18,18 24,22 20,28" fill="#53dde5" opacity="0.9"/>
+  <polygon points="10,30 16,28 14,36" fill="#22c1c9" opacity="0.7"/>
+  <polygon points="26,10 30,16 24,16" fill="#8bf3fc" opacity="0.8"/>
+  <polygon points="14,42 20,38 18,46" fill="#006a70" opacity="0.6"/>
+  <polygon points="8,22 12,18 12,26" fill="#c4f9fc" opacity="0.5"/>
+  <polygon points="22,32 28,28 26,36" fill="#53dde5" opacity="0.7"/>
+  <polygon points="32,14 36,20 30,22" fill="#22c1c9" opacity="0.6"/>
+
+  <!-- Small sparkle fragments -->
+  <rect x="6" y="36" width="3" height="3" transform="rotate(45 7.5 37.5)" fill="#8bf3fc" opacity="0.4"/>
+  <rect x="16" y="8" width="2.5" height="2.5" transform="rotate(30 17.25 9.25)" fill="#c4f9fc" opacity="0.5"/>
+  <rect x="30" y="6" width="2" height="2" transform="rotate(60 31 7)" fill="#53dde5" opacity="0.45"/>
+</svg>

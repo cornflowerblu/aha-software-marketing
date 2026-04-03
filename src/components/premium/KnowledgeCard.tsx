@@ -3,7 +3,6 @@
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import SectionLabel from '@/components/ui/SectionLabel'
 
 interface KnowledgeCardProps {
   title: string
@@ -50,12 +49,11 @@ export default function KnowledgeCard({
   return (
     <motion.div
       variants={fadeInUp}
-      whileHover={{ y: -8, transition: { duration: 0.3 } }}
-      className="bg-surface-container-lowest rounded-lg overflow-hidden flex flex-col cursor-pointer"
+      whileHover={{ y: -4, transition: { duration: 0.3 } }}
+      className="rounded-2xl bg-surface-lowest overflow-hidden flex flex-col cursor-pointer shadow-ambient hover:shadow-raised transition-shadow"
     >
       <Link href={href} className="flex flex-col flex-1">
-        {/* Thumbnail with blurred bg image + icon overlay */}
-        <div className="aspect-video bg-surface-container-high relative overflow-hidden">
+        <div className="aspect-video bg-surface-high relative overflow-hidden">
           {image ? (
             <Image
               src={image}
@@ -64,7 +62,7 @@ export default function KnowledgeCard({
               className="object-cover blur-sm opacity-60 scale-110"
             />
           ) : (
-            <div className="w-full h-full bg-surface-container-high" />
+            <div className="w-full h-full bg-surface-high" />
           )}
           <div className="absolute inset-0 flex items-center justify-center">
             <span
@@ -79,20 +77,19 @@ export default function KnowledgeCard({
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-10 flex flex-col flex-1">
-          <SectionLabel color="tertiary" className="mb-3">
+        <div className="p-6 flex flex-col flex-1">
+          <p className="ea-label text-tertiary mb-2">
             {config.label}
-          </SectionLabel>
-          <h3 className="font-headline text-2xl leading-8 mb-3 text-on-background">
+          </p>
+          <h3 className="text-lg font-bold leading-tight mb-2 text-on-surface">
             {title}
           </h3>
-          <p className="text-on-surface-variant text-base leading-6 mb-3 flex-1 font-body">
+          <p className="text-on-surface-variant text-sm leading-relaxed mb-3 flex-1">
             {description}
           </p>
           <motion.div
             whileHover={{ x: 6 }}
-            className="flex items-center gap-2 text-primary font-label text-xs tracking-[0.12em] uppercase pt-3"
+            className="flex items-center gap-2 text-primary text-xs font-semibold uppercase tracking-[0.08em] pt-2"
           >
             <span>{config.cta}</span>
             <span className="material-symbols-outlined text-sm">

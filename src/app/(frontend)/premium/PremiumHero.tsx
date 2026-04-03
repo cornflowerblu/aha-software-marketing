@@ -1,6 +1,6 @@
 'use client'
 
-import { motion, useInView, useScroll, useTransform } from 'motion/react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useRef } from 'react'
 import Image from 'next/image'
 
@@ -21,7 +21,6 @@ const staggerContainer = {
   },
 }
 
-/** Shimmer CTA with editorial-gradient background */
 function GradientCTA({
   children,
   className = '',
@@ -33,7 +32,7 @@ function GradientCTA({
 }) {
   return (
     <motion.div
-      className={`relative overflow-hidden cursor-pointer editorial-gradient ${className}`}
+      className={`relative overflow-hidden cursor-pointer ea-gradient ${className}`}
       {...props}
     >
       <motion.div
@@ -66,10 +65,9 @@ export function PremiumHero() {
   return (
     <section
       ref={ref}
-      className="bg-background pt-8 pb-20 relative mb-32"
+      className="bg-surface pt-28 pb-20 relative mb-24"
     >
-      <div className="absolute inset-0 editorial-grid-sm opacity-10 pointer-events-none" />
-      <div className="max-w-[1440px] mx-auto px-6 md:px-12">
+      <div className="max-w-[1280px] mx-auto px-6 md:px-12">
         <motion.div
           style={{ opacity }}
           className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10"
@@ -81,53 +79,45 @@ export function PremiumHero() {
             variants={staggerContainer}
             className="lg:col-span-7 flex flex-col"
           >
-            {/* Section label */}
             <motion.div variants={fadeInUp}>
-              <span className="font-label text-xs uppercase tracking-[0.2em] text-tertiary block mb-4">
+              <p className="ea-label mb-4 text-primary">
                 Strategic Alignment Hub
-              </span>
+              </p>
             </motion.div>
 
-            {/* Headline */}
             <motion.div variants={fadeInUp}>
-              <h1 className="font-headline text-7xl md:text-[96px] leading-none tracking-tighter text-on-background mb-4 italic">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.05] tracking-[-0.03em] text-on-surface mb-6">
                 Master the Art{' '}
-                <span className="text-primary-container">of</span>
+                <span className="text-primary">of</span>
                 <br />
-                Radical
-                <br />
-                Organizational
-                <br />
-                Change.
+                Radical Change.
               </h1>
             </motion.div>
 
-            {/* Sub-text */}
             <motion.div variants={fadeInUp}>
-              <p className="font-body text-xl text-on-surface-variant max-w-[576px] leading-relaxed mb-6 opacity-90">
+              <p className="text-lg text-on-surface-variant max-w-xl leading-relaxed mb-8">
                 Gain exclusive access to a library of instructional videos,
                 event recordings, speaking engagements, and premium posts that
                 deep-dive into the GitHub Spec Kit methodology.
               </p>
             </motion.div>
 
-            {/* Dual CTAs */}
             <motion.div
               variants={fadeInUp}
-              className="flex flex-wrap gap-4 items-center pt-2"
+              className="flex flex-wrap gap-4 items-center"
             >
               <GradientCTA
-                className="flex items-center justify-center px-10 py-5 rounded-md"
+                className="flex items-center justify-center px-8 py-3 rounded-full"
                 whileHover={{
                   scale: 1.03,
-                  boxShadow: '0 8px 24px rgba(0,92,85,0.35)',
+                  boxShadow: '0 8px 24px rgba(0,106,112,0.35)',
                 }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ duration: 0.2 }}
               >
                 <a
                   href="#pricing"
-                  className="font-label font-bold text-on-primary text-base relative z-10 tracking-[0.1em] uppercase"
+                  className="font-semibold text-on-primary text-sm relative z-10 tracking-wide"
                 >
                   View Full Access Plans
                 </a>
@@ -135,16 +125,16 @@ export function PremiumHero() {
 
               <motion.a
                 href="#knowledge"
-                whileHover={{ backgroundColor: 'var(--color-surface-dim)' }}
+                whileHover={{ backgroundColor: 'var(--ea-surface-highest)' }}
                 transition={{ duration: 0.2 }}
-                className="bg-surface-container-high flex items-center justify-center px-10 py-5 rounded-md cursor-pointer font-body text-on-surface text-base"
+                className="bg-surface-high flex items-center justify-center px-8 py-3 rounded-full cursor-pointer text-on-surface text-sm font-semibold"
               >
                 Our Methodology
               </motion.a>
             </motion.div>
           </motion.div>
 
-          {/* Right: strategic visual + pull-quote — 5 columns */}
+          {/* Right: visual — 5 columns */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
@@ -155,44 +145,36 @@ export function PremiumHero() {
             }}
             className="lg:col-span-5 relative self-center hidden lg:block"
           >
-            {/* Image card */}
-            <div className="bg-surface-container-low overflow-hidden rounded shadow-ambient-lg w-full">
-              <div className="h-[480px] relative overflow-hidden mix-blend-multiply opacity-80">
+            <div className="rounded-2xl bg-surface-low overflow-hidden shadow-ambient-lg w-full">
+              <div className="h-[420px] relative overflow-hidden">
                 <Image
                   src="/assets/hero-abstract.png"
                   alt="Strategic consulting visual"
                   fill
-                  className="object-cover"
+                  className="object-cover opacity-80"
                   priority
                 />
-                <div className="absolute inset-0 bg-white mix-blend-saturation" />
                 <div
                   className="absolute inset-0"
                   style={{
                     backgroundImage:
-                      'linear-gradient(51deg, rgba(0,92,85,0.2) 0%, rgba(0,92,85,0) 100%)',
+                      'linear-gradient(51deg, rgba(0,106,112,0.2) 0%, rgba(0,106,112,0) 100%)',
                   }}
                 />
               </div>
             </div>
 
-            {/* Pull-quote card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="absolute bg-background -bottom-6 -left-6 max-w-[320px] pl-9 pr-12 py-8 shadow-editorial"
+              className="absolute rounded-xl bg-surface-lowest -bottom-6 -left-6 max-w-[300px] p-6 shadow-raised border-l-4 border-primary"
             >
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 border-l-4 border-primary pointer-events-none"
-              />
-              <p className="font-headline text-2xl italic text-primary leading-[30px] mb-3">
+              <p className="text-lg text-primary leading-snug font-semibold mb-2">
                 &ldquo;The architect must be
-                <br />
                 the builder.&rdquo;
               </p>
-              <p className="font-label text-xs uppercase tracking-[0.1em] text-on-background/60">
+              <p className="ea-label text-tertiary">
                 &mdash; Principal, AHA Software
               </p>
             </motion.div>

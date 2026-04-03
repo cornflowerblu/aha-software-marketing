@@ -1,20 +1,33 @@
 # Figma MCP Integration Rules — AHA Software
 
-## Figma Files
-- **Design file** (for `get_design_context` / `get_screenshot`): fileKey=`wHqVLyVESensvFpFBbYhMk`
+**Product design spec (Ethereal Atrium, _Digital Conservatory_):** [`docs/DESIGN.md`](../../docs/DESIGN.md) — cool teal / frost Material tokens, Plus Jakarta Sans, no-line rule. **Styleguide:** `/styleguide` when `ENABLE_STYLEGUIDE=true`.
+
+**Visual source of truth (Figma):** **AHA Design System** — use this file for tokens, components, and layouts before implementing or auditing UI.
+
+**Code today:** Production routes still use **`src/app/globals.css`** (warm stone, Fraunces/DM Sans) in many places; align new work to Figma + [`docs/DESIGN.md`](../../docs/DESIGN.md) and migrate tokens over time.
+
+## Figma files
+
+### AHA Design System (primary — source of truth)
+
+- **File** (for `get_design_context` / `get_screenshot` / `get_metadata`): fileKey=`zlXMI6B9Y88ykFSawN4hqO`
+  - URL: https://www.figma.com/design/zlXMI6B9Y88ykFSawN4hqO/AHA-Design-System
+  - Example node (from share link): `node-id=11-4` → use **`11:4`** in MCP/API calls
+- **Also see:** [`docs/DESIGN.md`](../../docs/DESIGN.md) (Ethereal Atrium written spec); **`/styleguide`** when `ENABLE_STYLEGUIDE=true`
+
+### Legacy: marketing Webpage (Consulting Homepage comps)
+
+- **File:** fileKey=`wHqVLyVESensvFpFBbYhMk`
   - URL: https://www.figma.com/design/wHqVLyVESensvFpFBbYhMk/Webpage?m=dev
   - Homepage: nodeId `1:680` ("Consulting Homepage - Refined Style", 1280x5364)
-  - Nav: nodeId `1:942`
-  - Hero: nodeId `1:743`
-  - Core Pillars: nodeId `1:681`
-  - Spec Kit Section: nodeId `1:764`
-  - Insights Section: nodeId `1:807`
-  - Contact Section: nodeId `1:843`
-  - Footer: nodeId `1:902`
-- **Make file** (for animation code snippets): https://www.figma.com/make/qj2tEStlrJWpLUwKKGaQYF/Enhance-Visual-Effects
-  - Contains animations, transitions, and visual effects — reference for CSS/JS animation code
-- Also see: `docs/stitch-*.html` files for full HTML reference implementations
-- Also see: `docs/DESIGN.md` for the complete design system philosophy
+  - Nav: `1:942` · Hero: `1:743` · Core Pillars: `1:681` · Spec Kit: `1:764` · Insights: `1:807` · Contact: `1:843` · Footer: `1:902`
+  - Use when matching **existing** shipped homepage sections to older comps; prefer **AHA Design System** for new system work.
+
+### Other
+
+- **Make file** (animation snippets): https://www.figma.com/make/qj2tEStlrJWpLUwKKGaQYF/Enhance-Visual-Effects
+- **Stitch HTML:** `docs/stitch-*.html` — reference HTML only
+- **Implementation notes (pre-migration site):** `docs/design/DESIGN_SYSTEM.md`
 
 ## Required Flow (do not skip)
 
@@ -43,18 +56,19 @@
 - Material Symbols Outlined loaded via Google Fonts CDN for icons
 
 ### Key Color Tokens
-| Class | Value | Usage |
-|-------|-------|-------|
-| `bg-background` | #fff8f2 | "Warm Stone" page background |
-| `text-on-background` | #1e1b17 | Primary text |
-| `text-primary` / `bg-primary` | #005c55 | Brand CTAs, active states |
-| `bg-primary-container` | #0f766e | Hero moments, gradient endpoint |
-| `text-tertiary` / `bg-tertiary` | #7f4025 | Clay accent badges |
-| `bg-surface-container-low` | #faf2eb | Section backgrounds |
-| `bg-surface-container` | #f4ede6 | Footer, containers |
-| `bg-surface-container-lowest` | #ffffff | Card backgrounds |
-| `text-outline` | #6e7977 | Metadata text |
-| `border-outline-variant` | #bdc9c6 | Borders (low opacity only) |
+
+| Class                           | Value   | Usage                           |
+| ------------------------------- | ------- | ------------------------------- |
+| `bg-background`                 | #fff8f2 | "Warm Stone" page background    |
+| `text-on-background`            | #1e1b17 | Primary text                    |
+| `text-primary` / `bg-primary`   | #005c55 | Brand CTAs, active states       |
+| `bg-primary-container`          | #0f766e | Hero moments, gradient endpoint |
+| `text-tertiary` / `bg-tertiary` | #7f4025 | Clay accent badges              |
+| `bg-surface-container-low`      | #faf2eb | Section backgrounds             |
+| `bg-surface-container`          | #f4ede6 | Footer, containers              |
+| `bg-surface-container-lowest`   | #ffffff | Card backgrounds                |
+| `text-outline`                  | #6e7977 | Metadata text                   |
+| `border-outline-variant`        | #bdc9c6 | Borders (low opacity only)      |
 
 ## Styling Rules
 

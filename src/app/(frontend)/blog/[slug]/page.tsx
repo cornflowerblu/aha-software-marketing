@@ -193,12 +193,12 @@ export default async function BlogPostPage({ params }: Props) {
 								Premium
 							</Badge>
 						)}
-						<span className='text-xs font-label text-on-surface-variant/60 uppercase tracking-widest'>
+						<span className='text-xs text-on-surface-variant/60 uppercase tracking-[0.08em]'>
 							{readTime} Min Read
 						</span>
 					</div>
 
-					<h1 className='font-headline text-4xl md:text-6xl font-bold tracking-tighter text-on-surface mb-6 leading-[1.1]'>
+					<h1 className='text-3xl md:text-5xl font-bold tracking-[-0.03em] text-on-surface mb-6 leading-[1.08]'>
 						{post.title}
 					</h1>
 
@@ -208,11 +208,11 @@ export default async function BlogPostPage({ params }: Props) {
 						</p>
 					)}
 
-					<div className='flex items-center justify-between border-b border-outline-variant/20 pb-8'>
+					<div className='flex items-center justify-between pb-8'>
 						{authorName && (
 							<div className='flex items-center gap-4'>
-								<div className='w-12 h-12 rounded-full bg-surface-container-highest overflow-hidden flex items-center justify-center'>
-									<span className='font-headline text-lg text-primary'>
+								<div className='w-10 h-10 rounded-lg bg-surface-highest overflow-hidden flex items-center justify-center'>
+									<span className='text-sm font-bold text-primary'>
 										{authorName.charAt(0)}
 									</span>
 								</div>
@@ -230,7 +230,7 @@ export default async function BlogPostPage({ params }: Props) {
 				</header>
 
 				{imageUrl && (
-					<div className='aspect-video bg-surface-container overflow-hidden mb-12 relative'>
+					<div className='aspect-video rounded-2xl bg-surface-high overflow-hidden mb-12 relative'>
 						<Image
 							src={imageUrl}
 							alt={imageAlt || post.title}
@@ -260,10 +260,10 @@ export default async function BlogPostPage({ params }: Props) {
 					)
 				)}
 
-				<footer className='mt-16 pt-8 border-t border-outline-variant/20'>
+				<footer className='mt-16 pt-8'>
 					<Link
 						href='/blog'
-						className='inline-flex items-center gap-2 font-label text-sm uppercase tracking-widest text-primary hover:opacity-70 transition-opacity'
+						className='inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.08em] text-primary hover:text-primary-dim transition-colors'
 					>
 						<span className='material-symbols-outlined text-sm'>
 							arrow_back
