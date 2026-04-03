@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerSections = [
 	{
@@ -12,9 +13,9 @@ const footerSections = [
 	{
 		title: "Navigation",
 		links: [
-			{ label: "Editorial", href: "/blog" },
 			{ label: "Insights", href: "/blog" },
-			{ label: "Sitemap", href: "#" },
+			{ label: "Events", href: "/events" },
+			{ label: "About", href: "/about" },
 		],
 	},
 	{
@@ -22,39 +23,41 @@ const footerSections = [
 		links: [
 			{ label: "Newsletter", href: "/contact" },
 			{ label: "Privacy Policy", href: "#" },
-			{ label: "Security Architecture", href: "#", highlight: true },
+			{ label: "Security Architecture", href: "#" },
 		],
 	},
 ];
 
 export function Footer() {
 	return (
-		<footer className='bg-[--color-surface-container] border-t border-[--color-outline-variant]/10'>
-			<div className='grid grid-cols-1 md:grid-cols-4 gap-12 px-6 md:px-12 py-20 max-w-[1440px] mx-auto'>
-				<div className='flex flex-col gap-6'>
-					<div className='font-headline text-3xl text-[--color-on-background] tracking-tighter font-bold'>
-						AHA Software
-					</div>
-					<p className='font-body text-sm tracking-wide text-[--color-on-background]/60 leading-relaxed max-w-xs'>
+		<footer className='bg-surface-high'>
+			<div className='mx-auto grid max-w-[1280px] grid-cols-1 gap-12 px-6 py-16 md:grid-cols-4 md:px-12'>
+				<div>
+					<Link href="/" className="flex items-center gap-3">
+						<Image
+							src="/assets/logo-mark-traced.svg"
+							alt="AHA Software"
+							width={36}
+							height={36}
+						/>
+						<span className='text-lg font-bold text-primary'>AHA Software</span>
+					</Link>
+					<p className='mt-3 text-sm leading-relaxed text-tertiary max-w-xs'>
 						Architectural alignment for the modern enterprise. We build the
-						systems that build the future with precision structuralism.
+						systems that build the future.
 					</p>
 				</div>
 				{footerSections.map((section) => (
-					<div key={section.title} className='flex flex-col gap-6'>
-						<h4 className='font-label text-sm tracking-wide uppercase text-[--color-primary] font-bold'>
+					<div key={section.title}>
+						<p className='text-[10px] font-bold uppercase tracking-[0.1em] text-primary'>
 							{section.title}
-						</h4>
-						<nav className='flex flex-col gap-4'>
+						</p>
+						<nav className='mt-4 flex flex-col gap-3'>
 							{section.links.map((link) => (
 								<Link
 									key={link.label}
 									href={link.href}
-									className={`hover:opacity-100 hover:translate-x-1 transition-all font-body text-sm uppercase ${
-										(link as { highlight?: boolean }).highlight
-											? "text-[--color-primary] font-bold opacity-100"
-											: "text-[--color-on-background] opacity-60"
-									}`}
+									className='text-sm text-tertiary hover:text-primary hover:translate-x-1 transition-all'
 								>
 									{link.label}
 								</Link>
@@ -63,8 +66,8 @@ export function Footer() {
 					</div>
 				))}
 			</div>
-			<div className='px-6 md:px-12 pb-10 border-t border-[--color-outline-variant]/10 pt-8 max-w-[1440px] mx-auto'>
-				<p className='text-[--color-on-background]/40 font-label text-[10px] tracking-[0.2em] uppercase'>
+			<div className='mx-auto max-w-[1280px] px-6 pb-10 pt-8 md:px-12'>
+				<p className='text-[10px] uppercase tracking-[0.1em] text-tertiary/60'>
 					&copy; {new Date().getFullYear()} AHA Software. Precision
 					Structuralism in Digital Engineering.
 				</p>

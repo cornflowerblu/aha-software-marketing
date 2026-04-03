@@ -8,6 +8,7 @@ interface AnimateOnScrollProps {
   animation?: 'fade-up' | 'fade-in' | 'slide-left' | 'slide-right'
   delay?: number
   threshold?: number
+  style?: React.CSSProperties
 }
 
 const animations = {
@@ -35,6 +36,7 @@ export default function AnimateOnScroll({
   animation = 'fade-up',
   delay = 0,
   threshold = 0.1,
+  style,
 }: AnimateOnScrollProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [isVisible, setIsVisible] = useState(false)
@@ -69,7 +71,7 @@ export default function AnimateOnScroll({
       ]
         .filter(Boolean)
         .join(' ')}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: `${delay}ms`, ...style }}
     >
       {children}
     </div>

@@ -12,13 +12,13 @@ export default function Textarea({ label, className = '', id, ...props }: Textar
     <div className={className}>
       <label
         htmlFor={inputId}
-        className="block font-label text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 mb-3"
+        className="ea-label text-tertiary mb-2 block"
       >
         {label}
       </label>
       <textarea
         id={inputId}
-        className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-lg font-headline py-2 transition-all outline-none resize-none"
+        className="w-full bg-transparent border-0 border-b-2 border-outline-variant focus:border-primary focus:ring-0 text-on-surface py-2 transition-colors outline-none resize-none"
         {...props}
       />
     </div>
