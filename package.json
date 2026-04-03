@@ -6,7 +6,7 @@
 		"dev": "next dev",
 		"build": "next build",
 		"start": "next start",
-		"lint": "next lint",
+		"lint": "bunx tsc --noEmit",
 		"payload": "payload",
 		"test": "bun test tests/unit tests/integration",
 		"test:unit": "bun test tests/unit",
