@@ -35,9 +35,9 @@ export default function CategoryFilter({ categories, activeSlug }: CategoryFilte
             onClick={() => handleFilter(cat.slug || null)}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className={`px-6 py-2 rounded-full font-label text-sm font-bold tracking-wide transition-colors cursor-pointer border-none outline-none ${
+            className={`px-5 py-2 rounded-full text-sm font-semibold tracking-wide transition-colors cursor-pointer border-none outline-none ${
               isActive
-                ? 'editorial-gradient text-on-primary'
+                ? 'ea-gradient text-on-primary'
                 : 'bg-secondary-container text-on-secondary-container'
             }`}
           >

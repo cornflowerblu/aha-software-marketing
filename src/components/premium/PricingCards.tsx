@@ -40,33 +40,31 @@ export default function PricingCards() {
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
       variants={staggerContainer}
-      className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-[1024px] mx-auto"
+      className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-[1024px] mx-auto"
     >
       {/* Community Tier */}
       <motion.div
         variants={fadeInUp}
         whileHover={{ y: -4, transition: { duration: 0.3 } }}
-        className="bg-surface-container-lowest rounded-lg p-12 relative ghost-border"
+        className="rounded-2xl bg-surface-lowest p-10 relative shadow-ambient"
       >
-        <span className="font-label text-xs uppercase tracking-[0.1em] text-outline mb-4 block">
-          Standard
-        </span>
-        <h3 className="font-headline text-4xl mb-2 text-on-background">
+        <p className="ea-label text-tertiary mb-4">Standard</p>
+        <h3 className="text-3xl font-bold mb-2 text-on-surface">
           Community
         </h3>
-        <div className="flex items-baseline gap-1 mb-10">
-          <span className="text-4xl font-headline text-on-background">$0</span>
-          <span className="text-on-surface-variant opacity-60 font-body">
+        <div className="flex items-baseline gap-1 mb-8">
+          <span className="text-3xl font-bold text-on-surface">$0</span>
+          <span className="text-on-surface-variant text-sm">
             / forever
           </span>
         </div>
-        <ul className="space-y-4 mb-12 font-body">
+        <ul className="space-y-3 mb-10">
           {communityFeatures.map((feature) => (
             <li
               key={feature}
-              className="flex items-center gap-3 text-on-surface-variant"
+              className="flex items-center gap-3 text-on-surface-variant text-sm"
             >
-              <span className="material-symbols-outlined text-primary text-xl">
+              <span className="material-symbols-outlined text-primary text-lg">
                 check
               </span>
               <span>{feature}</span>
@@ -75,11 +73,11 @@ export default function PricingCards() {
         </ul>
         <Link href="/register">
           <motion.div
-            whileHover={{ backgroundColor: 'rgba(0,92,85,0.06)' }}
+            whileHover={{ backgroundColor: 'rgba(0,106,112,0.06)' }}
             transition={{ duration: 0.2 }}
-            className="rounded-md py-[18px] px-2 text-center cursor-pointer border-2 border-primary"
+            className="rounded-full py-3 text-center cursor-pointer border-2 border-primary"
           >
-            <span className="font-body text-primary text-base">
+            <span className="text-primary font-semibold text-sm">
               Join the Community
             </span>
           </motion.div>
@@ -90,9 +88,8 @@ export default function PricingCards() {
       <motion.div
         variants={fadeInUp}
         whileHover={{ y: -4, transition: { duration: 0.3 } }}
-        className="rounded-lg p-12 relative overflow-hidden editorial-gradient shadow-lift"
+        className="rounded-2xl p-10 relative overflow-hidden ea-gradient shadow-floating"
       >
-        {/* Shimmer effect */}
         <motion.div
           className="absolute inset-0 pointer-events-none"
           animate={{ x: ['-100%', '200%'] }}
@@ -108,28 +105,25 @@ export default function PricingCards() {
           }}
         />
 
-        {/* Badge */}
-        <div className="absolute top-0 right-0 bg-tertiary text-on-tertiary px-6 py-2">
-          <span className="font-label text-xs tracking-[0.1em] uppercase font-bold">
+        <div className="absolute top-0 right-0 rounded-bl-xl bg-tertiary text-on-tertiary px-5 py-1.5">
+          <span className="text-[10px] tracking-[0.1em] uppercase font-bold">
             Most Coveted
           </span>
         </div>
 
-        <span className="font-label text-xs uppercase tracking-[0.1em] text-on-primary/60 mb-4 block">
-          Strategic Partnership
-        </span>
-        <h3 className="font-headline text-4xl mb-2 text-on-primary">
+        <p className="ea-label text-on-primary/60 mb-4">Strategic Partnership</p>
+        <h3 className="text-3xl font-bold mb-2 text-on-primary">
           Full Access
         </h3>
-        <div className="flex items-baseline gap-1 mb-10">
-          <span className="text-4xl font-headline text-on-primary">$49</span>
-          <span className="text-on-primary/60 font-body">/ month</span>
+        <div className="flex items-baseline gap-1 mb-8">
+          <span className="text-3xl font-bold text-on-primary">$49</span>
+          <span className="text-on-primary/60 text-sm">/ month</span>
         </div>
-        <ul className="space-y-4 mb-12 font-body text-on-primary">
+        <ul className="space-y-3 mb-10 text-on-primary text-sm">
           {fullAccessFeatures.map((feature) => (
             <li key={feature} className="flex items-center gap-3">
               <span
-                className="material-symbols-outlined text-secondary-container text-xl"
+                className="material-symbols-outlined text-secondary-container text-lg"
                 style={{ fontVariationSettings: '"FILL" 1' }}
               >
                 verified
@@ -145,7 +139,7 @@ export default function PricingCards() {
               boxShadow: '0 8px 24px rgba(0,0,0,0.25)',
             }}
             whileTap={{ scale: 0.98 }}
-            className="bg-tertiary rounded-md py-[18px] text-center cursor-pointer relative overflow-hidden"
+            className="bg-tertiary rounded-full py-3 text-center cursor-pointer relative overflow-hidden"
           >
             <motion.div
               className="absolute inset-0 pointer-events-none"
@@ -161,7 +155,7 @@ export default function PricingCards() {
                   'linear-gradient(105deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%)',
               }}
             />
-            <span className="font-label font-bold text-on-tertiary text-base relative z-10">
+            <span className="font-semibold text-on-tertiary text-sm relative z-10">
               Upgrade to Full Access
             </span>
           </motion.div>

@@ -41,9 +41,9 @@ export default function EventCard({
   return (
     <Link
       href={`/events/${slug}`}
-      className="group flex flex-col bg-surface-container-lowest overflow-hidden hover:translate-y-[-8px] hover:shadow-lift transition-all duration-300"
+      className="group flex flex-col rounded-2xl bg-surface-lowest overflow-hidden shadow-ambient hover:shadow-raised hover:translate-y-[-4px] transition-all duration-300"
     >
-      <div className="aspect-[16/9] bg-surface-container overflow-hidden relative">
+      <div className="aspect-[16/9] bg-surface-high overflow-hidden relative">
         {image ? (
           <Image
             src={image}
@@ -52,10 +52,10 @@ export default function EventCard({
             className={`object-cover transition-transform duration-700 group-hover:scale-105 ${isPast ? 'grayscale opacity-70' : ''}`}
           />
         ) : (
-          <div className="w-full h-full bg-surface-container-high" />
+          <div className="w-full h-full bg-surface-high" />
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-on-surface/30 to-transparent" />
-        <div className="absolute bottom-4 left-4 flex gap-2">
+        <div className="absolute bottom-3 left-3 flex gap-2">
           <Badge variant={isPast ? 'category' : 'status'}>
             {isPast ? 'Past Event' : 'Upcoming'}
           </Badge>
@@ -65,12 +65,12 @@ export default function EventCard({
         </div>
       </div>
 
-      <div className="flex-grow p-6">
-        <h3 className="font-headline text-2xl font-bold mb-4 group-hover:text-primary transition-colors leading-tight">
+      <div className="flex-grow p-5">
+        <h3 className="text-lg font-bold mb-3 text-on-surface group-hover:text-primary transition-colors leading-tight">
           {title}
         </h3>
 
-        <div className="space-y-2 text-sm text-on-surface-variant font-body">
+        <div className="space-y-2 text-sm text-on-surface-variant">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-primary text-lg">
               calendar_today
@@ -89,14 +89,14 @@ export default function EventCard({
       </div>
 
       {remaining !== undefined && !isPast && (
-        <div className="px-6 pb-6">
-          <div className="flex justify-between text-[10px] font-bold uppercase tracking-widest text-outline font-label mb-2">
+        <div className="px-5 pb-5">
+          <div className="flex justify-between ea-label text-tertiary mb-2">
             <span>{remaining} seats left</span>
             <span>{capacity} total</span>
           </div>
-          <div className="w-full bg-surface-variant h-1 overflow-hidden">
+          <div className="w-full bg-surface-high h-1 rounded-full overflow-hidden">
             <div
-              className="bg-primary h-full transition-all"
+              className="bg-primary h-full rounded-full transition-all"
               style={{ width: `${capacity ? ((capacity - remaining) / capacity) * 100 : 0}%` }}
             />
           </div>

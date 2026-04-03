@@ -51,22 +51,20 @@ export default function Pagination({
       initial="hidden"
       animate={isInView ? 'visible' : 'hidden'}
       variants={fadeInUp}
-      className="mt-16 pt-8 border-t border-outline-variant/30 flex items-center justify-between"
+      className="mt-16 pt-8 flex items-center justify-between"
     >
-      {/* Info text */}
-      <span className="font-label text-xs text-on-surface-variant/60 uppercase tracking-widest">
+      <span className="ea-label text-tertiary">
         {totalPosts ? `${totalPosts} articles` : ''}{totalPosts ? ' \u00b7 ' : ''}{currentPage} of {totalPages} pages
       </span>
 
-      {/* Page numbers + next */}
       <div className="flex items-center gap-2">
         {pages.map((n) => (
           <Link key={n} href={buildHref(n)}>
             <motion.div
               whileHover={{ scale: 1.1 }}
-              className={`w-8 h-8 rounded flex items-center justify-center cursor-pointer font-label text-sm font-bold transition-colors ${
+              className={`w-8 h-8 rounded-lg flex items-center justify-center cursor-pointer text-sm font-bold transition-colors ${
                 n === currentPage
-                  ? 'editorial-gradient text-on-primary'
+                  ? 'ea-gradient text-on-primary'
                   : 'text-on-surface-variant ghost-border'
               }`}
             >
@@ -79,7 +77,7 @@ export default function Pagination({
           <Link href={buildHref(currentPage + 1)}>
             <motion.div
               whileHover={{ x: 4 }}
-              className="ml-2 flex items-center gap-1 font-label text-sm text-primary uppercase tracking-widest cursor-pointer"
+              className="ml-2 flex items-center gap-1 text-sm text-primary font-semibold uppercase tracking-[0.08em] cursor-pointer"
             >
               Next
               <span className="material-symbols-outlined text-sm">arrow_forward</span>

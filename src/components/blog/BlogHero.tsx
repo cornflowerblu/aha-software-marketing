@@ -20,30 +20,24 @@ export default function BlogHero() {
       variants={staggerContainer}
       className="flex flex-col items-center gap-6"
     >
-      {/* Section label */}
-      <motion.span
+      <motion.p
         variants={fadeInUp}
-        className="font-label text-xs uppercase tracking-[0.2em] text-tertiary text-center block"
+        className="ea-label text-primary text-center"
       >
         The Digital Curator
-      </motion.span>
+      </motion.p>
 
-      {/* Headline */}
       <motion.h1
         variants={fadeInUp}
-        className="font-headline text-5xl md:text-7xl tracking-tighter text-on-surface text-center max-w-[900px] leading-[1]"
+        className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-[-0.03em] text-on-surface text-center max-w-[900px] leading-[1.08]"
       >
-        <span>Perspectives on the </span>
-        <span className="italic">Modern</span>
-        <br />
-        <span className="italic">Workforce</span>
-        <span>.</span>
+        Perspectives on the{' '}
+        <span className="text-primary">Modern Workforce</span>.
       </motion.h1>
 
-      {/* Subtitle */}
       <motion.div
         variants={fadeInUp}
-        className="font-body text-xl text-on-surface-variant text-center max-w-[820px] opacity-90 leading-relaxed"
+        className="text-lg text-on-surface-variant text-center max-w-[700px] leading-relaxed"
       >
         <p className="mb-0">
           Exploring the intersection of technology, strategy, and premium editorial craftsmanship.

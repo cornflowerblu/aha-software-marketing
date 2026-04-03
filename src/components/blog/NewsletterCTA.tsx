@@ -29,9 +29,8 @@ export default function NewsletterCTA() {
 			initial='hidden'
 			animate={isInView ? "visible" : "hidden"}
 			variants={fadeInUp}
-			className='lg:col-span-2 md:col-span-2 editorial-gradient rounded-lg relative overflow-hidden'
+			className='lg:col-span-2 md:col-span-2 ea-gradient rounded-2xl relative overflow-hidden'
 		>
-			{/* Shimmer sweep */}
 			<motion.div
 				className='absolute inset-0 pointer-events-none'
 				animate={{ x: ["-100%", "200%"] }}
@@ -47,33 +46,31 @@ export default function NewsletterCTA() {
 				}}
 			/>
 
-			{/* Background mail icon */}
 			<div className='absolute right-[-61px] top-[-60px] opacity-10 pointer-events-none'>
 				<span
-					className='material-symbols-outlined text-on-primary-container select-none'
+					className='material-symbols-outlined text-on-primary select-none'
 					style={{ fontSize: "240px", fontVariationSettings: '"wght" 100' }}
 				>
 					mail
 				</span>
 			</div>
 
-			{/* Content */}
-			<div className='relative z-10 p-12 flex flex-col justify-between h-full min-h-[400px]'>
+			<div className='relative z-10 p-10 flex flex-col justify-between h-full min-h-[360px]'>
 				<div>
-					<span className='font-label text-xs tracking-[0.2em] uppercase text-on-primary-container opacity-80 block mb-4'>
+					<p className='ea-label text-primary-container/80 mb-3'>
 						Weekly Curator
-					</span>
-					<h3 className='font-headline text-4xl text-on-primary-container mb-6 leading-tight'>
+					</p>
+					<h3 className='text-3xl font-bold text-on-primary mb-4 leading-tight'>
 						Join 25,000+ digital architects.
 					</h3>
-					<p className='font-body text-base text-on-primary/70 mb-8 leading-relaxed'>
+					<p className='text-on-primary/70 text-sm leading-relaxed mb-6'>
 						The best of AHA Software, delivered to your inbox every Thursday
 						morning. No noise, just signal.
 					</p>
 				</div>
 
 				{submitted ? (
-					<p className='font-body text-lg font-bold text-on-primary-container'>
+					<p className='text-base font-bold text-on-primary'>
 						<span className='material-symbols-outlined align-middle mr-2'>
 							check_circle
 						</span>
@@ -85,7 +82,7 @@ export default function NewsletterCTA() {
 							type='email'
 							value={email}
 							onChange={(e) => setEmail(e.target.value)}
-							className='flex-1 bg-on-primary/12 border border-on-primary/20 px-4 py-3 rounded-l text-on-primary-container placeholder:text-on-primary/50 font-body text-sm focus:ring-2 focus:ring-on-primary/50 outline-none'
+							className='flex-1 bg-on-primary/12 border border-on-primary/20 px-4 py-3 rounded-l-lg text-on-primary placeholder:text-on-primary/50 text-sm focus:ring-2 focus:ring-on-primary/50 outline-none'
 							placeholder='Email address'
 						/>
 						<motion.button
@@ -123,14 +120,14 @@ export default function NewsletterCTA() {
 							}}
 							disabled={loading}
 							whileHover={{ backgroundColor: "rgba(255,255,255,0.2)" }}
-							className='bg-on-primary/15 border border-on-primary/20 border-l-0 px-5 py-3 rounded-r cursor-pointer disabled:opacity-50'
+							className='bg-on-primary/15 border border-on-primary/20 border-l-0 px-5 py-3 rounded-r-lg cursor-pointer disabled:opacity-50'
 						>
-							<span className='font-label text-sm font-bold text-on-primary'>
+							<span className='text-sm font-bold text-on-primary'>
 								{loading ? "..." : "Join"}
 							</span>
 						</motion.button>
 						{error && (
-							<p className='text-on-primary/70 text-xs mt-2 font-body'>
+							<p className='text-on-primary/70 text-xs mt-2'>
 								{error}
 							</p>
 						)}

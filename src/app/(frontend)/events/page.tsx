@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { getPayloadClient } from "@/lib/payload";
-import SectionLabel from "@/components/ui/SectionLabel";
 import EventCard from "@/components/events/EventCard";
 import AnimateOnScroll from "@/components/ui/AnimateOnScroll";
 import { Logger } from "next-axiom";
@@ -119,32 +118,29 @@ export default async function EventsPage() {
 	const { upcoming, past } = await fetchEvents();
 
 	return (
-		<div className='pb-20 px-6 md:px-12 max-w-[1440px] mx-auto'>
-			<header className='mb-20 pt-8 text-center max-w-4xl mx-auto'>
-				<SectionLabel color='tertiary' className='mb-6'>
-					Curated Gatherings
-				</SectionLabel>
-				<h1 className='font-headline text-5xl md:text-7xl font-bold tracking-tighter text-on-surface mb-8 leading-[1.1]'>
-					Workshops &amp; <span className='italic font-normal'>Exclusive</span>{" "}
-					Events.
+		<div className='pb-20 px-6 md:px-12 max-w-[1280px] mx-auto'>
+			<header className='pt-28 pb-16 text-center max-w-3xl mx-auto'>
+				<p className='ea-label mb-4 text-primary'>Curated Gatherings</p>
+				<h1 className='text-4xl md:text-5xl font-bold tracking-[-0.03em] text-on-surface mb-6 leading-[1.08]'>
+					Workshops &amp; Exclusive Events
 				</h1>
-				<p className='font-body text-xl text-on-surface-variant leading-relaxed opacity-90'>
+				<p className='text-lg text-on-surface-variant leading-relaxed'>
 					Deep-dive sessions, strategy workshops, and thought leadership for
 					engineering teams and digital leaders.
 				</p>
 			</header>
 
 			{upcoming.length > 0 && (
-				<section className='mb-28'>
-					<div className='flex justify-between items-baseline mb-12 border-b border-outline-variant/30 pb-6'>
-						<h2 className='font-headline text-3xl font-medium text-on-background'>
+				<section className='mb-20'>
+					<div className='flex justify-between items-end mb-8'>
+						<h2 className='text-2xl font-bold text-on-surface'>
 							Upcoming
 						</h2>
-						<span className='text-[10px] font-black text-primary/40 tracking-[0.4em] uppercase font-label'>
+						<span className='ea-label text-tertiary'>
 							{upcoming.length} Event{upcoming.length !== 1 ? "s" : ""}
 						</span>
 					</div>
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 						{upcoming.map((event, i) => (
 							<AnimateOnScroll key={event.slug} delay={i * 100}>
 								<EventCard {...event} />
@@ -156,15 +152,15 @@ export default async function EventsPage() {
 
 			{past.length > 0 && (
 				<section>
-					<div className='flex justify-between items-baseline mb-12 border-b border-outline-variant/30 pb-6'>
-						<h2 className='font-headline text-3xl font-medium text-on-background'>
+					<div className='flex justify-between items-end mb-8'>
+						<h2 className='text-2xl font-bold text-on-surface'>
 							Past Events
 						</h2>
-						<span className='text-[10px] font-black text-primary/40 tracking-[0.4em] uppercase font-label'>
+						<span className='ea-label text-tertiary'>
 							Archive
 						</span>
 					</div>
-					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+					<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
 						{past.map((event, i) => (
 							<AnimateOnScroll key={event.slug} delay={i * 100}>
 								<EventCard {...event} />
